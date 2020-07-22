@@ -1,35 +1,61 @@
-// import axios from 'axios'
+// import { useState, useEffect } from 'react'
+// // import axios from 'axios'
 
+
+// export default () => {
+//     const [products, setProducts] = useState([])
+
+//     useEffect(() => {
+//         const getProducts = async () => {
+//             const response = await fetch('http://164.90.158.158/products')
+//             const data = await response.json()
+//             setProducts(data)
+//         }
+
+//         getProducts()
+//     }, [])
+
+//     return products
+
+// }
+
+// //8888----------------------------------------------------
+// const fetchedProducts = () => {
+//     const [products, setProducts] = useState([])
+
+//     useEffect(
+//         () => {
+//             (async => {
+//                 const response = await axios({
+//                     method: 'GET',
+//                     url: 'http://164.90.158.158/products'
+//                 })
+//                 setProducts(response.data)
+//             })(products)
+//         }
+//     )
+// }
+
+// //------------------------------------------------------------------------------
 // async function makeRequest() {
 
 //     const config = {
 //         method: 'GET',
-//         url: 'http://164.90.158.158//products'
+//         url: 'http://164.90.158.158/products'
 //     }
 
 //     let res = await axios(config)
-//     let data = res.data;
-//     return data
-
+//     let fetchedProducts = res.data;
+//     console.log(res.status);
+//     return fetchedProducts
 // }
 
-// makeRequest();
-// console.log(data);
-
-// async function makeGetRequest() {
-
-//     let res = await axios.get('http://164.90.158.158//products');
-
-//     let data = res.data;
-//     console.log(data);
-// }
-
-// makeGetRequest();
+// // const fetchedProducts = makeRequest();
+// // console.log("makeRequest with fetchedProducts ->", fetchedProducts);
 
 // export default data;
 
-
-
+// //------------------------------------------------------------------------------
 export default {
     products: [
         {

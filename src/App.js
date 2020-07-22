@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import data from './data';
+// import data from './data';
 import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function App() {
 
@@ -15,22 +16,38 @@ function App() {
 
   }
 
-  async function makeRequest() {
+  const [fetchedProducts, setFetchedProducts] = useState([])
 
-    const config = {
-      method: 'GET',
-      url: 'http://164.90.158.158/products'
+  useEffect(() => {
+    async function makeRequest() {
+      const config = {
+        method: 'GET',
+        url: 'http://164.90.158.158/products'
+      }
+      let res = await axios(config)
+      let strapiData = res.data;
+      // console.log(res.status);
+      // console.log("makeRequest with strapiData ->", strapiData);
+      setFetchedProducts(strapiData)
     }
+    makeRequest();
+  }, [])
+  console.log("fetchedProducts, ", fetchedProducts);
 
-    let res = await axios(config)
-    let fetchedProducts = res.data;
-    console.log(res.status);
-    console.log(fetchedProducts);
-
-  }
-
-  makeRequest();
-
+  // const [fetchedProducts, setFetchedProducts] = useState([])
+  // async function makeRequest() {
+  //   const config = {
+  //     method: 'GET',
+  //     url: 'http://164.90.158.158/products'
+  //   }
+  //   let res = await axios(config)
+  //   let strapiData = res.data;
+  //   // console.log(res.status);
+  //   // console.log("makeRequest with strapiData ->", strapiData);
+  //   setFetchedProducts(strapiData)
+  // }
+  // // makeRequest();
+  // // console.log("fetchedProducts, ", fetchedProducts);
 
   return (
     <BrowserRouter>
@@ -61,14 +78,14 @@ function App() {
             {/* <Route path="/" exact={true} component={HomeScreen} /> */}
             <ul className="products">
               {
-                data.products.map(product =>
+                fetchedProducts.map(fetchedProduct =>
                   <li>
                     <div className="product">
-                      <img className="product-image" src={product.image} alt="productImage" />
+                      <img className="product-image" src={fetchedProduct.thumbnail.formats.thumbnail.url} alt="productImage" />
                       <div className="product-name">
-                        <a href="product.html">{product.name} </a>
+                        <a href="product.html">{fetchedProduct.name} </a>
                       </div>
-                      <div className="product-price" >${product.price}</div>
+                      <div className="product-price" >${fetchedProduct.price_in_cents}</div>
                     </div>
                   </li>
                 )
