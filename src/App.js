@@ -79,9 +79,9 @@ function App() {
             <ul className="products">
               {
                 fetchedProducts.map(fetchedProduct =>
-                  <li>
+                  <li >
                     <div className="product">
-                      <img className="product-image" src={fetchedProduct.thumbnail.formats.thumbnail.url} alt="productImage" />
+                      <img className="product-image" src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.thumbnail.url}`} alt="productImage" />
                       <div className="product-name">
                         <a href="product.html">{fetchedProduct.name} </a>
                       </div>
