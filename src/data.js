@@ -1,3 +1,35 @@
+// import axios from 'axios'
+
+// async function makeRequest() {
+
+//     const config = {
+//         method: 'GET',
+//         url: 'http://164.90.158.158//products'
+//     }
+
+//     let res = await axios(config)
+//     let data = res.data;
+//     return data
+
+// }
+
+// makeRequest();
+// console.log(data);
+
+// async function makeGetRequest() {
+
+//     let res = await axios.get('http://164.90.158.158//products');
+
+//     let data = res.data;
+//     console.log(data);
+// }
+
+// makeGetRequest();
+
+// export default data;
+
+
+
 export default {
     products: [
         {

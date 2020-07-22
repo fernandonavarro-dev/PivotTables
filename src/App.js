@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import data from './data';
 import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -13,6 +14,23 @@ function App() {
     document.querySelector(".sidebar").classList.remove("open");
 
   }
+
+  async function makeRequest() {
+
+    const config = {
+      method: 'GET',
+      url: 'http://164.90.158.158/products'
+    }
+
+    let res = await axios(config)
+    let fetchedProducts = res.data;
+    console.log(res.status);
+    console.log(fetchedProducts);
+
+  }
+
+  makeRequest();
+
 
   return (
     <BrowserRouter>
