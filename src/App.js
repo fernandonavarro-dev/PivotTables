@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import HomeScreen from './Screens/HomeScreen';
 import ProductScreen from './Screens/ProductScreen';
@@ -23,7 +23,7 @@ function App() {
             <button onClick={openMenu}>
               &#9776;
           </button>
-            <a href="index.html">Wellstar Order App</a>
+            <Link to="/" >Wellstar Order App</Link>
           </div>
           <div className="header-links" >
             <a href="cart.html">Cart</a>

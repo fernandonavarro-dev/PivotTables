@@ -1,10 +1,11 @@
 import React from 'react';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function HomeScreen(props) {
+function HomeScreen() {
 
-    const [fetchedProducts, setFetchedProducts] = useState([])
+    const [fetchedProducts, setFetchedProducts] = useState([]);
 
     useEffect(() => {
         async function makeRequest() {
@@ -19,24 +20,31 @@ function HomeScreen(props) {
             setFetchedProducts(strapiData)
         }
         makeRequest();
-    }, [])
+    }, []);
     console.log("fetchedProducts, ", fetchedProducts);
 
-    return <ul className="products">
-        {
-            fetchedProducts.map(fetchedProduct =>
-                <li >
+    return (
+        <ul className="products">
+            {fetchedProducts.map(fetchedProduct =>
+                <li key={fetchedProduct.id} >
                     <div className="product">
-                        <img className="product-image" src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.small.url}`} alt="product" />
+                        <Link to={'/product/' + fetchedProduct.id}>
+                            <img
+                                className="product-image"
+                                src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.small.url}`}
+                                alt="product"
+                            />
+                        </Link>
                         <div className="product-name">
-                            <a href="product.html">{fetchedProduct.name} </a>
+                            <Link to={'/product/' + fetchedProduct.id}>{fetchedProduct.name}
+                            </Link>
                         </div>
                         <div className="product-price" >${fetchedProduct.price_in_cents}</div>
                     </div>
                 </li>
-            )
-        }
-    </ul>
+            )}
+        </ul>
+    )
 }
 
 export default HomeScreen;
