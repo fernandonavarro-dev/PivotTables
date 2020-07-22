@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-// import data from './data';
-import './App.css';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import './App.css';
+import HomeScreen from './Screens/HomeScreen';
+import ProductScreen from './Screens/ProductScreen';
 
 function App() {
 
@@ -15,39 +14,6 @@ function App() {
     document.querySelector(".sidebar").classList.remove("open");
 
   }
-
-  const [fetchedProducts, setFetchedProducts] = useState([])
-
-  useEffect(() => {
-    async function makeRequest() {
-      const config = {
-        method: 'GET',
-        url: 'http://164.90.158.158/products'
-      }
-      let res = await axios(config)
-      let strapiData = res.data;
-      // console.log(res.status);
-      // console.log("makeRequest with strapiData ->", strapiData);
-      setFetchedProducts(strapiData)
-    }
-    makeRequest();
-  }, [])
-  console.log("fetchedProducts, ", fetchedProducts);
-
-  // const [fetchedProducts, setFetchedProducts] = useState([])
-  // async function makeRequest() {
-  //   const config = {
-  //     method: 'GET',
-  //     url: 'http://164.90.158.158/products'
-  //   }
-  //   let res = await axios(config)
-  //   let strapiData = res.data;
-  //   // console.log(res.status);
-  //   // console.log("makeRequest with strapiData ->", strapiData);
-  //   setFetchedProducts(strapiData)
-  // }
-  // // makeRequest();
-  // // console.log("fetchedProducts, ", fetchedProducts);
 
   return (
     <BrowserRouter>
@@ -75,25 +41,11 @@ function App() {
         </aside>
         <main className="main" >
           <div className="content" >
-            {/* <Route path="/" exact={true} component={HomeScreen} /> */}
-            <ul className="products">
-              {
-                fetchedProducts.map(fetchedProduct =>
-                  <li >
-                    <div className="product">
-                      <img className="product-image" src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.thumbnail.url}`} alt="productImage" />
-                      <div className="product-name">
-                        <a href="product.html">{fetchedProduct.name} </a>
-                      </div>
-                      <div className="product-price" >${fetchedProduct.price_in_cents}</div>
-                    </div>
-                  </li>
-                )
-              }
-            </ul>
+            <Route path="/product/:id" component={ProductScreen} />
+            <Route path="/" exact={true} component={HomeScreen} />
           </div>
         </main>
-        <footer className="footer">By Core ddd with React</footer>
+        <footer className="footer">by core data design & development with React</footer>
       </div>
     </BrowserRouter>
 
