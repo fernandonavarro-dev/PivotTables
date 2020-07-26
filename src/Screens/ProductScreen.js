@@ -32,42 +32,6 @@ class ProductScreen extends React.Component {
 
         const { pageProduct } = this.state
 
-        // console.log("this.props, ", this.props);
-
-        // const id = this.props.match.params.id
-        // const idInt = parseInt(id)
-        // console.log("typeof idInt, ", typeof idInt);
-
-        // console.log("fetchedProducts inside render(), ", fetchedProducts);
-
-        // const productIndex = [this.props.match.params.id - 1].toString();
-        // console.log("productIndex inside render(), ", productIndex);
-
-        // const product = fetchedProducts[productIndex];
-        // const product = fetchedProducts.find(x => x['id'] === idInt);
-
-        // console.log("fetchedProducts inside render(), ", fetchedProducts);
-        // console.log("pageProduct inside render(), ", pageProduct);
-
-
-        // console.log("typeof pageProduct, ", typeof pageProduct);
-        // console.log("Object.keys(product), ", Object.keys(pageProduct));
-        // const {  } = product;
-        // console.log("product.name inside render(), ", product.id);
-
-        // console.log("fetchedProducts.x.id inside render(), ", fetchedProducts.x.id);
-
-        // const product = fetchedProducts[this.props.match.params.id - 1]
-        // console.log("fetchedProducts[this.props.match.params.id - 1] inside render(), ", fetchedProducts.productIndex.id);
-        // console.log("this.props.match.params.id inside render(), ", this.props.match.params.id);
-        // console.log("product inside render(),", product);
-        console.log("pageProduct ->", pageProduct);
-        console.log("pageProduct.thumbnail ->", pageProduct.thumbnail);
-
-        // const imageUrl = "http://164.90.158.158/uploads/" + pageProduct.name + ".png"
-        // console.log("imageUrl, ", imageUrl);
-
-
         return (
             <div>
                 <div className="back-to-result">
@@ -106,7 +70,7 @@ class ProductScreen extends React.Component {
                         <div className="details-action">
                             <ul>
                                 <li>
-                                    Price: {pageProduct.price}
+                                    Price: $ {pageProduct.price}
                                 </li>
                                 <li>
                                     Status: {pageProduct.status}
@@ -134,6 +98,41 @@ class ProductScreen extends React.Component {
 
 
 }
+
+// console.log("this.props, ", this.props);
+
+// const id = this.props.match.params.id
+// const idInt = parseInt(id)
+// console.log("typeof idInt, ", typeof idInt);
+
+// console.log("fetchedProducts inside render(), ", fetchedProducts);
+
+// const productIndex = [this.props.match.params.id - 1].toString();
+// console.log("productIndex inside render(), ", productIndex);
+
+// const product = fetchedProducts[productIndex];
+// const product = fetchedProducts.find(x => x['id'] === idInt);
+
+// console.log("fetchedProducts inside render(), ", fetchedProducts);
+// console.log("pageProduct inside render(), ", pageProduct);
+
+
+// console.log("typeof pageProduct, ", typeof pageProduct);
+// console.log("Object.keys(product), ", Object.keys(pageProduct));
+// const {  } = product;
+// console.log("product.name inside render(), ", product.id);
+
+// console.log("fetchedProducts.x.id inside render(), ", fetchedProducts.x.id);
+
+// const product = fetchedProducts[this.props.match.params.id - 1]
+// console.log("fetchedProducts[this.props.match.params.id - 1] inside render(), ", fetchedProducts.productIndex.id);
+// console.log("this.props.match.params.id inside render(), ", this.props.match.params.id);
+// console.log("product inside render(),", product);
+// console.log("pageProduct ->", pageProduct);
+// console.log("pageProduct.thumbnail ->", pageProduct.thumbnail);
+
+// const imageUrl = "http://164.90.158.158/uploads/" + pageProduct.name + ".png"
+// console.log("imageUrl, ", imageUrl);
 
 // function ProductScreen(props) {
 //     console.log("props inside ProductScreen", props);

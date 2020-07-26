@@ -178,7 +178,7 @@ a > .rating > span:last-child {
   padding: 1rem;
 }
 .details-image {
-  flex: 2 1 60rem;
+  flex: 2 1 45rem;
 }
 .details-image img {
   max-width: 60rem;

@@ -1,19 +1,25 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { listProducts } from '../actions/productActions';
 // import fetchedProducts from "../fetchedProducts"
 
 function HomeScreen() {
 
-    const [fetchedProducts, setFetchedProducts] = useState([])
+    // const [fetchedProducts, setFetchedProducts] = useState([]);
+    const productList = useSelector(state => state.productList);
+    const { products, loading, error } = productList;
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        const fetchData = async () => {
-            const { data } = await axios.get("http://164.90.158.158/products");
-            setFetchedProducts(data);
-        }
-        fetchData();
+        dispatch(listProducts());
+        // const fetchData = async () => {
+        //     const { data } = await axios.get("http://164.90.158.158/products");
+        //     setFetchedProducts(data);
+        // }
+        // fetchData();
         return () => {
             //
         }
@@ -22,26 +28,28 @@ function HomeScreen() {
     // console.log("fetchedProduct ->", fetchedProducts);
 
     return (
-        <ul className="products">
-            {fetchedProducts.map(fetchedProduct =>
-                <li key={fetchedProduct.id} >
-                    <div className="product">
-                        <Link to={'/product/' + fetchedProduct.id} >
-                            <img
-                                className="product-image"
-                                src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.thumbnail.url}`}
-                                alt="product"
-                            />
-                        </Link>
-                        <div className="product-name">
-                            <Link to={'/product/' + fetchedProduct.id}>{fetchedProduct.name}
-                            </Link>
-                        </div>
-                        <div className="product-price" >${fetchedProduct.price}</div>
-                    </div>
-                </li>
-            )}
-        </ul>
+        loading ? <div>Loading...</div> :
+            error ? <div>error</div> :
+                <ul className="products">
+                    {products.map(product =>
+                        <li key={product.id} >
+                            <div className="product">
+                                <Link to={'/product/' + product.id} >
+                                    <img
+                                        className="product-image"
+                                        src={`http://164.90.158.158${product.thumbnail.formats.thumbnail.url}`}
+                                        alt="product"
+                                    />
+                                </Link>
+                                <div className="product-name">
+                                    <Link to={'/product/' + product.id}>{product.name}
+                                    </Link>
+                                </div>
+                                <div className="product-price" >${product.price}</div>
+                            </div>
+                        </li>
+                    )}
+                </ul>
     )
 
     // const [fetchedProducts, setFetchedProducts] = useState([]);
