@@ -6,24 +6,6 @@ import axios from 'axios';
 
 function HomeScreen() {
 
-    // const [fetchedProducts, setFetchedProducts] = useState([]);
-
-    // useEffect(() => {
-    //     async function makeRequest() {
-    //         const config = {
-    //             method: 'GET',
-    //             url: 'http://164.90.158.158/products'
-    //         }
-    //         let res = await axios(config)
-    //         let strapiData = res.data;
-    //         // console.log(res.status);
-    //         // console.log("makeRequest with strapiData ->", strapiData);
-    //         setFetchedProducts(strapiData)
-    //     }
-    //     makeRequest();
-    // }, []);
-    // console.log("fetchedProducts, ", fetchedProducts);
-
     const [fetchedProducts, setFetchedProducts] = useState([])
 
     useEffect(() => {
@@ -31,19 +13,20 @@ function HomeScreen() {
             const { data } = await axios.get("http://164.90.158.158/products");
             setFetchedProducts(data);
         }
-        console.log("fetchedProduct ->", fetchedProducts);
         fetchData();
         return () => {
             //
         }
     }, [])
 
+    console.log("fetchedProduct ->", fetchedProducts);
+
     return (
         <ul className="products">
             {fetchedProducts.map(fetchedProduct =>
                 <li key={fetchedProduct.id} >
                     <div className="product">
-                        <Link to={'/product/' + fetchedProduct.id}>
+                        <Link to={'/product/' + fetchedProduct.id} >
                             <img
                                 className="product-image"
                                 src={`http://164.90.158.158${fetchedProduct.thumbnail.formats.thumbnail.url}`}
@@ -61,6 +44,23 @@ function HomeScreen() {
         </ul>
     )
 
+    // const [fetchedProducts, setFetchedProducts] = useState([]);
+
+    // useEffect(() => {
+    //     async function makeRequest() {
+    //         const config = {
+    //             method: 'GET',
+    //             url: 'http://164.90.158.158/products'
+    //         }
+    //         let res = await axios(config)
+    //         let strapiData = res.data;
+    //         // console.log(res.status);
+    //         // console.log("makeRequest with strapiData ->", strapiData);
+    //         setFetchedProducts(strapiData)
+    //     }
+    //     makeRequest();
+    // }, []);
+    // console.log("fetchedProducts, ", fetchedProducts);
     // return (
     //     <ul className="products">
     //         {fetchedProducts.products.map(product =>
