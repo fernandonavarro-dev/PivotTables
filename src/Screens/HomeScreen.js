@@ -19,7 +19,7 @@ function HomeScreen() {
         }
     }, [])
 
-    console.log("fetchedProduct ->", fetchedProducts);
+    // console.log("fetchedProduct ->", fetchedProducts);
 
     return (
         <ul className="products">
@@ -37,7 +37,7 @@ function HomeScreen() {
                             <Link to={'/product/' + fetchedProduct.id}>{fetchedProduct.name}
                             </Link>
                         </div>
-                        <div className="product-price" >${fetchedProduct.price_in_cents}</div>
+                        <div className="product-price" >${fetchedProduct.price}</div>
                     </div>
                 </li>
             )}

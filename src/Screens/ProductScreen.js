@@ -30,9 +30,9 @@ class ProductScreen extends React.Component {
 
     render() {
 
-        const { fetchedProducts, pageProduct } = this.state
+        const { pageProduct } = this.state
 
-        console.log("this.props, ", this.props);
+        // console.log("this.props, ", this.props);
 
         // const id = this.props.match.params.id
         // const idInt = parseInt(id)
@@ -46,12 +46,12 @@ class ProductScreen extends React.Component {
         // const product = fetchedProducts[productIndex];
         // const product = fetchedProducts.find(x => x['id'] === idInt);
 
-        console.log("fetchedProducts inside render(), ", fetchedProducts);
-        console.log("pageProduct inside render(), ", pageProduct);
+        // console.log("fetchedProducts inside render(), ", fetchedProducts);
+        // console.log("pageProduct inside render(), ", pageProduct);
 
 
-        console.log("typeof pageProduct, ", typeof pageProduct);
-        console.log("Object.keys(product), ", Object.keys(pageProduct));
+        // console.log("typeof pageProduct, ", typeof pageProduct);
+        // console.log("Object.keys(product), ", Object.keys(pageProduct));
         // const {  } = product;
         // console.log("product.name inside render(), ", product.id);
 
@@ -61,8 +61,11 @@ class ProductScreen extends React.Component {
         // console.log("fetchedProducts[this.props.match.params.id - 1] inside render(), ", fetchedProducts.productIndex.id);
         // console.log("this.props.match.params.id inside render(), ", this.props.match.params.id);
         // console.log("product inside render(),", product);
-        const imageUrl = pageProduct.thumbnail
-        console.log("imageUrl, ", imageUrl);
+        console.log("pageProduct ->", pageProduct);
+        console.log("pageProduct.thumbnail ->", pageProduct.thumbnail);
+
+        // const imageUrl = "http://164.90.158.158/uploads/" + pageProduct.name + ".png"
+        // console.log("imageUrl, ", imageUrl);
 
 
         return (
@@ -73,7 +76,32 @@ class ProductScreen extends React.Component {
                 <>
                     <div className="details">
                         <div className="details-image">
-                            {/* <img src={`http://164.90.158.158${pageProduct.thumbnail.formats.thumbnail.url}`} alt="product"></img> */}
+                            <img src={pageProduct.imageURL} alt="product"></img>
+                        </div>
+                        <div className="details-info">
+                            <ul>
+                                <li>
+                                    <h4>{pageProduct.name}</h4>
+                                </li>
+                                {/* <li>
+                                <a href="#reviews">
+                                    <Rating
+                                    value={product.rating}
+                                text={product.numReviews + ' reviews'}
+                                />
+                                </a>
+                            </li> */}
+                                <li>
+                                    Price: <b>${pageProduct.price}</b>
+                                </li>
+                                <li>
+                                    Commission: <b>%{pageProduct.commissionPercentage}</b>
+                                </li>
+                                <li>
+                                    Description:
+                  <div>{pageProduct.description}</div>
+                                </li>
+                            </ul>
                         </div>
                         <div className="details-action">
                             <ul>
@@ -93,28 +121,6 @@ class ProductScreen extends React.Component {
                                 </li>
                                 <li>
                                     <button className="button primary" >Add to order</button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="details-info">
-                            <ul>
-                                <li>
-                                    <h4>{pageProduct.name}</h4>
-                                </li>
-                                {/* <li>
-                                <a href="#reviews">
-                                    <Rating
-                                    value={product.rating}
-                                text={product.numReviews + ' reviews'}
-                                />
-                                </a>
-                            </li> */}
-                                <li>
-                                    Price: <b>${pageProduct.price_in_cents}</b>
-                                </li>
-                                <li>
-                                    Description:
-                  <div>{pageProduct.description}</div>
                                 </li>
                             </ul>
                         </div>
