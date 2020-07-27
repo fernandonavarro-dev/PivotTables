@@ -186,6 +186,8 @@ a > .rating > span:last-child {
 }
 .details-info {
   flex: 1 1 30rem;
+  padding-left: 1rem;
+  max-width: 30rem;
 }
 .details-action {
   flex: 1 1 30rem;
