@@ -1,5 +1,5 @@
 // import React from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,36 +7,21 @@ import { detailsProduct } from '../actions/productActions';
 
 function ProductScreen(props) {
 
+    const [qty, setQty] = useState(1)
     const productDetails = useSelector(state => state.productDetails);
     console.log("productDetails, ", productDetails);
-    // const [pageProduct, setpageProduct] = useState({});
     const dispatch = useDispatch();
     const { products, loading, error } = productDetails;
 
-
     useEffect(() => {
         dispatch(detailsProduct(props.match.params.id));
-        // setpageProduct(products);
         return () => {
             //
         };
     }, [])
 
-
     const product = { ...products }
     delete product.thumbnail
-    // console.log("products,", products);
-    // console.log("product,", product);
-    // console.log("product.id,", product.id);
-
-    // console.log("props.match.params.id, ", props.match.params.id);
-    // console.log(Object.keys(product))
-
-    // console.log("pageProduct, ", pageProduct);
-    // console.log("products.name, ", id);
-
-    // const { ['id']: productId } = products;
-    // console.log("id, ", productId);
 
     return (
         <div>
@@ -84,11 +69,10 @@ function ProductScreen(props) {
                                         Status: {product.status}
                                     </li>
                                     <li>
-                                        Qty: <select>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
+                                        Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
+                                            {[...Array(product.qtyCDMX).keys()].map(x =>
+                                                <option key={x + 1} value={x + 1}>{x + 1}</option>
+                                            )}
                                         </select>
                                     </li>
                                     <li>
@@ -106,6 +90,19 @@ function ProductScreen(props) {
 
 export default ProductScreen;
 
+
+// console.log("products,", products);
+    // console.log("product,", product);
+    // console.log("product.id,", product.id);
+
+    // console.log("props.match.params.id, ", props.match.params.id);
+    // console.log(Object.keys(product))
+
+    // console.log("pageProduct, ", pageProduct);
+    // console.log("products.name, ", id);
+
+    // const { ['id']: productId } = products;
+    // console.log("id, ", productId);
 
 // class ProductScreen extends React.Component {
 
