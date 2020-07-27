@@ -79,6 +79,7 @@ function ProductScreen(props) {
                                             <option value="void">select</option>
                                             <option value={product.qtyCDMX}>CDMX</option>
                                             <option value={product.qtyCUN}>Cancun</option>
+                                            <option value={product.qtyEDOMEX}>EDOMEX</option>
                                             <option value={product.qtyMTY}>Monterrey</option>
                                             <option value={product.qtyPBL}>Puebla</option>
                                             <option value={product.qtyQRO}>Queretaro</option>
