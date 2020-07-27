@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
 
 function ProductScreen(props) {
-
+    const [plazaStock, setPlazaStock] = useState({})
     const [qty, setQty] = useState(1)
     const productDetails = useSelector(state => state.productDetails);
-    console.log("productDetails, ", productDetails);
+    // console.log("productDetails, ", productDetails);
     const dispatch = useDispatch();
     const { products, loading, error } = productDetails;
 
@@ -22,6 +22,15 @@ function ProductScreen(props) {
 
     const product = { ...products }
     delete product.thumbnail
+
+    console.log("plazaStock, ", plazaStock);
+    console.log("typeof plazaStock , ", typeof plazaStock);
+
+    const productsAvailable = []
+
+    for (let x = 0; x < parseInt(plazaStock); x++) {
+        productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
+    }
 
     return (
         <div>
@@ -52,7 +61,7 @@ function ProductScreen(props) {
                                         Price: <b>${product.price}</b>
                                     </li>
                                     <li>
-                                        Commission: <b>%{product.commissionPercentage}</b>
+                                        Commission: <b>{product.commissionPercentage}</b>
                                     </li>
                                     <li>
                                         Description:
@@ -66,13 +75,25 @@ function ProductScreen(props) {
                                         Price: $ {product.price}
                                     </li>
                                     <li>
+                                        Plaza: <select value={plazaStock} onChange={(e) => { setPlazaStock(e.target.value) }}>
+                                            <option value="void">select</option>
+                                            <option value={product.qtyCDMX}>CDMX</option>
+                                            <option value={product.qtyCUN}>Cancun</option>
+                                            <option value={product.qtyMTY}>Monterrey</option>
+                                            <option value={product.qtyPBL}>Puebla</option>
+                                            <option value={product.qtyQRO}>Queretaro</option>
+                                            <option value={product.qtyTUL}>Tulum</option>
+                                        </select>
+                                    </li>
+                                    <li>
                                         Status: {product.status}
                                     </li>
                                     <li>
                                         Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
-                                            {[...Array(product.qtyCDMX).keys()].map(x =>
+                                            {productsAvailable}
+                                            {/* {[...Array({ plazaStock }).keys()].map(x =>
                                                 <option key={x + 1} value={x + 1}>{x + 1}</option>
-                                            )}
+                                            )} */}
                                         </select>
                                     </li>
                                     <li>
