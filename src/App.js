@@ -27,7 +27,10 @@ function App() {
             <Link to="/" >Wellstar Order App</Link>
           </div>
           <div className="header-links" >
-            <a href="cart.html">Cart</a>
+            <Link to="/cart">
+              Cart
+              {/* <a href="cart.html">Cart</a> */}
+            </Link>
             <a href="signin.html">Sign In</a>
           </div>
         </header>
@@ -47,7 +50,7 @@ function App() {
             <Route path="/" exact={true} component={HomeScreen} />
           </div>
         </main>
-        <footer className="footer">by core data design & development with React</footer>
+        <footer className="footer">by CORE Data Design & Development w/ React</footer>
       </div>
     </BrowserRouter>
 

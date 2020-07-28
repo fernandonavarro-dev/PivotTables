@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import { usedispatch } from 'react-redux';
@@ -16,11 +16,19 @@ function CartScreen(props) {
     // console.log("cart, ", cart);
     // console.log("cartItems, ", cartItems);
 
+    const removeFromCartHandler = (productId) => {
+        dispatch(removeFromCart(productId))
+    }
+
     useEffect(() => {
         if (productId) {
             dispatch(addToCart(productId, qty));
         }
     }, [])
+
+    const checkoutHandler = () => {
+        props.history.push("/signin?redirect=shipping");
+    }
 
     return <div className="cart" >
         <div className="cart-list">
@@ -40,7 +48,7 @@ function CartScreen(props) {
                         </div>
                         :
                         cartItems.map(item =>
-                            <li>
+                            <li key={item.product} >
                                 <div className="cart-image">
                                     <img src={item.image} alt="product" />
                                 </div>
@@ -52,11 +60,20 @@ function CartScreen(props) {
                                     </div>
                                     <div>
                                         Qty:
-                                         <select>
+                                         <select
+                                            value={item.qty}
+                                            onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
+                                        >
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
+                                        <button
+                                            type="button"
+                                            onClick={() => removeFromCartHandler(item.product)}
+                                            className="button">
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
                                 <div>
@@ -69,11 +86,15 @@ function CartScreen(props) {
         </div>
         <div className="cart-action">
             <h3>
-                Subtotal ({cartItems.reduce((accum, current) => accum + current.qty, 0)} items)
-                :
-            $ {cartItems.reduce((accum, current) => accum + current.price * current.qty, 0)}
+                Subtotal ( {cartItems.reduce((a, c) => a + c.qty, 0)} items)
+        :
+         $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
             </h3>
-            <button className="button primary" disabled={cartItems.length === 0}>
+            <button
+                className="button primary full-width"
+                disabled={cartItems.length === 0}
+                onClick={checkoutHandler}
+            >
                 Proceed to checkout
             </button>
 
