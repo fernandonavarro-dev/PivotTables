@@ -18,7 +18,11 @@ function ProductScreen(props) {
         return () => {
             //
         };
-    }, [])
+    }, []);
+
+    const handleAddToCart = () => {
+        props.history.push("/cart/" + props.match.params.id + "?qty=" + qty)
+    }
 
     const product = { ...products }
     delete product.thumbnail
@@ -87,7 +91,7 @@ function ProductScreen(props) {
                                         </select>
                                     </li>
                                     <li>
-                                        Status: {product.status}
+                                        Status: {productsAvailable.length > 0 ? "In stock" : ""}
                                     </li>
                                     <li>
                                         Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
@@ -98,7 +102,11 @@ function ProductScreen(props) {
                                         </select>
                                     </li>
                                     <li>
-                                        <button className="button primary" >Add to order</button>
+                                        {productsAvailable.length > 0 &&
+                                            <button
+                                                onClick={handleAddToCart}
+                                                className="button primary" >Add to order</button>
+                                        }
                                     </li>
                                 </ul>
                             </div>
