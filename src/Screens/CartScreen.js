@@ -89,6 +89,11 @@ function CartScreen(props) {
         :
          $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
             </h3>
+            {/* <h3>
+                Commission ( {cartItems.reduce((a, c) => a + Number(c.qty), 0)} items)
+        :
+         $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+            </h3> */}
             <button
                 className="button primary full-width"
                 disabled={cartItems.length === 0}
