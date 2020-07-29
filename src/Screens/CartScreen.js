@@ -9,25 +9,21 @@ function CartScreen(props) {
     const cart = useSelector(state => state.cart);
 
     const { cartItems } = cart;
+
     const productId = props.match.params.id;
     const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
     const dispatch = useDispatch();
-
-    // console.log("cart, ", cart);
-    // console.log("cartItems, ", cartItems);
-
     const removeFromCartHandler = (productId) => {
-        dispatch(removeFromCart(productId))
+        dispatch(removeFromCart(productId));
     }
-
     useEffect(() => {
         if (productId) {
             dispatch(addToCart(productId, qty));
         }
-    }, [])
+    }, []);
 
     const checkoutHandler = () => {
-        props.history.push("/signin?redirect=shipping");
+        props.history.push("/login?redirect=shipping");
     }
 
     return <div className="cart" >
@@ -64,9 +60,9 @@ function CartScreen(props) {
                                             value={item.qty}
                                             onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
                                         >
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                            {[...Array(item.qtyCDMX).keys()].map(x =>
+                                                <option key={x + 1} value={x + 1}>{x + 1}</option>
+                                            )}
                                         </select>
                                         <button
                                             type="button"
