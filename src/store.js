@@ -8,7 +8,11 @@ import { userLoginReducer } from './reducers/userReducers';
 const cartItems = Cookie.getJSON("cartItems") || [];
 const userInfo = Cookie.getJSON("userInfo") || null;
 
-const initialState = { cart: { cartItems }, userLogin: { userInfo } };
+const initialState = {
+    cart: { cartItems, shipping: {} },
+    userLogin: { userInfo },
+    // processingOrder: { orderItems: [], shipping: {}, delivery: {} }
+};
 const reducer = combineReducers({
     productList: productListReducer,
     productDetails: productDetailsReducer,

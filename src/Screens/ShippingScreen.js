@@ -12,16 +12,17 @@ function ShippingScreen(props) {
     const [colony, setColony] = useState('')
     const [city, setCity] = useState('');
     const [zip, setZip] = useState('');
-    const [paymentMethod, setPaymentMethod] = useState(null)
-    const [invoice, setInvoice] = useState(false)
+    const [shippingCost, setShippingCost] = useState(null);
+    const [paymentMethod, setPaymentMethod] = useState('')
+    const [invoice, setInvoice] = useState(null)
     const [comments, setComments] = useState('')
 
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShipping({ customerName, customerTel, address, colony, city, zip, paymentMethod, comments, invoice }));
-        props.history.push('delivery');
+        dispatch(saveShipping({ customerName, customerTel, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
+        props.history.push('placeorder');
     }
     return <div>
         <PostOrderSteps step1 step2 ></PostOrderSteps>
@@ -29,7 +30,7 @@ function ShippingScreen(props) {
             <form onSubmit={submitHandler} >
                 <ul className="form-container">
                     <li>
-                        <h2>Shipping</h2>
+                        <h3>Shipping Info</h3>
                     </li>
                     <li>
                         <label htmlFor="customerName">
@@ -73,101 +74,104 @@ function ShippingScreen(props) {
                         <input type="text" name="city" id="city" onChange={(e) => setCity(e.target.value)}>
                         </input>
                     </li>
-                    <div className="form">
-                        <ul className="form-container">
-                            <li>
-                                <h4>Payment Method</h4>
-                            </li>
-
-                            <li>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        id="paymentMethod"
-                                        value="cash"
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                    ></input>
-                                    <label htmlFor="paymentMethod">cash</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        id="paymentMethod"
-                                        value="creditCard"
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                    ></input>
-                                    <label htmlFor="paymentMethod">credit card</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="paymentMethod"
-                                        id="paymentMethod"
-                                        value="bankTransfer"
-                                        onChange={(e) => setPaymentMethod(e.target.value)}
-                                    ></input>
-                                    <label htmlFor="paymentMethod">bank transfer</label>
-                                </div>
-                            </li>
-
-                        </ul>
-
-                    </div>
-                    <div className="form">
-                        <ul className="form-container">
-                            <li>
-                                <h4>Invoice</h4>
-                            </li>
-
-                            <li>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="invoice"
-                                        id="invoice"
-                                        value={false}
-                                        onChange={(e) => setInvoice(e.target.value)}
-                                    ></input>
-                                    <label htmlFor="invoice">no</label>
-                                </div>
-                            </li>
-                            <li>
-                                <div>
-                                    <input
-                                        type="radio"
-                                        name="invoice"
-                                        id="invoice"
-                                        value={true}
-                                        onChange={(e) => setInvoice(e.target.value)}
-                                    ></input>
-                                    <label htmlFor="invoice">yes</label>
-                                </div>
-                            </li>
-
-                        </ul>
-
-                    </div>
-
-                    <div>
-                        <li>
-                            <label htmlFor="comments">
-                                Comments
-          </label>
-                            <input type="text" name="comments" id="comments" onChange={(e) => setComments(e.target.value)}>
-                            </input>
-                        </li>
-                    </div>
-
                     <li>
-                        <button type="submit" className="button primary">Place Order</button>
+                        <label htmlFor="shippingCost">
+                            Shipping Cost $
+          </label>
+                        <input type="number" name="shippingCost" id="shippingCost" onChange={(e) => setShippingCost(e.target.value)}>
+                        </input>
+                    </li>
+                </ul>
+                <ul className="form-container">
+                    <li>
+                        <h3>Payment Method</h3>
                     </li>
 
+                    <li>
+                        <div>
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                id="paymentMethod"
+                                value="cash"
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                            ></input>
+                            <label htmlFor="paymentMethod">cash</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                id="paymentMethod"
+                                value="creditCard"
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                            ></input>
+                            <label htmlFor="paymentMethod">credit card</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                id="paymentMethod"
+                                value="bankTransfer"
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                            ></input>
+                            <label htmlFor="paymentMethod">bank transfer</label>
+                        </div>
+                    </li>
+
+                    <li>
+                        <h4>Invoice</h4>
+                    </li>
+
+                    <li>
+                        <div>
+                            <input
+                                type="radio"
+                                name="invoice"
+                                id="invoice"
+                                value={0}
+                                onChange={(e) => setInvoice(e.target.value)}
+                            ></input>
+                            <label htmlFor="invoice">no</label>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <input
+                                type="radio"
+                                name="invoice"
+                                id="invoice"
+                                value={0.15}
+                                onChange={(e) => setInvoice(e.target.value)}
+                            ></input>
+                            <label htmlFor="invoice">yes</label>
+                        </div>
+                    </li>
+
+
+                </ul>
+                <ul className="form-container">
+                    <li>
+                        <label htmlFor="comments">
+                            Comments
+          </label>
+                        <input type="text" name="comments" id="comments" onChange={(e) => setComments(e.target.value)}>
+                        </input>
+                    </li>
+
+
+                </ul>
+                <ul className="form-container">
+                    {(!address || !customerTel || !shippingCost || !paymentMethod || !invoice) ? "" :
+                        <li>
+                            <button type="submit" className="button primary">Continue</button>
+                        </li>
+                    }
                 </ul>
             </form>
         </div>

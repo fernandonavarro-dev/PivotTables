@@ -6,7 +6,6 @@ import PostOrderSteps from '../components/PostOrderSteps';
 function DeliveryScreen(props) {
     // const [deliveryMethod, setDeliveryMethod] = useState('');
 
-    const [shippingCost, setShippingCost] = useState(0);
     const [coordinator, setCoordinator] = useState('')
     const [notes, setNotes] = useState('')
     const [deliveryPerson, setDeliveryPerson] = useState('')
@@ -14,12 +13,12 @@ function DeliveryScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveDelivery({ shippingCost, coordinator, deliveryPerson, notes }));
+        dispatch(saveDelivery({ coordinator, deliveryPerson, notes }));
         // props.history.push('completeorder');
     };
     return (
         <div>
-            <PostOrderSteps step1 step2 step3></PostOrderSteps>
+            <PostOrderSteps step1 step2 step3 step4></PostOrderSteps>
             <div className="form">
                 <form onSubmit={submitHandler}>
                     <ul className="form-container">
@@ -39,13 +38,7 @@ function DeliveryScreen(props) {
                                 <label for="paymentMethod">Paypal</label>
                             </div>
                         </li> */}
-                        <li>
-                            <label htmlFor="shippingCost">
-                                Shipping Cost $
-          </label>
-                            <input type="number" name="shippingCost" id="shippingCost" onChange={(e) => setShippingCost(e.target.value)}>
-                            </input>
-                        </li>
+
                         <li>
                             <label htmlFor="coordinator">
                                 Coordinator

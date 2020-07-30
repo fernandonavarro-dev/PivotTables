@@ -1,7 +1,7 @@
 // import React from 'react';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_DELIVERY, CART_SAVE_SHIPPING } from '../constants/cartConstants'
 
-function cartReducer(state = { cartItems: [] }, action) {
+function cartReducer(state = { cartItems: [], shipping: {}, }, action) {
     switch (action.type) {
         case CART_ADD_ITEM:
             const item = action.payload;

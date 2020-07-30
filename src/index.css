@@ -350,6 +350,7 @@ tbody > tr:nth-child(odd) {
   color: #c0c0c0;
   flex: 1 1;
   padding-top: 1rem;
+  margin-right: 0.5rem;
 }
 .checkout-steps > div.active {
   border-top: 0.3rem #f08000 solid;
