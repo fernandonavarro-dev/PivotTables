@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createOrder } from '../actions/orderActions';
 import PostOrderSteps from '../components/PostOrderSteps';
 // import { usedispatch } from 'react-redux';
 
 function PlaceOrderScreen(props) {
 
     const cart = useSelector(state => state.cart);
+    const orderCreate = useSelector(state => state.orderCreate);
+    const { loading, success, error, order } = orderCreate;
 
     const { cartItems, shipping } = cart;
     if (!shipping.address || !shipping.customerTel || !shipping.shippingCost) {
@@ -16,21 +19,24 @@ function PlaceOrderScreen(props) {
     // console.log("cart, ", cart);
     // console.log("shipping, ", shipping);
 
-    const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-    const taxPrice = shipping.invoice * itemsPrice
+    const subtotal = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
+    const taxPrice = shipping.invoice * subtotal
+    const totalNoShipping = Number(subtotal) + taxPrice
+    const total = Number(subtotal) + Number(shipping.shippingCost) + taxPrice;
 
-    const totalNoShipping = Number(itemsPrice) + taxPrice
-
-    const totalPrice = Number(itemsPrice) + Number(shipping.shippingCost) + taxPrice
     const dispatch = useDispatch();
-
-    useEffect(() => {
-
-    }, []);
 
     const placeOrderHandler = () => {
         props.history.push("/login?redirect=shipping");
+        dispatch(createOrder({
+            orderItems: cartItems, shipping, taxPrice, totalNoShipping, total
+        }));
     }
+    useEffect(() => {
+        if (success) {
+            props.hisotry.push("/order/" + order.id);
+        }
+    }, [success]);
 
     return <div>
         <PostOrderSteps step1 step2 step3></PostOrderSteps>
@@ -105,7 +111,7 @@ function PlaceOrderScreen(props) {
                     </li>
                     <li>
                         <div>Subtotal</div>
-                        <div>${itemsPrice}</div>
+                        <div>${subtotal}</div>
                     </li>
                     <li>
                         <div>Shipping</div>
@@ -121,7 +127,7 @@ function PlaceOrderScreen(props) {
                     </li>
                     <li>
                         <div>Order Total</div>
-                        <div>${totalPrice}</div>
+                        <div>${total}</div>
                     </li>
                 </ul>
 

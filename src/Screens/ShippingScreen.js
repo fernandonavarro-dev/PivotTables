@@ -167,7 +167,7 @@ function ShippingScreen(props) {
 
                 </ul>
                 <ul className="form-container">
-                    {(!address || !customerTel || !shippingCost || !paymentMethod || !invoice) ? "" :
+                    {(!address || !customerTel || !shippingCost || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
                         <li>
                             <button type="submit" className="button primary">Continue</button>
                         </li>
