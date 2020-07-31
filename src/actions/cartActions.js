@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookie from 'js-cookie';
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_DELIVERY } from '../constants/cartConstants';
 
-const addToCart = (productId, qty) => async (dispatch, getState) => {
+const addToCart = (productId, qty, plazaStock) => async (dispatch, getState) => {
     try {
         const { data } = await axios.get("http://164.90.158.158/products/" + productId);
         dispatch({
@@ -11,7 +11,7 @@ const addToCart = (productId, qty) => async (dispatch, getState) => {
                 name: data.name,
                 image: data.imageURL,
                 price: data.price,
-                qtyCDMX: data.qtyCDMX,
+                countInStock: plazaStock,
                 qty
             }
         });

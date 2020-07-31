@@ -56,13 +56,13 @@ function App() {
         </aside>
         <main className="main" >
           <div className="content" >
-            <Route path="/login" component={LoginScreen} />
+            <Route path="/home" component={HomeScreen} />
             <Route path="/shipping" component={ShippingScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
             <Route path="/delivery" component={DeliveryScreen} />
             <Route path="/product/:id" component={ProductScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
-            <Route path="/" exact={true} component={HomeScreen} />
+            <Route path="/" exact={true} component={LoginScreen} />
           </div>
         </main>
         <footer className="footer">by CORE Data Design & Development w/ React</footer>

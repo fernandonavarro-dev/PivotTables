@@ -17,5 +17,13 @@ const createOrder = (order) => async (dispatch, getState) => {
         dispatch({ type: ORDER_CREATE_FAIL, error: error.message });
     }
 }
+//strapi ecommerce order
+// fetch("http:...", {
+//     method: 'POST',
+//     headers: {
+//         'Content-type': 'application/json'
+//     },
+//     body: JSON.stringify(data)
+// })
 
 export { createOrder }

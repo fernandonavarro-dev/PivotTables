@@ -29,7 +29,7 @@ function PlaceOrderScreen(props) {
     const placeOrderHandler = () => {
         props.history.push("/login?redirect=shipping");
         dispatch(createOrder({
-            orderItems: cartItems, shipping, taxPrice, totalNoShipping, total
+            orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total
         }));
     }
     useEffect(() => {

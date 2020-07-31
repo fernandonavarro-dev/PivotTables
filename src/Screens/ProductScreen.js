@@ -4,37 +4,86 @@ import { Link } from 'react-router-dom';
 // import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { detailsProduct } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 
 function ProductScreen(props) {
-    const [plazaStock, setPlazaStock] = useState({})
-    const [qty, setQty] = useState(1)
+
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+    // console.log("userInfo, ", userInfo);
+
+    const { plaza } = userInfo.user;
+    // console.log("plaza, ", plaza);
+
+    const [plazaStock, setPlazaStock] = useState({});
+    const [plazaSelected, setPlazaSelected] = useState('')
+    const [qty, setQty] = useState(1);
     const productDetails = useSelector(state => state.productDetails);
-    // console.log("productDetails, ", productDetails);
     const dispatch = useDispatch();
     const { products, loading, error } = productDetails;
+    // const plazaString = `['qty${plaza}']`;
 
     useEffect(() => {
+        // setPlazaString(`product[qty${plaza}]`);
+        // setPlazaStock({ plazaString })
         dispatch(detailsProduct(props.match.params.id));
+
         return () => {
             //
         };
     }, []);
 
-    const handleAddToCart = () => {
-        props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
-    }
-
     const product = { ...products }
     delete product.thumbnail
-
-    console.log("plazaStock, ", plazaStock);
-    console.log("typeof plazaStock , ", typeof plazaStock);
 
     const productsAvailable = []
 
     for (let x = 0; x < parseInt(plazaStock); x++) {
         productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
     }
+
+    const handlePlazaSelection = (e) => {
+        setPlazaStock(e.target.value);
+        const plazaOption = e.target.getAttribute("data-remove");
+        setPlazaSelected(plazaOption);
+        console.log("e.target.name, ", e.target.name);
+
+    }
+    console.log("plazaSelected, ", plazaSelected);
+
+    const handleAddToCart = () => {
+        // props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
+        dispatch(addToCart(product.id, qty, Number(plazaStock)));
+        alert("Added to cart")
+
+    }
+
+    // Plaza: <select
+    //     value={plazaStock}
+    //     onChange={(e) => { setPlazaStock(e.target.value) }}
+    // >
+
+    // function SetPlazaStuff(plaza) {
+    //     switch (plaza) {
+    //         case "CDMX":
+    //             setPlazaString("product.qtyCDMX");
+    //             setPlazaStock({ product.qtyCDMX });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+    // SetPlazaStuff(plaza)
+
+    // const plazaObject = JSON.parse(plazaString.replace(/['"]+/g, ''))
+
+    // console.log("plazaString, ", plazaString);
+    // console.log("typeof plazaString, ", typeof plazaString);
+
+    // console.log("plazaObject, ", plazaObject);
+
+    // console.log("plazaStock, ", plazaStock);
+    // console.log("typeof plazaStock , ", typeof plazaStock);
 
     return (
         <div>
@@ -65,7 +114,7 @@ function ProductScreen(props) {
                                         Price: <b>${product.price}</b>
                                     </li>
                                     <li>
-                                        Commission: <b>{product.commissionPercentage}</b>
+                                        Commission: <b>${product.commission}</b>
                                     </li>
                                     <li>
                                         Description:
@@ -76,15 +125,19 @@ function ProductScreen(props) {
                             <div className="details-action">
                                 <ul>
                                     <li>
-                                        Price: $ {product.price}
+                                        Home Plaza: <b>{plaza}</b>
                                     </li>
                                     <li>
-                                        Plaza: <select value={plazaStock} onChange={(e) => { setPlazaStock(e.target.value) }}>
+                                        Price: $ {product.price}
+                                    </li>
+
+                                    <li>
+                                        Plaza: <select value={plazaStock} onChange={handlePlazaSelection}>
                                             <option value="void">select</option>
-                                            <option value={product.qtyCDMX}>CDMX</option>
+                                            <option value={product.qtyCDMX} name="CDMX">CDMX</option>
                                             <option value={product.qtyCUN}>Cancun</option>
-                                            <option value={product.qtyEDOMEX}>EDOMEX</option>
                                             <option value={product.qtyMTY}>Monterrey</option>
+                                            <option value={product.qtyPLAYA}>Playa del Carmen</option>
                                             <option value={product.qtyPBL}>Puebla</option>
                                             <option value={product.qtyQRO}>Queretaro</option>
                                             <option value={product.qtyTUL}>Tulum</option>

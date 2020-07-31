@@ -7,15 +7,15 @@ import PostOrderSteps from '../components/PostOrderSteps';
 function ShippingScreen(props) {
 
     const [customerName, setCustomerName] = useState('');
-    const [customerTel, setCustomerTel] = useState('')
+    const [customerTel, setCustomerTel] = useState('');
     const [address, setAddress] = useState('');
     const [colony, setColony] = useState('')
     const [city, setCity] = useState('');
     const [zip, setZip] = useState('');
     const [shippingCost, setShippingCost] = useState(null);
-    const [paymentMethod, setPaymentMethod] = useState('')
-    const [invoice, setInvoice] = useState(null)
-    const [comments, setComments] = useState('')
+    const [paymentMethod, setPaymentMethod] = useState('');
+    const [invoice, setInvoice] = useState(null);
+    const [comments, setComments] = useState('');
 
     const dispatch = useDispatch();
 

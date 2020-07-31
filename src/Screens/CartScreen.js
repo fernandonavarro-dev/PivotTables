@@ -10,20 +10,20 @@ function CartScreen(props) {
 
     const { cartItems } = cart;
 
-    const productId = props.match.params.id;
-    const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
+    // const productId = props.match.params.id;
+    // const qty = props.location.search ? Number(props.location.search.split("=")[1]) : 1;
     const dispatch = useDispatch();
     const removeFromCartHandler = (productId) => {
         dispatch(removeFromCart(productId));
     }
-    useEffect(() => {
-        if (productId) {
-            dispatch(addToCart(productId, qty));
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (productId) {
+    //         dispatch(addToCart(productId, qty));
+    //     }
+    // }, []);
 
     const checkoutHandler = () => {
-        props.history.push("/login?redirect=shipping");
+        props.history.push("/shipping");
     }
 
     // const { cartQty } = cartItems
@@ -58,19 +58,21 @@ function CartScreen(props) {
                                         </Link>
                                     </div>
                                     <div>
-                                        Qty:
-                                         <select
+                                        Qty: {item.qty}
+                                        {/* <select
                                             value={item.qty}
                                             onChange={(e) => dispatch(addToCart(item.product, e.target.value))}
                                         >
                                             {[...Array(item.qtyCDMX).keys()].map(x =>
                                                 <option key={x + 1} value={x + 1}>{x + 1}</option>
                                             )}
-                                        </select>
+                                        </select> */}
                                         <button
                                             type="button"
                                             onClick={() => removeFromCartHandler(item.product)}
-                                            className="button">
+                                            className="button"
+                                            style={{ marginLeft: '1.5rem', marginTop: '1rem' }}
+                                        >
                                             Delete
                                         </button>
                                     </div>
@@ -92,7 +94,7 @@ function CartScreen(props) {
             {/* <h3>
                 Commission ( {cartItems.reduce((a, c) => a + Number(c.qty), 0)} items)
         :
-         $ {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+         $ {cartItems.reduce((a, c) => a + c.commission * c.qty, 0)}
             </h3> */}
             <button
                 className="button primary full-width"
