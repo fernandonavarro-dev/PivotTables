@@ -20,7 +20,7 @@ function PlaceOrderScreen(props) {
     // console.log("shipping, ", shipping);
 
     const subtotal = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-    const taxPrice = shipping.invoice * subtotal
+    const taxPrice = shipping.invoice ? 0.15 * subtotal : 0;
     const totalNoShipping = Number(subtotal) + taxPrice
     const total = Number(subtotal) + Number(shipping.shippingCost) + taxPrice;
 

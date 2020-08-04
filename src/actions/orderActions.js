@@ -6,7 +6,7 @@ const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, t
 
     const order = {
         // body: {
-        user: userInfo.username,
+        sellerUsername: userInfo.user.username,
         customerName: shipping.customerName,
         customerTel: shipping.customerTel,
         address: shipping.address,

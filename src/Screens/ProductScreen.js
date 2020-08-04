@@ -28,6 +28,26 @@ function ProductScreen(props) {
     const product = { ...products }
     delete product.thumbnail
 
+    const cdmxStocks = product.cdmx_product
+    const cunStocks = product.cun_product
+    const mtyStocks = product.mty_product
+    const pblStocks = product.pbl_product
+    const playaStocks = product.playa_product
+    const qroStocks = product.qro_product
+    const tulStocks = product.tul_product
+
+    const cdmxStock = { ...cdmxStocks }
+    const cunStock = { ...cunStocks }
+    const mtyStock = { ...mtyStocks }
+    const pblStock = { ...pblStocks }
+    const playaStock = { ...playaStocks }
+    const qroStock = { ...qroStocks }
+    const tulStock = { ...tulStocks }
+
+    // console.log("product, ", product);
+    // console.log("product.cdmx_product, ", product.cdmx_product);
+    // console.log("cdmxStock.countInStock, ", cdmxStock.countInStock);
+
     // const { qtyCDMX, qtyCUN, qtyMTY, qtyPLAYA, qtyPBL, qtyQRO, qtyTUL } = product;
 
     const productsAvailable = []
@@ -91,13 +111,13 @@ function ProductScreen(props) {
                                             setPlazaStock(e.target.value)
                                         }}>
                                             <option value="void">select</option>
-                                            <option value={product.qtyCDMX}>CDMX</option>
-                                            <option value={product.qtyCUN}>Cancun</option>
-                                            <option value={product.qtyMTY}>Monterrey</option>
-                                            <option value={product.qtyPLAYA}>Playa del Carmen</option>
-                                            <option value={product.qtyPBL}>Puebla</option>
-                                            <option value={product.qtyQRO}>Queretaro</option>
-                                            <option value={product.qtyTUL}>Tulum</option>
+                                            <option value={cdmxStock.countInStock}>CDMX</option>
+                                            <option value={cunStock.countInStock}>Cancun</option>
+                                            <option value={mtyStock.countInStock}>Monterrey</option>
+                                            <option value={pblStock.countInStock}>Playa del Carmen</option>
+                                            <option value={playaStock.countInStock}>Puebla</option>
+                                            <option value={qroStock.countInStock}>Queretaro</option>
+                                            <option value={tulStock.countInStock}>Tulum</option>
                                         </select>
                                     </li>
                                     <li>

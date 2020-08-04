@@ -7,7 +7,6 @@ import PostOrderSteps from '../components/PostOrderSteps';
 function ShippingScreen(props) {
 
     const [plaza, setPlaza] = useState('');
-    // const [qtyPlaza, setQtyPlaza] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [customerTel, setCustomerTel] = useState('');
     const [address, setAddress] = useState('');
@@ -21,23 +20,11 @@ function ShippingScreen(props) {
 
     const dispatch = useDispatch();
 
-    // const handlePlazaSelect = (e) => {
-    //     // const value = e.target.value
-    //     setPlaza(e.target.value);
-    //     setQtyPlaza("qty" + plaza);
-    //     // console.log("plaza, ", plaza);
-    //     // console.log("qtyPlaza, ", qtyPlaza);
-    // }
-
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(saveShipping({ plaza, customerName, customerTel, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
-
-    // setQtyPlaza("qty" + plaza)
-    console.log("plaza, ", plaza);
-
 
     return <div>
         <PostOrderSteps step1 step2 ></PostOrderSteps>
@@ -53,13 +40,13 @@ function ShippingScreen(props) {
                         }}>
                             {/* Plaza: <select value={plaza} required={true} onChange={handlePlazaSelect}> */}
                             <option value="void">select</option>
-                            <option value="CDMX">CDMX</option>
-                            <option value="CUN">Cancun</option>
-                            <option value="MTY">Monterrey</option>
-                            <option value="PLAYA">Playa del Carmen</option>
-                            <option value="PBL">Puebla</option>
-                            <option value="QRO">Queretaro</option>
-                            <option value="TUL">Tulum</option>
+                            <option value="cdmx">CDMX</option>
+                            <option value="cun">Cancun</option>
+                            <option value="mty">Monterrey</option>
+                            <option value="playa">Playa del Carmen</option>
+                            <option value="pbl">Puebla</option>
+                            <option value="qro">Queretaro</option>
+                            <option value="tul">Tulum</option>
                         </select>
                     </li>
                     <li>
@@ -164,7 +151,7 @@ function ShippingScreen(props) {
                                 type="radio"
                                 name="invoice"
                                 id="invoice"
-                                value={0}
+                                value={false}
                                 onChange={(e) => setInvoice(e.target.value)}
                             ></input>
                             <label htmlFor="invoice">no</label>
@@ -176,7 +163,7 @@ function ShippingScreen(props) {
                                 type="radio"
                                 name="invoice"
                                 id="invoice"
-                                value={0.15}
+                                value={true}
                                 onChange={(e) => setInvoice(e.target.value)}
                             ></input>
                             <label htmlFor="invoice">yes</label>
