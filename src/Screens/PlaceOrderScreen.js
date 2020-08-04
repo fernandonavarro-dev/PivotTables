@@ -19,8 +19,10 @@ function PlaceOrderScreen(props) {
     // console.log("cart, ", cart);
     // console.log("shipping, ", shipping);
 
+
     const subtotal = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
-    const taxPrice = shipping.invoice ? 0.15 * subtotal : 0;
+    const commission = cartItems.reduce((a, c) => a + c.commission * c.qty, 0);
+    const taxPrice = shipping.invoice * subtotal;
     const totalNoShipping = Number(subtotal) + taxPrice
     const total = Number(subtotal) + Number(shipping.shippingCost) + taxPrice;
 
@@ -28,19 +30,12 @@ function PlaceOrderScreen(props) {
 
     const placeOrderHandler = () => {
         props.history.push("/login?redirect=shipping");
-        dispatch(createOrder(cartItems, shipping, subtotal, taxPrice, totalNoShipping, total));
+        dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
+        // props.hisotry.push("/orders/");
 
-        console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
+
+        // console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
     }
-
-    // const placeOrderHandler = () => {
-    //     props.history.push("/login?redirect=shipping");
-    //     dispatch(createOrder({
-    //         orderItems: shipping, subtotal, taxPrice, totalNoShipping, total
-    //     }));
-
-    //     console.log("orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
-    // }
 
     useEffect(() => {
         if (success) {
@@ -66,6 +61,9 @@ function PlaceOrderScreen(props) {
                     <h3>Payment</h3>
                     <div>
                         Payment Method: {cart.shipping.paymentMethod}
+                    </div>
+                    <div>
+                        Invoice Pct Charge: {cart.shipping.invoice * 100} %
                     </div>
                 </div>
                 <div>
@@ -124,11 +122,15 @@ function PlaceOrderScreen(props) {
                         <div>${subtotal}</div>
                     </li>
                     <li>
+                        <div>Commission</div>
+                        <div>${commission}</div>
+                    </li>
+                    <li>
                         <div>Shipping</div>
                         <div>${shipping.shippingCost}</div>
                     </li>
                     <li>
-                        <div>Invoice</div>
+                        <div>Invoice Tax</div>
                         <div>${taxPrice}</div>
                     </li>
                     <li>
@@ -151,3 +153,12 @@ function PlaceOrderScreen(props) {
 }
 
 export default PlaceOrderScreen;
+
+ // const placeOrderHandler = () => {
+    //     props.history.push("/login?redirect=shipping");
+    //     dispatch(createOrder({
+    //         orderItems: shipping, subtotal, taxPrice, totalNoShipping, total
+    //     }));
+
+    //     console.log("orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
+    // }

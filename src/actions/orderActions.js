@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
 
-const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
+const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     const order = {
@@ -14,11 +14,12 @@ const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, t
         zip: shipping.zip,
         city: shipping.city,
         paymentMethod: shipping.paymentMethod,
-        invoice: shipping.invoice,
+        invoicePct: shipping.invoice * 100,
         plaza: shipping.plaza,
         subtotal,
+        commission,
         shippingCost: shipping.shippingCost,
-        tax: taxPrice,
+        invoiceTax: taxPrice,
         totalNoShipping,
         total,
         isDelivered: false,
@@ -30,7 +31,7 @@ const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, t
     }
     try {
         dispatch({ type: ORDER_CREATE_REQUEST, payload: order });
-        const { data: { data: newOrder } } = await axios
+        const { data: newOrder } = await axios
             .post("http://164.90.158.158/orders/",
                 order, {
                 headers: {
@@ -38,10 +39,17 @@ const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, t
                 }
             });
         dispatch({ type: ORDER_CREATE_SUCCESS, payload: newOrder });
+        // console.log("newOrder, ", newOrder);
     } catch (error) {
         dispatch({ type: ORDER_CREATE_FAIL, error: error.message });
     }
 }
+
+export { createOrder }
+
+// const { data: { data: newOrder } } = await axios
+
+
 //strapi ecommerce order
 // fetch("http:...", {
 //     method: 'POST',
@@ -50,5 +58,3 @@ const createOrder = (cartItems, shipping, subtotal, taxPrice, totalNoShipping, t
 //     },
 //     body: JSON.stringify(data)
 // })
-
-export { createOrder }

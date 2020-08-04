@@ -46,7 +46,7 @@ function ShippingScreen(props) {
                             <option value="playa">Playa del Carmen</option>
                             <option value="pbl">Puebla</option>
                             <option value="qro">Queretaro</option>
-                            <option value="tul">Tulum</option>
+                            <option value="tulum">Tulum</option>
                         </select>
                     </li>
                     <li>
@@ -151,8 +151,8 @@ function ShippingScreen(props) {
                                 type="radio"
                                 name="invoice"
                                 id="invoice"
-                                value={false}
-                                onChange={(e) => setInvoice(e.target.value)}
+                                value={0}
+                                onChange={(e) => (setInvoice(e.target.value))}
                             ></input>
                             <label htmlFor="invoice">no</label>
                         </div>
@@ -163,8 +163,8 @@ function ShippingScreen(props) {
                                 type="radio"
                                 name="invoice"
                                 id="invoice"
-                                value={true}
-                                onChange={(e) => setInvoice(e.target.value)}
+                                value={0.15}
+                                onChange={(e) => (setInvoice(e.target.value))}
                             ></input>
                             <label htmlFor="invoice">yes</label>
                         </div>
