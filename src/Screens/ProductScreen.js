@@ -7,25 +7,17 @@ import { detailsProduct } from '../actions/productActions';
 import { addToCart } from '../actions/cartActions';
 
 function ProductScreen(props) {
-
-    const userLogin = useSelector(state => state.userLogin);
-    const { userInfo } = userLogin;
+    // const userLogin = useSelector(state => state.userLogin);
+    // const { userInfo } = userLogin;
     // console.log("userInfo, ", userInfo);
 
-    const { plaza } = userInfo.user;
-    // console.log("plaza, ", plaza);
-
     const [plazaStock, setPlazaStock] = useState({});
-    const [plazaSelected, setPlazaSelected] = useState('')
     const [qty, setQty] = useState(1);
     const productDetails = useSelector(state => state.productDetails);
     const dispatch = useDispatch();
     const { products, loading, error } = productDetails;
-    // const plazaString = `['qty${plaza}']`;
 
     useEffect(() => {
-        // setPlazaString(`product[qty${plaza}]`);
-        // setPlazaStock({ plazaString })
         dispatch(detailsProduct(props.match.params.id));
 
         return () => {
@@ -36,20 +28,13 @@ function ProductScreen(props) {
     const product = { ...products }
     delete product.thumbnail
 
+    // const { qtyCDMX, qtyCUN, qtyMTY, qtyPLAYA, qtyPBL, qtyQRO, qtyTUL } = product;
+
     const productsAvailable = []
 
     for (let x = 0; x < parseInt(plazaStock); x++) {
         productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
     }
-
-    const handlePlazaSelection = (e) => {
-        setPlazaStock(e.target.value);
-        const plazaOption = e.target.getAttribute("data-remove");
-        setPlazaSelected(plazaOption);
-        console.log("e.target.name, ", e.target.name);
-
-    }
-    console.log("plazaSelected, ", plazaSelected);
 
     const handleAddToCart = () => {
         // props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
@@ -57,33 +42,6 @@ function ProductScreen(props) {
         alert("Added to cart")
 
     }
-
-    // Plaza: <select
-    //     value={plazaStock}
-    //     onChange={(e) => { setPlazaStock(e.target.value) }}
-    // >
-
-    // function SetPlazaStuff(plaza) {
-    //     switch (plaza) {
-    //         case "CDMX":
-    //             setPlazaString("product.qtyCDMX");
-    //             setPlazaStock({ product.qtyCDMX });
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
-    // SetPlazaStuff(plaza)
-
-    // const plazaObject = JSON.parse(plazaString.replace(/['"]+/g, ''))
-
-    // console.log("plazaString, ", plazaString);
-    // console.log("typeof plazaString, ", typeof plazaString);
-
-    // console.log("plazaObject, ", plazaObject);
-
-    // console.log("plazaStock, ", plazaStock);
-    // console.log("typeof plazaStock , ", typeof plazaStock);
 
     return (
         <div>
@@ -125,16 +83,15 @@ function ProductScreen(props) {
                             <div className="details-action">
                                 <ul>
                                     <li>
-                                        Home Plaza: <b>{plaza}</b>
-                                    </li>
-                                    <li>
                                         Price: $ {product.price}
                                     </li>
 
                                     <li>
-                                        Plaza: <select value={plazaStock} onChange={handlePlazaSelection}>
+                                        Plaza: <select value={plazaStock} onChange={(e) => {
+                                            setPlazaStock(e.target.value)
+                                        }}>
                                             <option value="void">select</option>
-                                            <option value={product.qtyCDMX} name="CDMX">CDMX</option>
+                                            <option value={product.qtyCDMX}>CDMX</option>
                                             <option value={product.qtyCUN}>Cancun</option>
                                             <option value={product.qtyMTY}>Monterrey</option>
                                             <option value={product.qtyPLAYA}>Playa del Carmen</option>
@@ -173,6 +130,34 @@ function ProductScreen(props) {
 
 export default ProductScreen;
 
+   // Plaza: <select
+    //     value={plazaStock}
+    //     onChange={(e) => { setPlazaStock(e.target.value) }}
+    // >
+
+    // function SetPlazaStuff(plaza) {
+    //     switch (plaza) {
+    //         case "CDMX":
+    //             setPlazaString("product.qtyCDMX");
+    //             setPlazaStock({ product.qtyCDMX });
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    // }
+    // SetPlazaStuff(plaza)
+
+    // const plazaObject = JSON.parse(plazaString.replace(/['"]+/g, ''))
+    // const plazaString = `['qty${plaza}']`;
+
+
+    // console.log("plazaString, ", plazaString);
+    // console.log("typeof plazaString, ", typeof plazaString);
+
+    // console.log("plazaObject, ", plazaObject);
+
+    // console.log("plazaStock, ", plazaStock);
+    // console.log("typeof plazaStock , ", typeof plazaStock);
 
 // console.log("products,", products);
     // console.log("product,", product);

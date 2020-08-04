@@ -10,7 +10,7 @@ function LoginScreen(props) {
     const userLogin = useSelector(state => state.userLogin);
     const { loading, userInfo, error } = userLogin;
     const dispatch = useDispatch();
-    const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+    // const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
     useEffect(() => {
         if (userInfo) {
             props.history.push("/home");

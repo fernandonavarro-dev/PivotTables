@@ -6,6 +6,8 @@ import PostOrderSteps from '../components/PostOrderSteps';
 
 function ShippingScreen(props) {
 
+    const [plaza, setPlaza] = useState('');
+    // const [qtyPlaza, setQtyPlaza] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [customerTel, setCustomerTel] = useState('');
     const [address, setAddress] = useState('');
@@ -19,11 +21,24 @@ function ShippingScreen(props) {
 
     const dispatch = useDispatch();
 
+    // const handlePlazaSelect = (e) => {
+    //     // const value = e.target.value
+    //     setPlaza(e.target.value);
+    //     setQtyPlaza("qty" + plaza);
+    //     // console.log("plaza, ", plaza);
+    //     // console.log("qtyPlaza, ", qtyPlaza);
+    // }
+
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShipping({ customerName, customerTel, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
+        dispatch(saveShipping({ plaza, customerName, customerTel, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
+
+    // setQtyPlaza("qty" + plaza)
+    console.log("plaza, ", plaza);
+
+
     return <div>
         <PostOrderSteps step1 step2 ></PostOrderSteps>
         <div className="form">
@@ -31,6 +46,21 @@ function ShippingScreen(props) {
                 <ul className="form-container">
                     <li>
                         <h3>Shipping Info</h3>
+                    </li>
+                    <li>
+                        Plaza: <select value={plaza} required={true} onChange={(e) => {
+                            setPlaza(e.target.value)
+                        }}>
+                            {/* Plaza: <select value={plaza} required={true} onChange={handlePlazaSelect}> */}
+                            <option value="void">select</option>
+                            <option value="CDMX">CDMX</option>
+                            <option value="CUN">Cancun</option>
+                            <option value="MTY">Monterrey</option>
+                            <option value="PLAYA">Playa del Carmen</option>
+                            <option value="PBL">Puebla</option>
+                            <option value="QRO">Queretaro</option>
+                            <option value="TUL">Tulum</option>
+                        </select>
                     </li>
                     <li>
                         <label htmlFor="customerName">

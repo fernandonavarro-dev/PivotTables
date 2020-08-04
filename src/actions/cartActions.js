@@ -7,11 +7,11 @@ const addToCart = (productId, qty, plazaStock) => async (dispatch, getState) => 
         const { data } = await axios.get("http://164.90.158.158/products/" + productId);
         dispatch({
             type: CART_ADD_ITEM, payload: {
-                product: data.id,
+                id: data.id,
                 name: data.name,
                 image: data.imageURL,
                 price: data.price,
-                countInStock: plazaStock,
+                qtyPlaza: plazaStock,
                 qty
             }
         });

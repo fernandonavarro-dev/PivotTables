@@ -28,10 +28,20 @@ function PlaceOrderScreen(props) {
 
     const placeOrderHandler = () => {
         props.history.push("/login?redirect=shipping");
-        dispatch(createOrder({
-            orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total
-        }));
+        dispatch(createOrder(cartItems, shipping, subtotal, taxPrice, totalNoShipping, total));
+
+        console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
     }
+
+    // const placeOrderHandler = () => {
+    //     props.history.push("/login?redirect=shipping");
+    //     dispatch(createOrder({
+    //         orderItems: shipping, subtotal, taxPrice, totalNoShipping, total
+    //     }));
+
+    //     console.log("orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
+    // }
+
     useEffect(() => {
         if (success) {
             props.hisotry.push("/order/" + order.id);
