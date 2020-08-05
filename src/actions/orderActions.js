@@ -50,13 +50,13 @@ const listMyOrders = () => async (dispatch, getState) => {
     try {
         dispatch({ type: MY_ORDER_LIST_REQUEST });
         const { userLogin: { userInfo } } = getState();
-        const { data } = await axios.get("http://164.90.158.158/orders/"
+        const { data: orders } = await axios.get("http://164.90.158.158/orders/"
             , {
                 headers:
                     { Authorization: 'Bearer ' + userInfo.jwt }
             }
         );
-        dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data })
+        dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: orders, user: userInfo })
     } catch (error) {
         dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.message });
     }

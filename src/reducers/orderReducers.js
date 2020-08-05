@@ -21,7 +21,14 @@ function myOrderListReducer(state = {
         case MY_ORDER_LIST_REQUEST:
             return { loading: true };
         case MY_ORDER_LIST_SUCCESS:
-            return { loading: false, orders: action.payload };
+            const ordersPre = action.payload
+            const orders = [...ordersPre]
+            const userInfo = action.user
+            const myOrders = orders.filter(order => order.sellerUsername === userInfo.user.username)
+            console.log("myOrders, ", myOrders);
+            console.log("userInfo.user.username, ", userInfo.user.username);
+
+            return { loading: false, orders: myOrders };
         case MY_ORDER_LIST_FAIL:
             return { loading: false, error: action.payload };
         default: return state;
