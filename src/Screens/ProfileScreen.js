@@ -8,7 +8,6 @@ function ProductScreen(props) {
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
-    const userData = { ...userLogin };
 
     const dispatch = useDispatch();
 
@@ -33,43 +32,6 @@ function ProductScreen(props) {
 
         };
     }, [userInfo])
-
-    // const ordersData = { ...orders }
-    // const ordersArray = Object.entries(self.ordersData);
-
-    // function findInObject(my_object, my_criteria) {
-
-    //     return my_object.filter(function (obj) {
-    //         return Object.keys(my_criteria).every(function (c) {
-    //             return obj[c] == my_criteria[c];
-    //         });
-    //     });
-
-    // }
-
-    // const myOrders = [];
-    // const needle = userData.userInfo.user.username; // what to look for
-
-    // ordersArray.forEach(function (e) {
-    //     myOrders = myOrders.concat(e.Categories.filter(function (c) {
-    //         return (c['sellerUsername'] === needle);
-    //     }));
-    // });
-
-
-    // const myOrders = findInObject(JSON.parse(ordersArray), { 'sellerUsername': userData.userInfo.user.username });
-
-    // const myOrders = JSON.parse(ordersArray).filter(({ sellerUsername }) => sellerUsername === userData.userInfo.user.username);
-
-    // const myOrders = JSON.parse(ordersArray).filter(function (entry) {
-    //     return entry['sellerUsername'] === userData.userInfo.user.username;
-    // });
-
-    // console.log("userData.userInfo.user.username ", userData.userInfo.user.username);
-    // console.log("orders , ", orders);
-    // console.log("typeof orders , ", typeof orders);
-    // console.log("myOrders , ", myOrders);
-    // console.log("typeof myOrders , ", typeof myOrders);
 
     return <div className="profile">
         <div className="profile-info">
@@ -141,6 +103,45 @@ function ProductScreen(props) {
 }
 
 export default ProductScreen;
+
+
+ // const ordersData = { ...orders }
+    // const ordersArray = Object.entries(self.ordersData);
+
+    // function findInObject(my_object, my_criteria) {
+
+    //     return my_object.filter(function (obj) {
+    //         return Object.keys(my_criteria).every(function (c) {
+    //             return obj[c] == my_criteria[c];
+    //         });
+    //     });
+
+    // }
+
+    // const myOrders = [];
+    // const needle = userData.userInfo.user.username; // what to look for
+
+    // ordersArray.forEach(function (e) {
+    //     myOrders = myOrders.concat(e.Categories.filter(function (c) {
+    //         return (c['sellerUsername'] === needle);
+    //     }));
+    // });
+
+
+    // const myOrders = findInObject(JSON.parse(ordersArray), { 'sellerUsername': userData.userInfo.user.username });
+
+    // const myOrders = JSON.parse(ordersArray).filter(({ sellerUsername }) => sellerUsername === userData.userInfo.user.username);
+
+    // const myOrders = JSON.parse(ordersArray).filter(function (entry) {
+    //     return entry['sellerUsername'] === userData.userInfo.user.username;
+    // });
+
+    // console.log("userData.userInfo.user.username ", userData.userInfo.user.username);
+    // console.log("orders , ", orders);
+    // console.log("typeof orders , ", typeof orders);
+    // console.log("myOrders , ", myOrders);
+    // console.log("typeof myOrders , ", typeof myOrders);
+
 
     // const [ordersState, setOrdersState] = useState([])
 

@@ -29,7 +29,7 @@ function PlaceOrderScreen(props) {
     const dispatch = useDispatch();
 
     const placeOrderHandler = () => {
-        props.history.push("/login?redirect=shipping");
+        props.history.push("/profile");
         dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
         // props.hisotry.push("/orders/");
 
@@ -39,7 +39,7 @@ function PlaceOrderScreen(props) {
 
     useEffect(() => {
         if (success) {
-            props.hisotry.push("/order/" + order.id);
+            props.hisotry.push("/profile");
         }
     }, [success]);
 

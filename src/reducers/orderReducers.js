@@ -25,8 +25,8 @@ function myOrderListReducer(state = {
             const orders = [...ordersPre]
             const userInfo = action.user
             const myOrders = orders.filter(order => order.sellerUsername === userInfo.user.username)
-            console.log("myOrders, ", myOrders);
-            console.log("userInfo.user.username, ", userInfo.user.username);
+            // console.log("myOrders, ", myOrders);
+            // console.log("userInfo.user.username, ", userInfo.user.username);
 
             return { loading: false, orders: myOrders };
         case MY_ORDER_LIST_FAIL:
