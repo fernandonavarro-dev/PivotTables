@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
+import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
 
 const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -43,9 +43,26 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
     } catch (error) {
         dispatch({ type: ORDER_CREATE_FAIL, error: error.message });
     }
+
 }
 
-export { createOrder }
+const listMyOrders = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: MY_ORDER_LIST_REQUEST });
+        const { userLogin: { userInfo } } = getState();
+        const { data } = await axios.get("http://164.90.158.158/orders/"
+            , {
+                headers:
+                    { Authorization: 'Bearer ' + userInfo.jwt }
+            }
+        );
+        dispatch({ type: MY_ORDER_LIST_SUCCESS, payload: data })
+    } catch (error) {
+        dispatch({ type: MY_ORDER_LIST_FAIL, payload: error.message });
+    }
+}
+
+export { createOrder, listMyOrders }
 
 // const { data: { data: newOrder } } = await axios
 
