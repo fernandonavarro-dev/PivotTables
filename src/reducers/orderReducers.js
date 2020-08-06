@@ -1,4 +1,4 @@
-import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL } from "../constants/orderConstants";
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL } from "../constants/orderConstants";
 
 
 function OrderCreateReducer(state = {}, action) {
@@ -35,4 +35,25 @@ function myOrderListReducer(state = {
     }
 }
 
-export { OrderCreateReducer, myOrderListReducer }
+function openOrderListReducer(state = {
+    orders: []
+}, action) {
+    switch (action.type) {
+        case OPEN_ORDER_LIST_REQUEST:
+            return { loading: true };
+        case OPEN_ORDER_LIST_SUCCESS:
+            const ordersPre = action.payload
+            const orders = [...ordersPre]
+            const userInfo = action.user
+            const openOrders = orders.filter(order => order.isDelivered === false)
+            // console.log("myOrders, ", myOrders);
+            // console.log("userInfo.user.username, ", userInfo.user.username);
+
+            return { loading: false, orders: orders };
+        case OPEN_ORDER_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
+export { OrderCreateReducer, myOrderListReducer, openOrderListReducer }

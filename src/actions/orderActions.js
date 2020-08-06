@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
+import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
 
 const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -62,7 +62,23 @@ const listMyOrders = () => async (dispatch, getState) => {
     }
 }
 
-export { createOrder, listMyOrders }
+const listOpenOrders = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: OPEN_ORDER_LIST_REQUEST });
+        const { userLogin: { userInfo } } = getState();
+        const { data: orders } = await axios.get("http://164.90.158.158/orders/"
+            , {
+                headers:
+                    { Authorization: 'Bearer ' + userInfo.jwt }
+            }
+        );
+        dispatch({ type: OPEN_ORDER_LIST_SUCCESS, payload: orders, user: userInfo })
+    } catch (error) {
+        dispatch({ type: OPEN_ORDER_LIST_FAIL, payload: error.message });
+    }
+}
+
+export { createOrder, listMyOrders, listOpenOrders }
 
 // const { data: { data: newOrder } } = await axios
 
