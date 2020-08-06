@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS } from '../constants/orderConstants';
+import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS } from '../constants/orderConstants';
 
 const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -78,7 +78,23 @@ const listOpenOrders = () => async (dispatch, getState) => {
     }
 }
 
-export { createOrder, listMyOrders, listOpenOrders }
+const detailsOrder = (orderId) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
+        const { userLogin: { userInfo } } = getState();
+        const { data } = await axios.get("http://164.90.158.158/orders/" + orderId, {
+            headers:
+                { Authorization: 'Bearer ' + userInfo.jwt }
+        }
+        );
+        // console.log("order inside orderActions," order);
+        dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data, user: userInfo })
+    } catch (error) {
+        dispatch({ type: ORDER_DETAILS_FAIL, payload: error.message });
+    }
+}
+
+export { createOrder, listMyOrders, listOpenOrders, detailsOrder }
 
 // const { data: { data: newOrder } } = await axios
 

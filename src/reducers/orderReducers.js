@@ -1,4 +1,4 @@
-import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL } from "../constants/orderConstants";
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL } from "../constants/orderConstants";
 
 
 function OrderCreateReducer(state = {}, action) {
@@ -56,4 +56,22 @@ function openOrderListReducer(state = {
     }
 }
 
-export { OrderCreateReducer, myOrderListReducer, openOrderListReducer }
+function orderDetailsReducer(state = {
+    order: []
+}, action) {
+    switch (action.type) {
+        case ORDER_DETAILS_REQUEST:
+            return { loading: true };
+        case ORDER_DETAILS_SUCCESS:
+            console.log("action.payload in orderReducers, ", action.payload);
+            const data = action.payload
+            const orderItems = [data.cartItems]
+            console.log("orderItems in orderReducers, ", orderItems)
+            return { loading: false, orderData: data, orderItems: orderItems };
+        case ORDER_DETAILS_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
+export { OrderCreateReducer, myOrderListReducer, openOrderListReducer, orderDetailsReducer }

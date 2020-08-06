@@ -4,12 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { listOpenOrders } from '../actions/orderActions';
 
 function OrdersScreen() {
+    const userLogin = useSelector(state => state.userLogin);
+    const { userInfo } = userLogin;
+
     const openOrderList = useSelector(state => state.openOrderList);
     // const { loading, orders, error } = openOrderList;
-    const {
-        loading: loadingOrders,
-        orders,
-        error: errorOrders } = openOrderList;
+    const { loading: loadingOrders, orders, error: errorOrders } = openOrderList;
 
     const dispatch = useDispatch();
 
@@ -21,46 +21,54 @@ function OrdersScreen() {
     }, []);
 
     return (
-        <div className="content content-margined">
+        <div>
+            <div className="content content-margined">
 
-            <div className="order-header">
-                <h3>Orders</h3>
-            </div>
-            <div className="order-list">
-                {
-                    loadingOrders ? <div>Loading...</div> :
-                        errorOrders ? <div>{errorOrders} </div> :
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th>ORDER ID</th>
-                                        <th>SELLER</th>
-                                        <th>PLAZA</th>
-                                        <th>TOTAL</th>
-                                        <th>COMMISSION</th>
-                                        <th>DELIVERED</th>
-                                        <th>CREATED AT</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {orders.map(order =>
-                                        <tr key={order.id}>
-                                            <td >{order.id}</td>
-                                            <td >{order.sellerUsername}</td>
-                                            <td>{order.plaza}</td>
-                                            <td>${order.total}</td>
-                                            <td>${order.commission}</td>
-                                            <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
-                                            <td>{order.created_at}</td>
-                                            {/* <td>
-                                        <Link to={"/order/" + order.id}>DETAILS</Link>
-                                    </td> */}
-                                        </tr>)}
-                                </tbody>
-                            </table>
-                }
+                <div className="order-header">
+                    <h3>Orders</h3>
+                </div>
+                {userInfo && userInfo.user.isAdmin && (
+
+                    <div className="order-list">
+                        {
+                            loadingOrders ? <div>Loading...</div> :
+                                errorOrders ? <div>{errorOrders} </div> :
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ORDER ID</th>
+                                                <th>SELLER</th>
+                                                <th>PLAZA</th>
+                                                <th>TOTAL</th>
+                                                <th>COMMISSION</th>
+                                                <th>DELIVERED</th>
+                                                <th>CREATED AT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {orders.map(order =>
+                                                <tr key={order.id}>
+                                                    <td >{order.id}</td>
+                                                    <td >{order.sellerUsername}</td>
+                                                    <td>{order.plaza}</td>
+                                                    <td>${order.total}</td>
+                                                    <td>${order.commission}</td>
+                                                    <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
+                                                    <td>{order.created_at}</td>
+                                                    <td>
+                                                        <Link to={"/orders/" + order.id}>DETAILS</Link>
+                                                        {' '}
+                                                    </td>
+                                                </tr>)}
+                                        </tbody>
+                                    </table>
+                        }
+                    </div>
+                )}
+
             </div>
         </div>
+
     )
 }
 export default OrdersScreen;
