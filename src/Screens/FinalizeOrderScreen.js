@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostOrderSteps from '../components/PostOrderSteps';
@@ -8,13 +8,22 @@ function FinalizeOrderScreen(props) {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
+    const [deliveryDate, setDeliveryDate] = useState('')
+    const [notes, setNotes] = useState('')
+    const [deliveryPerson, setDeliveryPerson] = useState('')
+
     const dispatch = useDispatch();
 
-    const deliveredHandler = () => {
-        // create an order
-        // dispatch(updateOrder());
-        // dispatch(updateStock());
-    }
+    // const deliveredHandler = () => {
+    //     // create an order
+    //     // dispatch(updateOrder());
+    //     // dispatch(updateStock());
+    // }
+    const submitHandler = (e) => {
+        e.preventDefault();
+        // dispatch(saveDelivery({ deliveryDate, deliveryPerson, notes }));
+        // props.history.push('completeorder');
+    };
 
     useEffect(() => {
         if (userInfo) {
@@ -24,19 +33,24 @@ function FinalizeOrderScreen(props) {
     }, []);
 
     const orderDetails = useSelector(state => state.orderDetails);
-    const { loading, orderData, orderItems, error } = orderDetails;
+    const { loading, orderData, error } = orderDetails;
 
-    const order = { ...orderData }
-    const cartItems = [{ ...orderItems }]
+    const orderDataCopy = { ...orderData }
+    const { cartItems, ...order } = orderDataCopy
+    // const [cartItems] = order
+    // const cartItems = [{ ...orderItems }]
     // const [orderItems] = Object.entries({ cartItems })
 
     // console.log("orderData inside FinalizeOrderScreen, ", orderData);
-    // console.log("order inside FinalizeOrderScreen, ", order);
-    console.log("orderItems inside FinalizeOrderScreen, ", orderItems);
-    console.log("cartItems[0] inside FinalizeOrderScreen, ", cartItems[0]);
+    console.log("order inside FinalizeOrderScreen, ", order);
+    console.log("cartItems inside FinalizeOrderScreen, ", cartItems);
+    // console.log("cartItems[0] inside FinalizeOrderScreen, ", cartItems[0]);
     // console.log("orderItems.Array inside FinalizeOrderScreen, ", orderItems.Array);
 
     return <div>
+        <div className="content content-margined" >
+            <h3>Order Id: {order.id}</h3>
+        </div>
         <PostOrderSteps step1 step2 step3 step4 ></PostOrderSteps>
         {loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
 
@@ -52,7 +66,7 @@ function FinalizeOrderScreen(props) {
           {order.zip}, {order.country},
           </div>
                             <div>
-                                {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
+                                Status: {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
                             </div>
                         </div>
                         <div>
@@ -83,7 +97,7 @@ function FinalizeOrderScreen(props) {
                                             Cart is empty
           </div>
                                         : */}
-                                {cartItems.map(cartItem =>
+                                {/* {cartItems.map(cartItem =>
                                     <li key={cartItem.id}>
                                         <div className="cart-image">
                                             <img src={cartItem.image} alt="product" />
@@ -103,7 +117,7 @@ function FinalizeOrderScreen(props) {
                                             ${cartItem.price}
                                         </div>
                                     </li>
-                                )}
+                                )} */}
                                 {/* } */}
                             </ul>
                         </div>
@@ -123,26 +137,105 @@ function FinalizeOrderScreen(props) {
                             <li>
                                 <h3>Order Summary</h3>
                             </li>
-                            {/* <li>
-                            <div>Items</div>
-                            <div>${order.itemsPrice}</div>
-                        </li>
-                        <li>
-                            <div>Shipping</div>
-                            <div>${order.shippingPrice}</div>
-                        </li>
-                        <li>
-                            <div>Tax</div>
-                            <div>${order.taxPrice}</div>
-                        </li>
-                        <li>
-                            <div>Order Total</div>
-                            <div>${order.totalPrice}</div>
-                        </li> */}
+                            <li>
+                                <div>Items</div>
+                                <div>${order.subtotal}</div>
+                            </li>
+                            <li>
+                                <div>Shipping</div>
+                                <div>${order.shippingCost}</div>
+                            </li>
+                            <li>
+                                <div>Tax</div>
+                                <div>${order.tax}</div>
+                            </li>
+                            <li>
+                                <div>Order Total</div>
+                                <div>${order.total}</div>
+                            </li>
                         </ul>
 
 
 
+                    </div>
+                    <div className="form" >
+                        <form onSubmit={submitHandler}>
+                            <ul className="form-container">
+                                <li>
+                                    <h2>Delivery Info</h2>
+                                </li>
+
+                                {/* <li>
+                            <div>
+                                <input
+                                    type="radio"
+                                    name="isDelivered"
+                                    id="isDelivered"
+                                    value={true}
+                                    // onChange={(e) => setDeliveryMethod(e.target.value)}
+                                ></input>
+                                <label for="isDelivered">Delivered</label>
+                            </div>
+                        </li> */}
+
+                                <li>
+                                    <label htmlFor="deliveryDate">
+                                        Delivery Date
+          </label>
+                                    <input type="text" name="deliveryDate" id="deliveryDate" onChange={(e) => setDeliveryDate(e.target.value)}>
+                                    </input>
+                                </li>
+                                <li>
+                                    <label htmlFor="deliveryPerson">
+                                        Delivery Person
+          </label>
+                                    <input type="text" name="deliveryPerson" id="deliveryPerson" onChange={(e) => setDeliveryPerson(e.target.value)}>
+                                    </input>
+                                </li>
+                                <li>
+                                    <label htmlFor="notes">
+                                        Notes
+          </label>
+                                    <input type="text" name="notes" id="notes" onChange={(e) => setNotes(e.target.value)}>
+                                    </input>
+                                </li>
+                                <li>
+                                    <h4>Delivery Status</h4>
+                                </li>
+
+                                <li>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            name="isDelivered"
+                                            id="isDelivered"
+                                            value={false}
+                                            defaultChecked={true}
+                                        // onChange={(e) => (setInvoice(e.target.value))}
+                                        ></input>
+                                        <label htmlFor="isDelivered">Processing</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <input
+                                            type="radio"
+                                            name="isDelivered"
+                                            id="isDelivered"
+                                            value={true}
+                                        // onChange={(e) => (setInvoice(e.target.value))}
+                                        ></input>
+                                        <label htmlFor="invoice">Delivered</label>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <button type="submit" className="button primary">
+                                        Update
+              </button>
+                                </li>
+                            </ul>
+                        </form>
                     </div>
 
                 </div>

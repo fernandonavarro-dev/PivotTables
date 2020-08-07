@@ -57,17 +57,18 @@ function openOrderListReducer(state = {
 }
 
 function orderDetailsReducer(state = {
-    order: []
+    order: { cartItems: [], data: {} }
 }, action) {
     switch (action.type) {
         case ORDER_DETAILS_REQUEST:
             return { loading: true };
         case ORDER_DETAILS_SUCCESS:
             console.log("action.payload in orderReducers, ", action.payload);
-            const data = action.payload
-            const orderItems = [data.cartItems]
-            console.log("orderItems in orderReducers, ", orderItems)
-            return { loading: false, orderData: data, orderItems: orderItems };
+            return { loading: false, orderData: action.payload };
+        // const data = action.payload
+        // const orderItems = [data.cartItems]
+        // console.log("orderItems in orderReducers, ", orderItems)
+        // return { loading: false, orderData: data, orderItems: orderItems };
         case ORDER_DETAILS_FAIL:
             return { loading: false, error: action.payload };
         default: return state;
