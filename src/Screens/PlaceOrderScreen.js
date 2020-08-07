@@ -134,8 +134,8 @@ function PlaceOrderScreen(props) {
                         <div>${taxPrice}</div>
                     </li>
                     <li>
-                        <div>Total w/o Shipping</div>
-                        <div>${totalNoShipping}</div>
+                        <div className="placeorder-action-total">Total NO Shipping</div>
+                        <div className="placeorder-action-total">${totalNoShipping}</div>
                     </li>
                     <li>
                         <div>Order Total</div>

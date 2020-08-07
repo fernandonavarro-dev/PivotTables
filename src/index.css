@@ -399,6 +399,11 @@ tbody > tr:nth-child(odd) {
   font-weight: bold;
   color: #c04000;
 }
+.placeorder-action-total {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c04000;
+}
 .placeorder-actions-payment > div {
   width: 100%;
 }
