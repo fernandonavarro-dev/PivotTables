@@ -11,6 +11,7 @@ const addToCart = (productId, qty, plazaStock) => async (dispatch, getState) => 
                 name: data.name,
                 image: data.imageURL,
                 price: data.price,
+                commission: data.commission,
                 countInStock: plazaStock,
                 qty
             }

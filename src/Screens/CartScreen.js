@@ -53,7 +53,7 @@ function CartScreen(props) {
                                 </div>
                                 <div className="cart-name">
                                     <div>
-                                        <Link to={"/product/" + item.product}>
+                                        <Link to={"/product/" + item.id}>
                                             {item.name}
                                         </Link>
                                     </div>
@@ -75,6 +75,9 @@ function CartScreen(props) {
                                         >
                                             Delete
                                         </button>
+                                        <div style={{ marginTop: '1rem' }} >
+                                            Count In Stock: {item.countInStock}
+                                        </div>
                                     </div>
                                 </div>
                                 <div>

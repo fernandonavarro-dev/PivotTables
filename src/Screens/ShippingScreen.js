@@ -72,7 +72,7 @@ function ShippingScreen(props) {
                     </li>
                     <li>
                         <label htmlFor="colony">
-                            Colony
+                            Neighborhood
           </label>
                         <input type="text" name="colony" id="colony" onChange={(e) => setColony(e.target.value)}>
                         </input>
@@ -163,7 +163,7 @@ function ShippingScreen(props) {
                                 type="radio"
                                 name="invoice"
                                 id="invoice"
-                                value={0.15}
+                                value={0.16}
                                 onChange={(e) => (setInvoice(e.target.value))}
                             ></input>
                             <label htmlFor="invoice">yes</label>

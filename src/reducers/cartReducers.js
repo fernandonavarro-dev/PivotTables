@@ -5,11 +5,11 @@ function cartReducer(state = { cartItems: [], shipping: {}, }, action) {
     switch (action.type) {
         case CART_ADD_ITEM:
             const item = action.payload;
-            const product = state.cartItems.find(x => x.product === item.product);
+            const product = state.cartItems.find(x => x.product === item.id);
             if (product) {
                 return {
                     cartItems:
-                        state.cartItems.map(x => x.product === product.product ? item : x)
+                        state.cartItems.map(x => x.product === product.id ? item : x)
                 };
             }
             return { cartItems: [...state.cartItems, item] }
