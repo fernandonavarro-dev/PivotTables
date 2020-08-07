@@ -154,90 +154,74 @@ function FinalizeOrderScreen(props) {
                                 <div>${order.total}</div>
                             </li>
                         </ul>
-
-
-
                     </div>
-                    <div className="form" >
-                        <form onSubmit={submitHandler}>
-                            <ul className="form-container">
-                                <li>
-                                    <h2>Delivery Info</h2>
-                                </li>
 
-                                {/* <li>
-                            <div>
-                                <input
-                                    type="radio"
-                                    name="isDelivered"
-                                    id="isDelivered"
-                                    value={true}
-                                    // onChange={(e) => setDeliveryMethod(e.target.value)}
-                                ></input>
-                                <label for="isDelivered">Delivered</label>
-                            </div>
-                        </li> */}
+                </div>
+                <div className="form" >
+                    <form onSubmit={submitHandler}>
+                        <ul className="form-container">
+                            <li>
+                                <h2>Delivery Info</h2>
+                            </li>
 
-                                <li>
-                                    <label htmlFor="deliveryDate">
-                                        Delivery Date
+                            <li>
+                                <label htmlFor="deliveryDate">
+                                    Delivery Date
           </label>
-                                    <input type="text" name="deliveryDate" id="deliveryDate" onChange={(e) => setDeliveryDate(e.target.value)}>
-                                    </input>
-                                </li>
-                                <li>
-                                    <label htmlFor="deliveryPerson">
-                                        Delivery Person
+                                <input type="text" name="deliveryDate" id="deliveryDate" onChange={(e) => setDeliveryDate(e.target.value)}>
+                                </input>
+                            </li>
+                            <li>
+                                <label htmlFor="deliveryPerson">
+                                    Delivery Person
           </label>
-                                    <input type="text" name="deliveryPerson" id="deliveryPerson" onChange={(e) => setDeliveryPerson(e.target.value)}>
-                                    </input>
-                                </li>
-                                <li>
-                                    <label htmlFor="notes">
-                                        Notes
+                                <input type="text" name="deliveryPerson" id="deliveryPerson" onChange={(e) => setDeliveryPerson(e.target.value)}>
+                                </input>
+                            </li>
+                            <li>
+                                <label htmlFor="notes">
+                                    Notes
           </label>
-                                    <input type="text" name="notes" id="notes" onChange={(e) => setNotes(e.target.value)}>
-                                    </input>
-                                </li>
-                                <li>
-                                    <h4>Delivery Status</h4>
-                                </li>
+                                <input type="text" name="notes" id="notes" onChange={(e) => setNotes(e.target.value)}>
+                                </input>
+                            </li>
+                            <li>
+                                <h4>Delivery Status</h4>
+                            </li>
 
-                                <li>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            name="isDelivered"
-                                            id="isDelivered"
-                                            value={false}
-                                            defaultChecked={true}
-                                        // onChange={(e) => (setInvoice(e.target.value))}
-                                        ></input>
-                                        <label htmlFor="isDelivered">Processing</label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div>
-                                        <input
-                                            type="radio"
-                                            name="isDelivered"
-                                            id="isDelivered"
-                                            value={true}
-                                        // onChange={(e) => (setInvoice(e.target.value))}
-                                        ></input>
-                                        <label htmlFor="invoice">Delivered</label>
-                                    </div>
-                                </li>
+                            <li>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="isDelivered"
+                                        id="isDelivered"
+                                        value={false}
+                                        defaultChecked={true}
+                                    // onChange={(e) => (setInvoice(e.target.value))}
+                                    ></input>
+                                    <label htmlFor="isDelivered">Processing</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="isDelivered"
+                                        id="isDelivered"
+                                        value={true}
+                                    // onChange={(e) => (setInvoice(e.target.value))}
+                                    ></input>
+                                    <label htmlFor="invoice">Delivered</label>
+                                </div>
+                            </li>
 
-                                <li>
-                                    <button type="submit" className="button primary">
-                                        Update
+                            <li>
+                                <button type="submit" className="button primary">
+                                    Update
               </button>
-                                </li>
-                            </ul>
-                        </form>
-                    </div>
-
+                            </li>
+                        </ul>
+                    </form>
                 </div>
             </div>
         }
