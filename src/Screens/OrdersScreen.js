@@ -56,7 +56,7 @@ function OrdersScreen() {
                                                     <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
                                                     <td>{order.created_at}</td>
                                                     <td>
-                                                        <Link to={"/orders/" + order.id}>DETAILS</Link>
+                                                        <Link to={"/order/" + order.id}>DETAILS</Link>
                                                         {' '}
                                                     </td>
                                                 </tr>)}

@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostOrderSteps from '../components/PostOrderSteps';
-import { detailsOrder } from '../actions/orderActions';
+import { detailsOrder, updateOrder } from '../actions/orderActions';
 
 function FinalizeOrderScreen(props) {
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
+    const [cartItems, setCartItems] = useState([])
+
     const [deliveryDate, setDeliveryDate] = useState('')
     const [notes, setNotes] = useState('')
     const [deliveryPerson, setDeliveryPerson] = useState('')
+    const [isDelivered, setIsDelivered] = useState(false)
 
     const dispatch = useDispatch();
 
@@ -21,7 +24,16 @@ function FinalizeOrderScreen(props) {
     // }
     const submitHandler = (e) => {
         e.preventDefault();
-        // dispatch(saveDelivery({ deliveryDate, deliveryPerson, notes }));
+        dispatch(updateOrder(order.id, isDelivered, deliveryDate, deliveryPerson, notes));
+
+        props.history.push('orders')
+        alert("Order Updated Successfully")
+
+        if (isDelivered) {
+            console.log("isDelivered == true");
+            // dispatch(updateStock())
+        }
+
         // props.history.push('completeorder');
     };
 
@@ -33,25 +45,40 @@ function FinalizeOrderScreen(props) {
     }, []);
 
     const orderDetails = useSelector(state => state.orderDetails);
-    const { loading, orderData, error } = orderDetails;
+    const { loading, orderData, orderItems, error } = orderDetails;
+    const order = { ...orderData }
+    // const cartItems = { ...orderItems }
 
-    const orderDataCopy = { ...orderData }
-    const { cartItems, ...order } = orderDataCopy
+    // const { cartItems } = order
+
+    // const orderDataCopy = { ...orderData }
+    // const { cartItems, ...order } = orderDataCopy
     // const [cartItems] = order
-    // const cartItems = [{ ...orderItems }]
-    // const [orderItems] = Object.entries({ cartItems })
+    // const orderItemsObject = Object.entries(orderItems)
 
-    // console.log("orderData inside FinalizeOrderScreen, ", orderData);
-    console.log("order inside FinalizeOrderScreen, ", order);
-    console.log("cartItems inside FinalizeOrderScreen, ", cartItems);
+    const fetchCartItems = (e) => {
+        setCartItems(orderItems)
+
+    }
+
+    // console.log("order inside FinalizeOrderScreen, ", order);
+    // console.log("cartItems inside FinalizeOrderScreen, ", cartItems);
     // console.log("cartItems[0] inside FinalizeOrderScreen, ", cartItems[0]);
+    // console.log("typeof cartItems inside FinalizeOrderScreen, ", typeof cartItems);
+    // console.log("orderItemsObject inside FinalizeOrderScreen, ", orderItemsObject);
     // console.log("orderItems.Array inside FinalizeOrderScreen, ", orderItems.Array);
+
 
     return <div>
         <div className="content content-margined" >
+            <Link to="/orders">Back to orders</Link>
             <h3>Order Id: {order.id}</h3>
         </div>
-        <PostOrderSteps step1 step2 step3 step4 ></PostOrderSteps>
+        {isDelivered ?
+            <PostOrderSteps step1 step2 step3 step4 step5></PostOrderSteps>
+            :
+            <PostOrderSteps step1 step2 step3 step4 ></PostOrderSteps>
+        }
         {loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
 
             <div>
@@ -91,34 +118,46 @@ function FinalizeOrderScreen(props) {
                                         Price
           </div>
                                 </li>
-                                {/* {
+
+
+                                {
                                     cartItems.length === 0 ?
                                         <div>
                                             Cart is empty
-          </div>
-                                        : */}
-                                {/* {cartItems.map(cartItem =>
-                                    <li key={cartItem.id}>
-                                        <div className="cart-image">
-                                            <img src={cartItem.image} alt="product" />
+                                             <div>
+                                                <button type="submit" className="button primary"
+                                                    onClick={fetchCartItems}
+                                                >
+                                                    Load Items
+              </button>
+                                            </div>
                                         </div>
-                                        <div className="cart-name">
-                                            <div>
-                                                <Link to={"/product/" + cartItem.product}>
-                                                    {cartItem.name}
-                                                </Link>
 
-                                            </div>
-                                            <div>
-                                                Qty: {cartItem.qty}
-                                            </div>
-                                        </div>
-                                        <div className="cart-price">
-                                            ${cartItem.price}
-                                        </div>
-                                    </li>
-                                )} */}
-                                {/* } */}
+                                        :
+                                        cartItems.map(cartItem =>
+                                            <li key={cartItem.id}>
+                                                <div className="cart-image">
+                                                    <img src={cartItem.image} alt="product" />
+                                                </div>
+                                                <div className="cart-name">
+                                                    <div>
+                                                        <Link to={"/product/" + cartItem.product}>
+                                                            {cartItem.name}
+                                                        </Link>
+
+                                                    </div>
+                                                    <div>
+                                                        Qty: {cartItem.qty}
+                                                    </div>
+                                                </div>
+                                                <div className="cart-price">
+                                                    ${cartItem.price}
+                                                </div>
+                                            </li>
+                                        )
+
+                                }
+
                             </ul>
                         </div>
 
@@ -150,6 +189,10 @@ function FinalizeOrderScreen(props) {
                                 <div>${order.tax}</div>
                             </li>
                             <li>
+                                <div className="placeorder-action-total">Total NO Shipping</div>
+                                <div className="placeorder-action-total">${order.totalNoShipping}</div>
+                            </li>
+                            <li>
                                 <div>Order Total</div>
                                 <div>${order.total}</div>
                             </li>
@@ -157,7 +200,7 @@ function FinalizeOrderScreen(props) {
                     </div>
 
                 </div>
-                <div className="form" >
+                <div className="form"  >
                     <form onSubmit={submitHandler}>
                         <ul className="form-container">
                             <li>
@@ -197,7 +240,7 @@ function FinalizeOrderScreen(props) {
                                         id="isDelivered"
                                         value={false}
                                         defaultChecked={true}
-                                    // onChange={(e) => (setInvoice(e.target.value))}
+                                        onChange={(e) => (setIsDelivered(e.target.value))}
                                     ></input>
                                     <label htmlFor="isDelivered">Processing</label>
                                 </div>
@@ -209,14 +252,18 @@ function FinalizeOrderScreen(props) {
                                         name="isDelivered"
                                         id="isDelivered"
                                         value={true}
-                                    // onChange={(e) => (setInvoice(e.target.value))}
+                                        onChange={(e) => (setIsDelivered(e.target.value))}
                                     ></input>
                                     <label htmlFor="invoice">Delivered</label>
                                 </div>
                             </li>
 
                             <li>
-                                <button type="submit" className="button primary">
+                                <button
+                                    type="submit"
+                                    // disabled={cartItems.length === 0}
+                                    className="button primary"
+                                >
                                     Update
               </button>
                             </li>

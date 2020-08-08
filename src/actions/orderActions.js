@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS } from '../constants/orderConstants';
+import { MY_ORDER_LIST_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, ORDER_CREATE_FAIL, ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_DETAILS_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, UPDATE_ORDER_FAIL, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS } from '../constants/orderConstants';
 
 const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -44,6 +44,31 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
         dispatch({ type: ORDER_CREATE_FAIL, error: error.message });
     }
 
+}
+
+const updateOrder = (orderId, isDelivered, deliveryDate, deliveryPerson, notes) => async (dispatch, getState) => {
+    const { userLogin: { userInfo } } = getState();
+
+    const order = {
+        isDelivered,
+        deliveryDate,
+        deliveryPerson,
+        coordinatorNotes: notes
+    }
+    try {
+        dispatch({ type: UPDATE_ORDER_REQUEST, payload: order });
+        const { data: orderUpdate } = await axios
+            .put("http://164.90.158.158/orders/" + orderId,
+                order, {
+                headers: {
+                    Authorization: 'Bearer ' + userInfo.jwt
+                }
+            });
+        dispatch({ type: UPDATE_ORDER_SUCCESS, payload: orderUpdate });
+
+    } catch (error) {
+        dispatch({ type: UPDATE_ORDER_FAIL, error: error.message });
+    }
 }
 
 const listMyOrders = () => async (dispatch, getState) => {
@@ -94,7 +119,7 @@ const detailsOrder = (orderId) => async (dispatch, getState) => {
     }
 }
 
-export { createOrder, listMyOrders, listOpenOrders, detailsOrder }
+export { createOrder, listMyOrders, listOpenOrders, detailsOrder, updateOrder }
 
 // const { data: { data: newOrder } } = await axios
 
