@@ -12,6 +12,7 @@ import PlaceOrderScreen from './Screens/PlaceOrderScreen';
 import OrdersScreen from './Screens/OrdersScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 import FinalizeOrderScreen from './Screens/FinalizeOrderScreen';
+import PivotTableScreen from './Screens/PivotTableScreen';
 
 function App() {
 
@@ -62,9 +63,12 @@ function App() {
         <aside className="sidebar">
           <h3>Product Categories</h3>
           <button className="sidebar-close-button" onClick={closeMenu}>X</button>
-          <ul>
+          <ul className="categories" >
             <li>
-              <a href="index.html">Shirt</a>
+              <Link to="/category/category1">category1</Link>
+            </li>
+            <li>
+              <Link to="/category/category2">category2</Link>
             </li>
           </ul>
         </aside>
@@ -72,6 +76,7 @@ function App() {
           <div className="content" >
             <Route path="/home" component={HomeScreen} />
             <Route path="/orders" component={OrdersScreen} />
+            <Route path="/pivottable" component={PivotTableScreen} />
             <Route path="/profile" component={ProfileScreen} />
             <Route path="/shipping" component={ShippingScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />

@@ -1,58 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
-// import fetchedProducts from "../fetchedProducts"
 
-function HomeScreen() {
+function HomeScreen(props) {
 
-    // const [fetchedProducts, setFetchedProducts] = useState([]);
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
+    const category = props.match.params.id ? props.match.params.id : '';
+
     const productList = useSelector(state => state.productList);
     const { products, loading, error } = productList;
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(listProducts());
-        // const fetchData = async () => {
-        //     const { data } = await axios.get("http://164.90.158.158/products");
-        //     setFetchedProducts(data);
-        // }
-        // fetchData();
+        dispatch(listProducts(category));
+
         return () => {
             //
         }
-    }, [])
+    }, [category]);
 
-    // console.log("fetchedProduct ->", fetchedProducts);
+    const submitHandler = (e) => {
+        e.preventDefault();
+        dispatch(listProducts(category, searchKeyword, sortOrder));
+    };
+    const sortHandler = (e) => {
+        setSortOrder(e.target.value);
+        dispatch(listProducts(category, searchKeyword, sortOrder));
+    };
 
     return (
-        loading ? <div>Loading...</div> :
-            error ? <div>error</div> :
-                <ul className="products">
-                    {products.map(product =>
-                        <li key={product.id} >
-                            <div className="product">
-                                <Link to={'/product/' + product.id} >
-                                    <img
-                                        className="product-image"
-                                        src={`http://164.90.158.158${product.thumbnail.formats.thumbnail.url}`}
-                                        alt="product"
-                                    />
-                                </Link>
-                                <div className="product-name">
-                                    <Link to={'/product/' + product.id}>{product.name}
-                                    </Link>
-                                </div>
-                                <div className="product-price" >${product.price}</div>
-                            </div>
-                        </li>
-                    )}
-                </ul>
-    )
+        <>
+            {category && <h2>{category}</h2>}
 
-    // const [fetchedProducts, setFetchedProducts] = useState([]);
+            <ul className="filter">
+                <li>
+                    <form onSubmit={submitHandler}>
+                        <input
+                            name="searchKeyword"
+                            onChange={(e) => setSearchKeyword(e.target.value)}
+                        />
+                        <button type="submit">Search</button>
+                    </form>
+                </li>
+                <li>
+                    Sort By{' '}
+                    <select name="sortOrder" onChange={sortHandler}>
+                        <option value="">Newest</option>
+                        <option value="lowest">Lowest</option>
+                        <option value="highest">Highest</option>
+                    </select>
+                </li>
+            </ul>
+
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>{error}</div>
+            ) : (
+                        <ul className="products">
+                            {products.map((product) => (
+                                <li key={product.id} >
+                                    <div className="product">
+                                        <Link to={'/product/' + product.id} >
+                                            <img
+                                                className="product-image"
+                                                src={`http://164.90.158.158${product.thumbnail.formats.thumbnail.url}`}
+                                                alt="product"
+                                            />
+                                        </Link>
+                                        <div className="product-name">
+                                            <Link to={'/product/' + product.id}>{product.name}
+                                            </Link>
+                                        </div>
+                                        <div className="product-price" >${product.price}</div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+        </>
+    )
+}
+
+export default HomeScreen;
+
+// const [fetchedProducts, setFetchedProducts] = useState([]);
 
     // useEffect(() => {
     //     async function makeRequest() {
@@ -91,6 +126,3 @@ function HomeScreen() {
     //         )}
     //     </ul>
     // )
-}
-
-export default HomeScreen;
