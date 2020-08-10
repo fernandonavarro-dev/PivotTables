@@ -54,6 +54,11 @@ function App() {
                   <li>
                     <Link to="/orders">Orders</Link>
                   </li>
+                  {userInfo && userInfo.user.isTop && (
+                    <li>
+                      <Link to="/pivottable">Table</Link>
+                    </li>
+                  )}
                 </ul>
               </div>
 

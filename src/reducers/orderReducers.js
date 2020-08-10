@@ -1,4 +1,4 @@
-import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAIL } from "../constants/orderConstants";
+import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_FAIL, ORDER_LIST_SUCCESS } from "../constants/orderConstants";
 
 
 function OrderCreateReducer(state = {}, action) {
@@ -69,6 +69,28 @@ function openOrderListReducer(state = {
     }
 }
 
+function orderListReducer(state = {
+    orders: []
+}, action) {
+    switch (action.type) {
+        case ORDER_LIST_REQUEST:
+            return { loading: true };
+        case ORDER_LIST_SUCCESS:
+            const ordersPre = action.payload
+            const orders = [...ordersPre]
+            const ordersArray = Array(orders)
+            // const openOrders = orders.filter(order => order.isDelivered === false)
+            console.log("orders in orderReducers, ", orders);
+            console.log("typeof orders in orderReducers, ", typeof orders);
+            console.log("typeof  ordersArray in orderReducers, ", typeof ordersArray);
+
+            return { loading: false, orders: orders };
+        case ORDER_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default: return state;
+    }
+}
+
 function orderDetailsReducer(state = {
     order: { cartItems: [], data: {} }
 }, action) {
@@ -88,4 +110,4 @@ function orderDetailsReducer(state = {
     }
 }
 
-export { OrderCreateReducer, myOrderListReducer, openOrderListReducer, orderDetailsReducer, orderUpdateReducer }
+export { OrderCreateReducer, myOrderListReducer, openOrderListReducer, orderDetailsReducer, orderUpdateReducer, orderListReducer }

@@ -4,7 +4,7 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
 // import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { listOpenOrders } from '../actions/orderActions';
+import { listOpenOrders, listOrders } from '../actions/orderActions';
 
 // see documentation for supported input formats
 const data = [['attribute', 'attribute2'], ['value1', 'value2']];
@@ -17,14 +17,14 @@ const PivotTableScreen = (props) => {
     const [initialState, setInitialState] = useState(props)
     // const [data, setData] = useState([])
 
-    const openOrderList = useSelector(state => state.openOrderList);
-    // const { loading, orders, error } = openOrderList;
-    const { loading: loadingOrders, orders, error: errorOrders } = openOrderList;
+    const orderList = useSelector(state => state.orderList);
+    // const { loading, orders, error } = orderList;
+    const { loading: loadingOrders, orders, error: errorOrders } = orderList;
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(listOpenOrders());
+        dispatch(listOrders());
         return () => {
             //
         };
@@ -32,16 +32,20 @@ const PivotTableScreen = (props) => {
 
     const ordersData = [{ ...orders }]
 
-    console.log("userInfo, ", userInfo);
-    console.log("ordersData, ", ordersData);
+    // console.log("ordersData in PivotTableScreen, ", ordersData);
 
 
     return (
-        <PivotTableUI
-            data={ordersData}
-            onChange={s => setInitialState(s)}
-            {...initialState}
-        />
+        <div>
+            {userInfo && userInfo.user.isTop && (
+
+                <PivotTableUI
+                    data={ordersData}
+                    onChange={s => setInitialState(s)}
+                    {...initialState}
+                />
+            )}
+        </div>
     );
 
 }
