@@ -33,7 +33,7 @@ function HomeScreen(props) {
 
     return (
         <>
-            {category && <h2>{category}</h2>}
+            {/* {category && <h2>{category}</h2>}
 
             <ul className="filter">
                 <li>
@@ -53,7 +53,7 @@ function HomeScreen(props) {
                         <option value="highest">Highest</option>
                     </select>
                 </li>
-            </ul>
+            </ul> */}
 
             {loading ? (
                 <div>Loading...</div>
