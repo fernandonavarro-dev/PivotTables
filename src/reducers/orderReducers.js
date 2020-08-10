@@ -1,11 +1,13 @@
 import { ORDER_CREATE_REQUEST, ORDER_CREATE_SUCCESS, ORDER_CREATE_FAIL, MY_ORDER_LIST_REQUEST, MY_ORDER_LIST_SUCCESS, MY_ORDER_LIST_FAIL, OPEN_ORDER_LIST_REQUEST, OPEN_ORDER_LIST_SUCCESS, OPEN_ORDER_LIST_FAIL, ORDER_DETAILS_REQUEST, ORDER_DETAILS_SUCCESS, ORDER_DETAILS_FAIL, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS, UPDATE_ORDER_FAIL, ORDER_LIST_REQUEST, ORDER_LIST_FAIL, ORDER_LIST_SUCCESS } from "../constants/orderConstants";
+import Cookie from 'js-cookie';
 
 
-function OrderCreateReducer(state = {}, action) {
+function OrderCreateReducer(state = { cartItems: [] }, action) {
     switch (action.type) {
         case ORDER_CREATE_REQUEST:
             return { loading: true };
         case ORDER_CREATE_SUCCESS:
+            Cookie.remove('cartItems');
             return { loading: false, order: action.payload, success: true };
         case ORDER_CREATE_FAIL:
             return { loading: false, error: action.payload };
