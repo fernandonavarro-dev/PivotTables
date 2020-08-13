@@ -37,6 +37,7 @@ function OrdersScreen() {
                                         <thead>
                                             <tr>
                                                 <th>ORDER ID</th>
+                                                <th>CUSTOMER</th>
                                                 <th>SELLER</th>
                                                 <th>PLAZA</th>
                                                 <th>TOTAL</th>
@@ -49,6 +50,7 @@ function OrdersScreen() {
                                             {orders.map(order =>
                                                 <tr key={order.id}>
                                                     <td >{order.id}</td>
+                                                    <td >{order.customerName}</td>
                                                     <td >{order.sellerUsername}</td>
                                                     <td>{order.plaza}</td>
                                                     <td>${order.total}</td>

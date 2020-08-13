@@ -9,6 +9,7 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
         sellerUsername: userInfo.user.username,
         customerName: shipping.customerName,
         customerTel: shipping.customerTel,
+        customerFbPage: shipping.customerFbPage,
         address: shipping.address,
         colony: shipping.colony,
         zip: shipping.zip,

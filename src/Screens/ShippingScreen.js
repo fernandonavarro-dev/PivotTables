@@ -9,6 +9,7 @@ function ShippingScreen(props) {
     const [plaza, setPlaza] = useState('');
     const [customerName, setCustomerName] = useState('');
     const [customerTel, setCustomerTel] = useState('');
+    const [customerFbPage, setCustomerFbPage] = useState('')
     const [address, setAddress] = useState('');
     const [colony, setColony] = useState('')
     const [city, setCity] = useState('');
@@ -22,7 +23,7 @@ function ShippingScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(saveShipping({ plaza, customerName, customerTel, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
+        dispatch(saveShipping({ plaza, customerName, customerTel, customerFbPage, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
 
@@ -61,6 +62,13 @@ function ShippingScreen(props) {
                             Customer Tel
           </label>
                         <input type="text" name="customerTel" id="customerTel" onChange={(e) => setCustomerTel(e.target.value)}>
+                        </input>
+                    </li>
+                    <li>
+                        <label htmlFor="customerFbPage">
+                            Customer FB Page
+          </label>
+                        <input type="text" name="customerFbPage" id="customerFbPage" onChange={(e) => setCustomerFbPage(e.target.value)}>
                         </input>
                     </li>
                     <li>
@@ -184,7 +192,7 @@ function ShippingScreen(props) {
 
                 </ul>
                 <ul className="form-container">
-                    {(!address || !customerTel || !shippingCost || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
+                    {(!customerTel || !shippingCost || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
                         <li>
                             <button type="submit" className="button primary">Continue</button>
                         </li>

@@ -69,7 +69,7 @@ function CartScreen(props) {
                                         </select> */}
                                         <button
                                             type="button"
-                                            onClick={() => removeFromCartHandler(item.product)}
+                                            onClick={() => removeFromCartHandler(item.id)}
                                             className="button"
                                             style={{ marginLeft: '1.5rem', marginTop: '1rem' }}
                                         >
