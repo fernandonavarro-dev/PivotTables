@@ -15,6 +15,7 @@ function ShippingScreen(props) {
     const [city, setCity] = useState('');
     const [zip, setZip] = useState('');
     const [shippingCost, setShippingCost] = useState(null);
+    const [shippingIncluded, setShippingIncluded] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState('');
     const [invoice, setInvoice] = useState(null);
     const [comments, setComments] = useState('');
@@ -23,9 +24,14 @@ function ShippingScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
+        // if (shippingIncluded) {
+        //     setShippingCost(-Math.abs(shippingCost))
+        // }
         dispatch(saveShipping({ plaza, customerName, customerTel, customerFbPage, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
+    console.log("shippingCost, ", shippingCost);
+    console.log("shippingIncluded, ", shippingIncluded);
 
     return <div>
         <PostOrderSteps step1 step2 ></PostOrderSteps>
@@ -103,8 +109,30 @@ function ShippingScreen(props) {
                         <label htmlFor="shippingCost">
                             Shipping Cost $
           </label>
-                        <input type="number" name="shippingCost" id="shippingCost" onChange={(e) => setShippingCost(e.target.value)}>
+                        <input type="number" min="0" name="shippingCost" id="shippingCost" onChange={(e) => setShippingCost((e.target.value))}>
                         </input>
+                        <div>
+                            <input
+                                type="radio"
+                                name="shippingIncuded"
+                                id="shippingIncuded"
+                                value={true}
+                                onChange={(e) => setShippingCost(-Math.abs(shippingCost))}
+                            ></input>
+                            <label htmlFor="shippingIncuded">Shipping Included</label>
+                        </div>
+                        <div>
+                            <input
+                                type="radio"
+                                name="shippingIncuded"
+                                id="shippingIncuded"
+                                value={false}
+                                onChange={(e) => setShippingCost(Math.abs(shippingCost))}
+                            ></input>
+                            <label htmlFor="shippingIncuded">Shipping NOT Included</label>
+                        </div>
+
+
                     </li>
                 </ul>
                 <ul className="form-container">
@@ -192,7 +220,7 @@ function ShippingScreen(props) {
 
                 </ul>
                 <ul className="form-container">
-                    {(!customerTel || !shippingCost || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
+                    {(!customerName || !customerTel || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
                         <li>
                             <button type="submit" className="button primary">Continue</button>
                         </li>

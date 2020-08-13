@@ -13,9 +13,9 @@ function PlaceOrderScreen(props) {
     const { loading, success, error, order } = orderCreate;
 
     const { cartItems, shipping } = cart;
-    if (!shipping.address || !shipping.customerTel || !shipping.shippingCost) {
-        props.history.push("/shipping");
-    }
+    // if (!shipping.address || !shipping.customerTel ) {
+    //     props.history.push("/shipping");
+    // }
     // console.log("cart, ", cart);
     // console.log("shipping, ", shipping);
 
@@ -29,8 +29,8 @@ function PlaceOrderScreen(props) {
     const dispatch = useDispatch();
 
     const placeOrderHandler = () => {
-        props.history.push("/profile");
         dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
+        props.history.push("/profile");
         // props.hisotry.push("/orders/");
 
 
