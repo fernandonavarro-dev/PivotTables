@@ -5,7 +5,18 @@ function productListReducer(state = { products: [] }, action) {
         case PRODUCT_LIST_REQUEST:
             return { loading: true };
         case PRODUCT_LIST_SUCCESS:
-            return { loading: false, products: action.payload }
+            const sortedArray = action.payload.sort(function (a, b) {
+                var nameA = a.name;
+                var nameB = b.name;
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+            return { loading: false, products: sortedArray }
         case PRODUCT_LIST_FAIL:
             return { loading: false, error: action.payload }
         default:
