@@ -57,11 +57,7 @@ function OrdersScreen() {
                                                     <td>{order.plaza}</td>
                                                     <td>${order.total}</td>
                                                     <td>${order.commission}</td>
-<<<<<<< HEAD
-                                                    <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
-=======
                                                     <td>{order.status}</td>
->>>>>>> Order+-for-initial-usage
                                                     {/* <td>{order.created_at}</td> */}
                                                     <td>
                                                         <Link to={"/order/" + order.id}>DETAILS</Link>
