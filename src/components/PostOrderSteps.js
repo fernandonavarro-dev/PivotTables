@@ -7,6 +7,7 @@ function PostOrderSteps(props) {
         <div className={props.step2 ? 'active' : ''}>Order Details</div>
         <div className={props.step3 ? 'active' : ''}>Place Order</div>
         <div className={props.step4 ? 'active' : ''}>Processing</div>
+        {/* <div className={props.step5 ? 'active' : ''}>Scheduled</div> */}
         <div className={props.step5 ? 'active' : ''}>Delivered</div>
     </div>
 

@@ -40,7 +40,7 @@ function myOrderListReducer(state = {
             const orders = [...ordersPre]
             const userInfo = action.user
             const myOrders = orders.filter(order => order.sellerUsername === userInfo.user.username)
-            const myActiveOrders = myOrders.filter(order => order.status === 'processing')
+            const myActiveOrders = myOrders.filter(order => order.status !== 'cancelled')
             // console.log("myOrders, ", myOrders);
             // console.log("userInfo.user.username, ", userInfo.user.username);
 

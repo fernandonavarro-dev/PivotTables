@@ -40,10 +40,10 @@ function ProductScreen(props) {
     function cancelOrderHandler(orderId) {
         // e.preventDefault()
         setStatus("cancelled")
-        console.log("status, ", status);
+        // console.log("status, ", status);
         dispatch(updateOrder(orderId, status))
         if (status === "cancelled") {
-            alert("Order cancelled, please reload browser")
+            alert("Order cancelled, please reload browser to see changes")
         }
     }
 
