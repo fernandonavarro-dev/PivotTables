@@ -5,6 +5,8 @@ import 'react-pivottable/pivottable.css';
 // import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOpenOrders, listOrders } from '../actions/orderActions';
+import { jsonToCSV } from 'react-papaparse'
+import { cloneDeep } from 'lodash'
 
 // see documentation for supported input formats
 const data = [['attribute', 'attribute2'], ['value1', 'value2']];
@@ -31,8 +33,14 @@ const PivotTableScreen = (props) => {
     }, []);
 
     const ordersData = [{ ...orders }]
+    const ordersClone = { ...orders }
+    // delete ordersClone.cartItems
+    const ordersString = JSON.stringify(ordersData)
+    const ordersCSV = jsonToCSV(ordersString)
 
-    // console.log("ordersData in PivotTableScreen, ", ordersData);
+    console.log("ordersClone in PivotTableScreen, ", ordersClone);
+    console.log("ordersCSV in PivotTableScreen, ", ordersCSV);
+    console.log("ordersString in PivotTableScreen, ", ordersString);
 
 
     return (

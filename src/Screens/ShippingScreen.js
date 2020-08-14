@@ -15,7 +15,7 @@ function ShippingScreen(props) {
     const [city, setCity] = useState('');
     const [zip, setZip] = useState('');
     const [shippingCost, setShippingCost] = useState(null);
-    const [shippingIncluded, setShippingIncluded] = useState(null)
+    // const [shippingIncluded, setShippingIncluded] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState('');
     const [invoice, setInvoice] = useState(null);
     const [comments, setComments] = useState('');
@@ -30,8 +30,8 @@ function ShippingScreen(props) {
         dispatch(saveShipping({ plaza, customerName, customerTel, customerFbPage, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
-    console.log("shippingCost, ", shippingCost);
-    console.log("shippingIncluded, ", shippingIncluded);
+    // console.log("shippingCost, ", shippingCost);
+    // console.log("shippingIncluded, ", shippingIncluded);
 
     return <div>
         <PostOrderSteps step1 step2 ></PostOrderSteps>

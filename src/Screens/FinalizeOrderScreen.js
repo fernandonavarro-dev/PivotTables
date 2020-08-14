@@ -14,6 +14,7 @@ function FinalizeOrderScreen(props) {
     const [notes, setNotes] = useState('')
     const [deliveryPerson, setDeliveryPerson] = useState('')
     const [isDelivered, setIsDelivered] = useState(false)
+    const [status, setStatus] = useState('')
 
     const dispatch = useDispatch();
 
@@ -24,17 +25,10 @@ function FinalizeOrderScreen(props) {
     // }
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updateOrder(order.id, isDelivered, deliveryDate, deliveryPerson, notes));
+        dispatch(updateOrder(order.id, status, isDelivered, deliveryDate, deliveryPerson, notes));
 
         props.history.push('orders')
         alert("Order Updated Successfully")
-
-        if (isDelivered) {
-            console.log("isDelivered == true");
-            // dispatch(updateStock())
-        }
-
-        // props.history.push('completeorder');
     };
 
     useEffect(() => {
@@ -61,8 +55,8 @@ function FinalizeOrderScreen(props) {
 
     }
 
-    // console.log("order inside FinalizeOrderScreen, ", order);
-    // console.log("cartItems inside FinalizeOrderScreen, ", cartItems);
+    console.log("isDelivered inside FinalizeOrderScreen, ", isDelivered);
+    console.log("status inside FinalizeOrderScreen, ", status);
     // console.log("cartItems[0] inside FinalizeOrderScreen, ", cartItems[0]);
     // console.log("typeof cartItems inside FinalizeOrderScreen, ", typeof cartItems);
     // console.log("orderItemsObject inside FinalizeOrderScreen, ", orderItemsObject);
@@ -74,10 +68,9 @@ function FinalizeOrderScreen(props) {
             <Link to="/orders">Back to orders</Link>
             <h3>Order Id: {order.id}</h3>
         </div>
-        {isDelivered ?
-            <PostOrderSteps step1 step2 step3 step4 step5></PostOrderSteps>
-            :
-            <PostOrderSteps step1 step2 step3 step4 ></PostOrderSteps>
+        {isDelivered ? <PostOrderSteps step1 step2 step3 step4 step5 step6></PostOrderSteps>
+            : <PostOrderSteps step1 step2 step3 step4  ></PostOrderSteps>
+
         }
         {loading ? <div>Loading ...</div> : error ? <div>{error}</div> :
 
@@ -93,7 +86,7 @@ function FinalizeOrderScreen(props) {
           {order.zip}, {order.country},
           </div>
                             <div>
-                                Status: {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
+                                Status: {order.status ? "Delivered at " + order.deliveredAt : "Not Delivered."}
                             </div>
                         </div>
                         <div>
@@ -229,32 +222,52 @@ function FinalizeOrderScreen(props) {
                                 </input>
                             </li>
                             <li>
-                                <h4>Delivery Status</h4>
+                                <h4>Order Status: {order.status}</h4>
                             </li>
 
                             <li>
                                 <div>
                                     <input
                                         type="radio"
-                                        name="isDelivered"
-                                        id="isDelivered"
-                                        value={false}
-                                        defaultChecked={true}
-                                        onChange={(e) => (setIsDelivered(e.target.value))}
+                                        name="status"
+                                        id="status"
+                                        value={order.status}
+                                        onChange={(e) => {
+                                            setIsDelivered(false)
+                                            setStatus('processing')
+                                        }}
                                     ></input>
-                                    <label htmlFor="isDelivered">Processing</label>
+                                    <label htmlFor="status">Processing</label>
                                 </div>
                             </li>
                             <li>
                                 <div>
                                     <input
                                         type="radio"
-                                        name="isDelivered"
-                                        id="isDelivered"
-                                        value={true}
-                                        onChange={(e) => (setIsDelivered(e.target.value))}
+                                        name="status"
+                                        id="status"
+                                        value={order.status}
+                                        onChange={(e) => {
+                                            setIsDelivered(false)
+                                            setStatus('scheduled')
+                                        }}
                                     ></input>
-                                    <label htmlFor="invoice">Delivered</label>
+                                    <label htmlFor="status">Scheduled</label>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        id="status"
+                                        value={order.status}
+                                        onChange={(e) => {
+                                            setIsDelivered(true)
+                                            setStatus('delivered')
+                                        }}
+                                    ></input>
+                                    <label htmlFor="status">Delivered</label>
                                 </div>
                             </li>
 

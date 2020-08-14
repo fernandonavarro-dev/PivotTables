@@ -24,6 +24,7 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
         totalNoShipping,
         total,
         isDelivered: false,
+        status: "processing",
         deliveryPerson: shipping.deliveryPerson,
         cartItems,
         sellerComments: shipping.sellerComments,
@@ -47,11 +48,12 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
 
 }
 
-const updateOrder = (orderId, isDelivered, deliveryDate, deliveryPerson, notes) => async (dispatch, getState) => {
+const updateOrder = (orderId, status, isDelivered, deliveryDate, deliveryPerson, notes) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     const order = {
         isDelivered,
+        status,
         deliveryDate,
         deliveryPerson,
         coordinatorNotes: notes,

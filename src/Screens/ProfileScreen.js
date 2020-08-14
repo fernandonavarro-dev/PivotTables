@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { logout } from '../actions/userActions';
-import { listMyOrders } from '../actions/orderActions';
+import { listMyOrders, updateOrder } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function ProductScreen(props) {
@@ -11,6 +11,8 @@ function ProductScreen(props) {
 
     const dispatch = useDispatch();
 
+    const [status, setStatus] = useState('processing')
+
     const handleLogout = () => {
         dispatch(logout());
         props.history.push("/");
@@ -18,6 +20,8 @@ function ProductScreen(props) {
 
     const myOrderList = useSelector(state => state.myOrderList);
     const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+    // const [, updateState] = useState()
+    // const forceUpdate = useCallback(() => updateState({}), [])
 
     useEffect(() => {
         if (userInfo) {
@@ -32,6 +36,18 @@ function ProductScreen(props) {
 
         };
     }, [userInfo])
+
+    function cancelOrderHandler(orderId) {
+        // e.preventDefault()
+        setStatus("cancelled")
+        // console.log("status, ", status);
+        dispatch(updateOrder(orderId, status))
+        if (status === "cancelled") {
+            alert("Order cancelled, please reload browser to see changes")
+        }
+    }
+
+
 
     return <div className="profile">
         <div className="profile-info">
@@ -74,8 +90,8 @@ function ProductScreen(props) {
                                     <th>PLAZA</th>
                                     <th>TOTAL</th>
                                     <th>COMMISSION</th>
-                                    <th>DELIVERED</th>
-                                    <th>CREATED AT</th>
+                                    <th>STATUS</th>
+                                    {/* <th>CREATED AT</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,8 +103,19 @@ function ProductScreen(props) {
                                         <td>{order.plaza}</td>
                                         <td>${order.total}</td>
                                         <td>${order.commission}</td>
-                                        <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
-                                        <td>{order.created_at}</td>
+                                        <td>{order.status}</td>
+                                        {/* <td>{order.created_at}</td> */}
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                cancelOrderHandler(order.id)
+                                                // forceUpdate()
+                                            }}
+                                            className="button"
+                                            style={{ marginLeft: '1.5rem', marginTop: '1rem' }}
+                                        >
+                                            Cancel
+                                        </button>
                                         {/* <td>
                                         <Link to={"/order/" + order.id}>DETAILS</Link>
                                     </td> */}
