@@ -14,6 +14,7 @@ function FinalizeOrderScreen(props) {
     const [notes, setNotes] = useState('')
     const [deliveryPerson, setDeliveryPerson] = useState('')
     const [isDelivered, setIsDelivered] = useState(false)
+    const [status, setStatus] = useState('')
 
     const dispatch = useDispatch();
 
@@ -24,15 +25,19 @@ function FinalizeOrderScreen(props) {
     // }
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updateOrder(order.id, isDelivered, deliveryDate, deliveryPerson, notes));
+        isDelivered ? setStatus("delivered") : setStatus("processing")
+
+        dispatch(updateOrder(order.id, status, isDelivered, deliveryDate, deliveryPerson, notes));
 
         props.history.push('orders')
         alert("Order Updated Successfully")
 
-        if (isDelivered) {
-            console.log("isDelivered == true");
-            // dispatch(updateStock())
-        }
+
+        // if (isDelivered) {
+        //     console.log("isDelivered == true");
+        //     setStatus("delivered")
+        //     dispatch(updateOrder(status))
+        // }
 
         // props.history.push('completeorder');
     };
@@ -61,8 +66,8 @@ function FinalizeOrderScreen(props) {
 
     }
 
-    // console.log("order inside FinalizeOrderScreen, ", order);
-    // console.log("cartItems inside FinalizeOrderScreen, ", cartItems);
+    console.log("isDelivered inside FinalizeOrderScreen, ", isDelivered);
+    console.log("status inside FinalizeOrderScreen, ", status);
     // console.log("cartItems[0] inside FinalizeOrderScreen, ", cartItems[0]);
     // console.log("typeof cartItems inside FinalizeOrderScreen, ", typeof cartItems);
     // console.log("orderItemsObject inside FinalizeOrderScreen, ", orderItemsObject);
@@ -254,7 +259,7 @@ function FinalizeOrderScreen(props) {
                                         value={true}
                                         onChange={(e) => (setIsDelivered(e.target.value))}
                                     ></input>
-                                    <label htmlFor="invoice">Delivered</label>
+                                    <label htmlFor="isDelivered">Delivered</label>
                                 </div>
                             </li>
 

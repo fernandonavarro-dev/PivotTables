@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { logout } from '../actions/userActions';
-import { listMyOrders } from '../actions/orderActions';
+import { listMyOrders, updateOrder } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function ProductScreen(props) {
@@ -10,6 +10,8 @@ function ProductScreen(props) {
     const { userInfo } = userLogin;
 
     const dispatch = useDispatch();
+
+    const [status, setStatus] = useState('processing')
 
     const handleLogout = () => {
         dispatch(logout());
@@ -32,6 +34,14 @@ function ProductScreen(props) {
 
         };
     }, [userInfo])
+
+    const cancelOrderHandler = (e) => {
+        setStatus("cancelled")
+        console.log("status, ", status);
+        dispatch(updateOrder(status))
+    }
+
+
 
     return <div className="profile">
         <div className="profile-info">
@@ -73,7 +83,7 @@ function ProductScreen(props) {
                                     <th>PLAZA</th>
                                     <th>TOTAL</th>
                                     <th>COMMISSION</th>
-                                    <th>DELIVERED</th>
+                                    <th>STATUS</th>
                                     <th>CREATED AT</th>
                                 </tr>
                             </thead>
@@ -85,8 +95,16 @@ function ProductScreen(props) {
                                         <td>{order.plaza}</td>
                                         <td>${order.total}</td>
                                         <td>${order.commission}</td>
-                                        <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
+                                        <td>{order.status}</td>
                                         <td>{order.created_at}</td>
+                                        <button
+                                            type="button"
+                                            onClick={() => cancelOrderHandler(order.id)}
+                                            className="button"
+                                            style={{ marginLeft: '1.5rem', marginTop: '1rem' }}
+                                        >
+                                            Cancel
+                                        </button>
                                         {/* <td>
                                         <Link to={"/order/" + order.id}>DETAILS</Link>
                                     </td> */}
