@@ -10,7 +10,7 @@ function FinalizeOrderScreen(props) {
 
     const [cartItems, setCartItems] = useState([])
 
-    const [deliveryDate, setDeliveryDate] = useState('')
+    const [deliveryDate, setDeliveryDate] = useState(null)
     const [notes, setNotes] = useState('')
     const [deliveryPerson, setDeliveryPerson] = useState('')
     const [isDelivered, setIsDelivered] = useState(false)
@@ -25,7 +25,17 @@ function FinalizeOrderScreen(props) {
     // }
     const submitHandler = (e) => {
         e.preventDefault();
-        isDelivered ? setStatus("delivered") : setStatus("processing")
+
+        if (deliveryDate != null) {
+            setStatus("scheduled")
+            console.log("status = scheduled?", status);
+        }
+
+        if (isDelivered) {
+            setStatus("delivered")
+            setIsDelivered(true)
+            console.log("status = delivered?", status);
+        }
 
         dispatch(updateOrder(order.id, status, isDelivered, deliveryDate, deliveryPerson, notes));
 
@@ -98,7 +108,7 @@ function FinalizeOrderScreen(props) {
           {order.zip}, {order.country},
           </div>
                             <div>
-                                Status: {order.isDelivered ? "Delivered at " + order.deliveredAt : "Not Delivered."}
+                                Status: {order.status ? "Delivered at " + order.deliveredAt : "Not Delivered."}
                             </div>
                         </div>
                         <div>

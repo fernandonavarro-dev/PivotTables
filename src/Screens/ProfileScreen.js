@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { logout } from '../actions/userActions';
 import { listMyOrders, updateOrder } from '../actions/orderActions';
@@ -20,6 +20,8 @@ function ProductScreen(props) {
 
     const myOrderList = useSelector(state => state.myOrderList);
     const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
+    // const [, updateState] = useState()
+    // const forceUpdate = useCallback(() => updateState({}), [])
 
     useEffect(() => {
         if (userInfo) {
@@ -35,10 +37,14 @@ function ProductScreen(props) {
         };
     }, [userInfo])
 
-    const cancelOrderHandler = (e) => {
+    function cancelOrderHandler(orderId) {
+        // e.preventDefault()
         setStatus("cancelled")
         console.log("status, ", status);
-        dispatch(updateOrder(status))
+        dispatch(updateOrder(orderId, status))
+        if (status === "cancelled") {
+            alert("Order cancelled, please reload browser")
+        }
     }
 
 
@@ -79,27 +85,32 @@ function ProductScreen(props) {
                             <thead>
                                 <tr>
                                     <th>ORDER ID</th>
+                                    <th>CUSTOMER</th>
                                     <th>SELLER</th>
                                     <th>PLAZA</th>
                                     <th>TOTAL</th>
                                     <th>COMMISSION</th>
                                     <th>STATUS</th>
-                                    <th>CREATED AT</th>
+                                    {/* <th>CREATED AT</th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {orders.map(order =>
                                     <tr key={order.id}>
                                         <td >{order.id}</td>
+                                        <td >{order.customerName}</td>
                                         <td >{order.sellerUsername}</td>
                                         <td>{order.plaza}</td>
                                         <td>${order.total}</td>
                                         <td>${order.commission}</td>
                                         <td>{order.status}</td>
-                                        <td>{order.created_at}</td>
+                                        {/* <td>{order.created_at}</td> */}
                                         <button
                                             type="button"
-                                            onClick={() => cancelOrderHandler(order.id)}
+                                            onClick={() => {
+                                                cancelOrderHandler(order.id)
+                                                // forceUpdate()
+                                            }}
                                             className="button"
                                             style={{ marginLeft: '1.5rem', marginTop: '1rem' }}
                                         >
