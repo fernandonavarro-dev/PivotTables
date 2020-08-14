@@ -38,12 +38,13 @@ function OrdersScreen() {
                                             <tr>
                                                 <th>ORDER ID</th>
                                                 <th>CUSTOMER</th>
+                                                <th>CUSTOMER TEL</th>
                                                 <th>SELLER</th>
                                                 <th>PLAZA</th>
                                                 <th>TOTAL</th>
                                                 <th>COMMISSION</th>
-                                                <th>DELIVERED</th>
-                                                <th>CREATED AT</th>
+                                                <th>STATUS</th>
+                                                {/* <th>CREATED AT</th> */}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -51,12 +52,13 @@ function OrdersScreen() {
                                                 <tr key={order.id}>
                                                     <td >{order.id}</td>
                                                     <td >{order.customerName}</td>
+                                                    <td >{order.customerTel}</td>
                                                     <td >{order.sellerUsername}</td>
                                                     <td>{order.plaza}</td>
                                                     <td>${order.total}</td>
                                                     <td>${order.commission}</td>
                                                     <td>{order.isDelivered ? "Delivered" : "Processing"}</td>
-                                                    <td>{order.created_at}</td>
+                                                    {/* <td>{order.created_at}</td> */}
                                                     <td>
                                                         <Link to={"/order/" + order.id}>DETAILS</Link>
                                                         {' '}
