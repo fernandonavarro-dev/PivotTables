@@ -8,7 +8,6 @@ function OrdersScreen() {
     const { userInfo } = userLogin;
 
     const openOrderList = useSelector(state => state.openOrderList);
-    // const { loading, orders, error } = openOrderList;
     const { loading: loadingOrders, orders, error: errorOrders } = openOrderList;
 
     const dispatch = useDispatch();
@@ -18,7 +17,7 @@ function OrdersScreen() {
         return () => {
             //
         };
-    }, []);
+    }, [dispatch, userInfo]);
 
     return (
         <div>

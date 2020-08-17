@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-// import ReactDOM from 'react-dom';
 import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
-// import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { listOpenOrders, listOrders } from '../actions/orderActions';
-import { jsonToCSV } from 'react-papaparse'
-import { cloneDeep } from 'lodash'
-
-// see documentation for supported input formats
-const data = [['attribute', 'attribute2'], ['value1', 'value2']];
+import { listOrders } from '../actions/orderActions';
+// import { jsonToCSV } from 'react-papaparse'
+// import { cloneDeep } from 'lodash'
 
 const PivotTableScreen = (props) => {
 

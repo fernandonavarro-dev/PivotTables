@@ -66,8 +66,6 @@ function myOrderListReducer(
       const myActiveOrders = myOrders.filter(
         (order) => order.status !== 'cancelled'
       );
-      // console.log("myOrders, ", myOrders);
-      // console.log("userInfo.user.username, ", userInfo.user.username);
 
       return { loading: false, orders: myActiveOrders };
     case MY_ORDER_LIST_FAIL:
@@ -89,10 +87,7 @@ function openOrderListReducer(
     case OPEN_ORDER_LIST_SUCCESS:
       const ordersPre = action.payload;
       const orders = [...ordersPre];
-      // const userInfo = action.user
       const openOrders = orders.filter((order) => order.isDelivered === false);
-      // console.log("myOrders, ", myOrders);
-      // console.log("userInfo.user.username, ", userInfo.user.username);
 
       return { loading: false, orders: openOrders };
     case OPEN_ORDER_LIST_FAIL:
@@ -114,12 +109,6 @@ function orderListReducer(
     case ORDER_LIST_SUCCESS:
       const ordersPre = action.payload;
       const orders = [...ordersPre];
-      const ordersArray = Array(orders);
-      // const openOrders = orders.filter(order => order.isDelivered === false)
-      console.log('orders in orderReducers, ', orders);
-      console.log('typeof orders in orderReducers, ', typeof orders);
-      console.log('typeof  ordersArray in orderReducers, ', typeof ordersArray);
-
       return { loading: false, orders: orders };
     case ORDER_LIST_FAIL:
       return { loading: false, error: action.payload };
