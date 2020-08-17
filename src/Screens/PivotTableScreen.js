@@ -17,11 +17,9 @@ const PivotTableScreen = (props) => {
     const { userInfo } = userLogin;
 
     const [initialState, setInitialState] = useState(props)
-    // const [data, setData] = useState([])
 
     const orderList = useSelector(state => state.orderList);
-    // const { loading, orders, error } = orderList;
-    const { loading: loadingOrders, orders, error: errorOrders } = orderList;
+    const { loading, orders, error } = orderList;
 
     const dispatch = useDispatch();
 
@@ -30,29 +28,26 @@ const PivotTableScreen = (props) => {
         return () => {
             //
         };
-    }, []);
-
-    const ordersData = [{ ...orders }]
-    const ordersClone = { ...orders }
-    // delete ordersClone.cartItems
-    const ordersString = JSON.stringify(ordersData)
-    const ordersCSV = jsonToCSV(ordersString)
-
-    console.log("ordersClone in PivotTableScreen, ", ordersClone);
-    console.log("ordersCSV in PivotTableScreen, ", ordersCSV);
-    console.log("ordersString in PivotTableScreen, ", ordersString);
-
+    }, [dispatch]);
 
     return (
         <div>
-            {userInfo && userInfo.user.isTop && (
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>{error}</div>
+            ) : (
+                        <>
+                            {userInfo && userInfo.user.isTop && (
 
-                <PivotTableUI
-                    data={ordersData}
-                    onChange={s => setInitialState(s)}
-                    {...initialState}
-                />
-            )}
+                                <PivotTableUI
+                                    data={orders}
+                                    onChange={s => setInitialState(s)}
+                                    {...initialState}
+                                />
+                            )}
+                        </>
+                    )}
         </div>
     );
 
