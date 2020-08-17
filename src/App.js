@@ -15,41 +15,35 @@ import FinalizeOrderScreen from './Screens/FinalizeOrderScreen';
 import PivotTableScreen from './Screens/PivotTableScreen';
 
 function App() {
-
-  const userLogin = useSelector(state => state.userLogin);
+  const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const openMenu = () => {
-    document.querySelector(".sidebar").classList.add("open");
-  }
+    document.querySelector('.sidebar').classList.add('open');
+  };
 
   const closeMenu = () => {
-    document.querySelector(".sidebar").classList.remove("open");
-
-  }
-
-
+    document.querySelector('.sidebar').classList.remove('open');
+  };
 
   return (
     <BrowserRouter>
       <div className="grid-container">
         <header className="header">
           <div className="brand">
-            <button onClick={openMenu}>
-              &#9776;
-          </button>
-            <Link to="/" >Wellstar Order App</Link>
+            <button onClick={openMenu}>&#9776;</button>
+            <Link to="/">Wellstar Order App</Link>
           </div>
-          <div className="header-links" >
+          <div className="header-links">
             <a href="/cart">Cart</a>
-            {userInfo ? (
+            {userInfo && userInfo.user ? (
               <Link to="/profile">{userInfo.user.name}</Link>
             ) : (
-                <Link to="/">Login</Link>
-              )}
-            {userInfo && userInfo.user.isAdmin && (
+              <Link to="/">Login</Link>
+            )}
+            {userInfo && userInfo.user && userInfo.user.isAdmin && (
               <div className="dropdown">
-                <a href="#" >Admin</a>
+                <a href="#">Admin</a>
                 <ul className="dropdown-content">
                   <li>
                     <Link to="/orders">Orders</Link>
@@ -61,14 +55,15 @@ function App() {
                   )}
                 </ul>
               </div>
-
             )}
           </div>
         </header>
         <aside className="sidebar">
           <h3>Product Categories</h3>
-          <button className="sidebar-close-button" onClick={closeMenu}>X</button>
-          <ul className="categories" >
+          <button className="sidebar-close-button" onClick={closeMenu}>
+            X
+          </button>
+          <ul className="categories">
             <li>
               <Link to="/category/category1">category1</Link>
             </li>
@@ -77,8 +72,8 @@ function App() {
             </li>
           </ul>
         </aside>
-        <main className="main" >
-          <div className="content" >
+        <main className="main">
+          <div className="content">
             <Route path="/home" component={HomeScreen} />
             <Route path="/orders" component={OrdersScreen} />
             <Route path="/pivottable" component={PivotTableScreen} />
@@ -92,10 +87,11 @@ function App() {
             <Route path="/" exact={true} component={LoginScreen} />
           </div>
         </main>
-        <footer className="footer">by CORE Data Design & Development w/ React</footer>
+        <footer className="footer">
+          by CORE Data Design & Development w/ React
+        </footer>
       </div>
     </BrowserRouter>
-
   );
 }
 
