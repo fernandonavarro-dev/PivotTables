@@ -7,7 +7,7 @@ import { addToCart, savePlaza } from '../actions/cartActions';
 
 function ProductScreen(props) {
     const cart = useSelector((state) => state.cart);
-    const { plaza } = cart;
+    const { cartItems, plaza } = cart;
 
     const [qty, setQty] = useState(1);
 
@@ -21,12 +21,12 @@ function ProductScreen(props) {
     let productsAvailable = { product: { countInStock: 0 } };
     if (product && productsStock) {
         productsAvailable = productsStock.find((x) => {
-            console.log(x.name === product.name, '=>', x.name, '=', product.name);
+            // console.log(x.name === product.name, '=>', x.name, '=', product.name);
             return product.name.indexOf(x.name) >= 0;
         }) || { product: { countInStock: 0 } };
     }
     const countInStock = productsAvailable.product[plaza + '_product'] || 0;
-    const plazaStock = 0;
+
     useEffect(() => {
         if (!product || !product.name) {
             dispatch(detailsProduct(props.match.params.id));
@@ -55,8 +55,33 @@ function ProductScreen(props) {
                             <div className="back-to-result">
                                 <Link to="/">Back to products</Link>
                             </div>
+
                             <ul className="filter">
                                 <li>
+                                    {cartItems.length > 0 ?
+                                        <h3>Plaza: {plaza}</h3>
+                                        :
+                                        <li>
+                                            Plaza:{' '}
+                                            <select
+                                                value={plaza}
+                                                onChange={(e) => {
+                                                    dispatch(savePlaza(e.target.value));
+                                                }}
+                                            >
+                                                <option value="void">select</option>
+                                                <option value="cdmx">CDMX</option>
+                                                <option value="cun">Cancun</option>
+                                                <option value="mty">Monterrey</option>
+                                                <option value="playa">Playa del Carmen</option>
+                                                <option value="pbl">Puebla</option>
+                                                <option value="qro">Queretaro</option>
+                                                <option value="tulum">Tulum</option>
+                                            </select>
+                                        </li>
+                                    }
+                                </li>
+                                {/* <li>
                                     Plaza:{' '}
                                     <select
                                         value={plaza}
@@ -73,7 +98,7 @@ function ProductScreen(props) {
                                         <option value="qro">Queretaro</option>
                                         <option value="tulum">Tulum</option>
                                     </select>
-                                </li>
+                                </li> */}
                             </ul>
                             <div className="details">
                                 <div className="details-image">

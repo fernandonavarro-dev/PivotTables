@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 // import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { saveShipping } from '../actions/cartActions';
 import PostOrderSteps from '../components/PostOrderSteps';
 
 function ShippingScreen(props) {
+    const cart = useSelector((state) => state.cart);
+    const { plaza } = cart;
 
-    const [plaza, setPlaza] = useState('');
+    // const [plaza, setPlaza] = useState(plaza);
     const [customerName, setCustomerName] = useState('');
     const [customerTel, setCustomerTel] = useState('');
     const [customerFbPage, setCustomerFbPage] = useState('')
@@ -15,7 +17,6 @@ function ShippingScreen(props) {
     const [city, setCity] = useState('');
     const [zip, setZip] = useState('');
     const [shippingCost, setShippingCost] = useState(null);
-    // const [shippingIncluded, setShippingIncluded] = useState(null)
     const [paymentMethod, setPaymentMethod] = useState('');
     const [invoice, setInvoice] = useState(null);
     const [comments, setComments] = useState('');
@@ -24,9 +25,6 @@ function ShippingScreen(props) {
 
     const submitHandler = (e) => {
         e.preventDefault();
-        // if (shippingIncluded) {
-        //     setShippingCost(-Math.abs(shippingCost))
-        // }
         dispatch(saveShipping({ plaza, customerName, customerTel, customerFbPage, address, colony, city, zip, shippingCost, paymentMethod, invoice, comments }));
         props.history.push('placeorder');
     }
@@ -40,21 +38,6 @@ function ShippingScreen(props) {
                 <ul className="form-container">
                     <li>
                         <h3>Shipping Info</h3>
-                    </li>
-                    <li>
-                        Plaza: <select value={plaza} required={true} onChange={(e) => {
-                            setPlaza(e.target.value)
-                        }}>
-                            {/* Plaza: <select value={plaza} required={true} onChange={handlePlazaSelect}> */}
-                            <option value="void">select</option>
-                            <option value="cdmx">CDMX</option>
-                            <option value="cun">Cancun</option>
-                            <option value="mty">Monterrey</option>
-                            <option value="playa">Playa del Carmen</option>
-                            <option value="pbl">Puebla</option>
-                            <option value="qro">Queretaro</option>
-                            <option value="tulum">Tulum</option>
-                        </select>
                     </li>
                     <li>
                         <label htmlFor="customerName">
@@ -220,7 +203,7 @@ function ShippingScreen(props) {
 
                 </ul>
                 <ul className="form-container">
-                    {(!customerName || !customerTel || !paymentMethod || !invoice || (!colony && !zip)) ? "" :
+                    {(!customerName || !customerTel || !paymentMethod || !invoice || (!colony && !zip) || !city || !address) ? "" :
                         <li>
                             <button type="submit" className="button primary">Continue</button>
                         </li>

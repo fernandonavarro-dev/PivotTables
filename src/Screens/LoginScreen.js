@@ -12,7 +12,7 @@ function LoginScreen(props) {
   // const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   useEffect(() => {
     if (userInfo && userInfo.user) {
-      props.history.push('/home');
+      props.history.push('/');
     }
     return () => {
       //

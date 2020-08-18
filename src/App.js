@@ -39,8 +39,8 @@ function App() {
             {userInfo && userInfo.user ? (
               <Link to="/profile">{userInfo.user.name}</Link>
             ) : (
-              <Link to="/">Login</Link>
-            )}
+                <Link to="/login">Login</Link>
+              )}
             {userInfo && userInfo.user && userInfo.user.isAdmin && (
               <div className="dropdown">
                 <a href="#">Admin</a>
@@ -74,7 +74,7 @@ function App() {
         </aside>
         <main className="main">
           <div className="content">
-            <Route path="/home" component={HomeScreen} />
+            <Route path="/login" component={LoginScreen} />
             <Route path="/orders" component={OrdersScreen} />
             <Route path="/pivottable" component={PivotTableScreen} />
             <Route path="/profile" component={ProfileScreen} />
@@ -84,7 +84,7 @@ function App() {
             <Route path="/product/:id" component={ProductScreen} />
             <Route path="/order/:id" component={FinalizeOrderScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
-            <Route path="/" exact={true} component={LoginScreen} />
+            <Route path="/" exact={true} component={HomeScreen} />
           </div>
         </main>
         <footer className="footer">

@@ -118,6 +118,10 @@ function PlaceOrderScreen(props) {
                         <h3>Order Summary</h3>
                     </li>
                     <li>
+                        <div>Plaza: </div>
+                        <div>{cart.shipping.plaza}</div>
+                    </li>
+                    <li>
                         <div>Subtotal</div>
                         <div>${subtotal}</div>
                     </li>

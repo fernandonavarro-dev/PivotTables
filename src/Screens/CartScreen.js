@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 // import { usedispatch } from 'react-redux';
 
 function CartScreen(props) {
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
 
     const cart = useSelector(state => state.cart);
-
     const { cartItems } = cart;
 
     // const productId = props.match.params.id;
@@ -99,13 +100,19 @@ function CartScreen(props) {
         :
          $ {cartItems.reduce((a, c) => a + c.commission * c.qty, 0)}
             </h3> */}
-            <button
-                className="button primary full-width"
-                disabled={cartItems.length === 0}
-                onClick={checkoutHandler}
-            >
-                Proceed to checkout
+            <ul className="form-container">
+                {userInfo ?
+                    <button
+                        className="button primary full-width"
+                        disabled={cartItems.length === 0}
+                        onClick={checkoutHandler}
+                    >
+                        Proceed to checkout
             </button>
+                    :
+                    "Please Log in"
+                }
+            </ul>
 
         </div>
     </div>
