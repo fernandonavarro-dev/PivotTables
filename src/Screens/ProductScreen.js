@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,196 +6,177 @@ import { detailsProduct, stockCountProduct } from '../actions/productActions';
 import { addToCart, savePlaza } from '../actions/cartActions';
 
 function ProductScreen(props) {
-    const cart = useSelector(state => state.cart);
-    const { cartItems, plaza } = cart;
+  const cart = useSelector((state) => state.cart);
+  const { plaza } = cart;
 
-    // const [plazaStock, setPlazaStock] = useState({});
-    const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(1);
 
-    const productDetails = useSelector(state => state.productDetails);
-    const dispatch = useDispatch();
-    const { product, loading, error } = productDetails;
+  const productDetails = useSelector((state) => state.productDetails);
+  const dispatch = useDispatch();
+  const { product, loading, error } = productDetails;
 
-    const productStockCount = useSelector(state => state.productStockCount)
-    const { productsStock } = productStockCount
+  const productStockCount = useSelector((state) => state.productStockCount);
+  const { productsStock } = productStockCount;
 
-    const countInStock = () => {
-        const productInPlaza = productsStock.filter(x => x.name === product.name)
-        return productInPlaza.countInStock
+  let productsAvailable = { product: { countInStock: 0 } };
+  if (product && productsStock) {
+    productsAvailable = productsStock.find((x) => {
+      console.log(x.name === product.name, '=>', x.name, '=', product.name);
+      return product.name.indexOf(x.name) >= 0;
+    }) || { product: { countInStock: 0 } };
+  }
+  const countInStock = productsAvailable.product[plaza + '_product'] || 0;
+  const plazaStock = 0;
+  useEffect(() => {
+    if (!product || !product.name) {
+      dispatch(detailsProduct(props.match.params.id));
     }
 
-    useEffect(() => {
-        dispatch(detailsProduct(props.match.params.id));
-        dispatch(stockCountProduct(plaza));
+    dispatch(stockCountProduct(plaza));
 
-        return () => {
-            //
-        };
-    }, [dispatch, props.match.params.id, plaza]);
+    return () => {
+      //
+    };
+  }, [dispatch, props.match.params.id, plaza]);
 
-    const productsAvailable = []
+  const handleAddToCart = () => {
+    // dispatch(addToCart(product.id, qty, countInStock));
+    alert('Added to cart');
+  };
 
-    for (let x = 0; x < countInStock; x++) {
-        productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
-    }
-
-    // const handleSetPlaza = (e) => {
-    //     dispatch(savePlaza(e.target.value))
-    // }
-
-    const handleAddToCart = () => {
-        // props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
-        dispatch(addToCart(product.id, qty, countInStock));
-        alert("Added to cart")
-    }
-
-    return (
-        <div>
-            {loading ? (
-                <div>Loading...</div>
-            ) : error ? (
-                <div>{error}</div>
-            ) : (
-                        <>
-                            <div className="back-to-result">
-                                <Link to="/">Back to products</Link>
-                            </div>
-                            <ul className="filter">
-                                <li>
-                                    Plaza: <select value={plaza} onChange={(e) => {
-                                        dispatch(savePlaza(e.target.value))
-                                    }}>
-                                        <option value="void">select</option>
-                                        <option value="cdmx">CDMX</option>
-                                        <option value="cun">Cancun</option>
-                                        <option value="mty">Monterrey</option>
-                                        <option value="pbl">Playa del Carmen</option>
-                                        <option value="playa">Puebla</option>
-                                        <option value="qro">Queretaro</option>
-                                        <option value="tulum">Tulum</option>
-                                    </select>
-                                </li>
-                            </ul>
-                            <div className="details">
-                                <div className="details-image">
-                                    <img src={product.imageURL} alt="product"></img>
-                                </div>
-                                <div className="details-info">
-                                    <ul>
-                                        <li>
-                                            <h4>{product.name}</h4>
-                                        </li>
-                                        {/* <li>
-                                <a href="#reviews">
-                                    <Rating
-                                    value={product.rating}
-                                text={product.numReviews + ' reviews'}
-                                />
-                                </a>
-                            </li> */}
-                                        <li>
-                                            Price: <b>${product.price}</b>
-                                        </li>
-                                        <li>
-                                            Commission: <b>${product.commission}</b>
-                                        </li>
-                                        <li>
-                                            Description:
+  return (
+    <div>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <div>{error}</div>
+      ) : (
+        <>
+          <div className="back-to-result">
+            <Link to="/">Back to products</Link>
+          </div>
+          <ul className="filter">
+            <li>
+              Plaza:{' '}
+              <select
+                value={plaza}
+                onChange={(e) => {
+                  dispatch(savePlaza(e.target.value));
+                }}
+              >
+                <option value="void">select</option>
+                <option value="cdmx">CDMX</option>
+                <option value="cun">Cancun</option>
+                <option value="mty">Monterrey</option>
+                <option value="pbl">Playa del Carmen</option>
+                <option value="playa">Puebla</option>
+                <option value="qro">Queretaro</option>
+                <option value="tulum">Tulum</option>
+              </select>
+            </li>
+          </ul>
+          <div className="details">
+            <div className="details-image">
+              <img src={product.imageURL} alt="product"></img>
+            </div>
+            <div className="details-info">
+              <ul>
+                <li>
+                  <h4>{product.name}</h4>
+                </li>
+                <li>
+                  Price: <b>${product.price}</b>
+                </li>
+                <li>
+                  Commission: <b>${product.commission}</b>
+                </li>
+                <li>
+                  Description:
                   <div>{product.description}</div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="details-action">
-                                    <ul>
-                                        <li>
-                                            Price: $ {product.price}
-                                        </li>
-
-                                        {/* <li>
-                                        Plaza: <select value={plazaStock} onChange={(e) => {
-                                            setPlazaStock(e.target.value)
-                                        }}>
-                                            <option value="void">select</option>
-                                            <option value={cdmxStock.countInStock}>CDMX</option>
-                                            <option value={cunStock.countInStock}>Cancun</option>
-                                            <option value={mtyStock.countInStock}>Monterrey</option>
-                                            <option value={pblStock.countInStock}>Playa del Carmen</option>
-                                            <option value={playaStock.countInStock}>Puebla</option>
-                                            <option value={qroStock.countInStock}>Queretaro</option>
-                                            <option value={tulStock.countInStock}>Tulum</option>
-                                        </select>
-                                    </li> */}
-                                        <li>
-                                            Status: {productsAvailable.length > 0 ? "In stock" : ""}
-                                        </li>
-                                        <li>
-                                            Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
-                                                {productsAvailable}
-                                                {/* {[...Array({ plazaStock }).keys()].map(x =>
-                                                <option key={x + 1} value={x + 1}>{x + 1}</option>
-                                            )} */}
-                                            </select>
-                                        </li>
-                                        <li>
-                                            {productsAvailable.length > 0 &&
-                                                <button
-                                                    onClick={handleAddToCart}
-                                                    className="button primary" >Add to order</button>
-                                            }
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-                        </>
-                    )}
-        </div>
-    )
+                </li>
+              </ul>
+            </div>
+            <div className="details-action">
+              <ul>
+                <li>Price: $ {product.price}</li>
+                <li>Status: {countInStock > 0 ? 'In stock' : ''}</li>
+                <li>
+                  Qty:
+                  <select
+                    value={qty}
+                    onChange={(e) => {
+                      setQty(e.target.value);
+                    }}
+                  >
+                    {' '}
+                    {[...Array(countInStock).keys()].map((x) => (
+                      <option key={x + 1} value={x + 1}>
+                        {x + 1}
+                      </option>
+                    ))}
+                  </select>
+                </li>
+                <li>
+                  {countInStock > 0 && (
+                    <button
+                      onClick={handleAddToCart}
+                      className="button primary"
+                    >
+                      Add to order
+                    </button>
+                  )}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default ProductScreen;
 
-   // Plaza: <select
-    //     value={plazaStock}
-    //     onChange={(e) => { setPlazaStock(e.target.value) }}
-    // >
+// Plaza: <select
+//     value={plazaStock}
+//     onChange={(e) => { setPlazaStock(e.target.value) }}
+// >
 
-    // function SetPlazaStuff(plaza) {
-    //     switch (plaza) {
-    //         case "CDMX":
-    //             setPlazaString("product.qtyCDMX");
-    //             setPlazaStock({ product.qtyCDMX });
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
-    // SetPlazaStuff(plaza)
+// function SetPlazaStuff(plaza) {
+//     switch (plaza) {
+//         case "CDMX":
+//             setPlazaString("product.qtyCDMX");
+//             setPlazaStock({ product.qtyCDMX });
+//             break;
+//         default:
+//             break;
+//     }
+// }
+// SetPlazaStuff(plaza)
 
-    // const plazaObject = JSON.parse(plazaString.replace(/['"]+/g, ''))
-    // const plazaString = `['qty${plaza}']`;
+// const plazaObject = JSON.parse(plazaString.replace(/['"]+/g, ''))
+// const plazaString = `['qty${plaza}']`;
 
+// console.log("plazaString, ", plazaString);
+// console.log("typeof plazaString, ", typeof plazaString);
 
-    // console.log("plazaString, ", plazaString);
-    // console.log("typeof plazaString, ", typeof plazaString);
+// console.log("plazaObject, ", plazaObject);
 
-    // console.log("plazaObject, ", plazaObject);
-
-    // console.log("plazaStock, ", plazaStock);
-    // console.log("typeof plazaStock , ", typeof plazaStock);
+// console.log("plazaStock, ", plazaStock);
+// console.log("typeof plazaStock , ", typeof plazaStock);
 
 // console.log("products,", products);
-    // console.log("product,", product);
-    // console.log("product.id,", product.id);
+// console.log("product,", product);
+// console.log("product.id,", product.id);
 
-    // console.log("props.match.params.id, ", props.match.params.id);
-    // console.log(Object.keys(product))
+// console.log("props.match.params.id, ", props.match.params.id);
+// console.log(Object.keys(product))
 
-    // console.log("pageProduct, ", pageProduct);
-    // console.log("products.name, ", id);
+// console.log("pageProduct, ", pageProduct);
+// console.log("products.name, ", id);
 
-    // const { ['id']: productId } = products;
-    // console.log("id, ", productId);
+// const { ['id']: productId } = products;
+// console.log("id, ", productId);
 
 // class ProductScreen extends React.Component {
 
@@ -216,7 +198,6 @@ export default ProductScreen;
 //         const product = fetchedProducts.find(x => x['id'] === idInt);
 
 //         const pageProduct = product
-
 
 //         this.setState({ fetchedProducts, pageProduct })
 //     }
@@ -240,7 +221,6 @@ export default ProductScreen;
 
 // console.log("fetchedProducts inside render(), ", fetchedProducts);
 // console.log("pageProduct inside render(), ", pageProduct);
-
 
 // console.log("typeof pageProduct, ", typeof pageProduct);
 // console.log("Object.keys(product), ", Object.keys(pageProduct));
