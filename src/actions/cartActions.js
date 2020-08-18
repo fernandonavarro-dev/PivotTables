@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_DELIVERY } from '../constants/cartConstants';
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING, CART_SAVE_DELIVERY, CART_SAVE_PLAZA } from '../constants/cartConstants';
 
 const addToCart = (productId, qty, plazaStock) => async (dispatch, getState) => {
     try {
@@ -39,5 +39,10 @@ const saveShipping = (data) => (dispatch) => {
 const saveDelivery = (data) => (dispatch) => {
     dispatch({ type: CART_SAVE_DELIVERY, payload: data })
 }
+const savePlaza = (data) => (dispatch, getState) => {
+    dispatch({ type: CART_SAVE_PLAZA, payload: data })
+    const { cart: { plaza } } = getState();
+    Cookie.set("plaza", plaza)
+}
 
-export { addToCart, removeFromCart, saveShipping, saveDelivery };
+export { addToCart, removeFromCart, saveShipping, saveDelivery, savePlaza };

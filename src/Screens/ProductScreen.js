@@ -1,54 +1,34 @@
-// import React from 'react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsProduct } from '../actions/productActions';
-import { addToCart } from '../actions/cartActions';
+import { detailsProduct, stockCountProduct } from '../actions/productActions';
+import { addToCart, savePlaza } from '../actions/cartActions';
 
 function ProductScreen(props) {
-    // const userLogin = useSelector(state => state.userLogin);
-    // const { userInfo } = userLogin;
-    // console.log("userInfo, ", userInfo);
+    const cart = useSelector(state => state.cart);
+    const { cartItems, plaza } = cart;
 
     const [plazaStock, setPlazaStock] = useState({});
     const [qty, setQty] = useState(1);
+
     const productDetails = useSelector(state => state.productDetails);
     const dispatch = useDispatch();
-    const { products, loading, error } = productDetails;
+    const { product, loading, error } = productDetails;
+
+    const productStockCount = useSelector(state => state.productStockCount)
+    const { productsStock } = productStockCount
+
+    // const countInStock = productsStock.filter(x => x.name === product.name)
 
     useEffect(() => {
         dispatch(detailsProduct(props.match.params.id));
+        dispatch(stockCountProduct(plaza));
 
         return () => {
             //
         };
-    }, []);
+    }, [dispatch, props.match.params.id, plaza]);
 
-    const product = { ...products }
-    delete product.thumbnail
-
-    const cdmxStocks = product.cdmx_product
-    const cunStocks = product.cun_product
-    const mtyStocks = product.mty_product
-    const pblStocks = product.pbl_product
-    const playaStocks = product.playa_product
-    const qroStocks = product.qro_product
-    const tulStocks = product.tul_product
-
-    const cdmxStock = { ...cdmxStocks }
-    const cunStock = { ...cunStocks }
-    const mtyStock = { ...mtyStocks }
-    const pblStock = { ...pblStocks }
-    const playaStock = { ...playaStocks }
-    const qroStock = { ...qroStocks }
-    const tulStock = { ...tulStocks }
-
-    // console.log("product, ", product);
-    // console.log("product.cdmx_product, ", product.cdmx_product);
-    // console.log("cdmxStock.countInStock, ", cdmxStock.countInStock);
-
-    // const { qtyCDMX, qtyCUN, qtyMTY, qtyPLAYA, qtyPBL, qtyQRO, qtyTUL } = product;
 
     const productsAvailable = []
 
@@ -56,31 +36,51 @@ function ProductScreen(props) {
         productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
     }
 
+    const handleSetPlaza = (e) => {
+        dispatch(savePlaza(e.target.value))
+    }
+
     const handleAddToCart = () => {
         // props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
         dispatch(addToCart(product.id, qty, Number(plazaStock)));
         alert("Added to cart")
-
     }
 
     return (
         <div>
-            <div className="back-to-result">
-                <Link to="/">Back to products</Link>
-            </div>
-            {loading ? <div>Loading...</div> :
-                error ? <div>{error}</div> :
-                    (
-                        <div className="details">
-                            <div className="details-image">
-                                <img src={product.imageURL} alt="product"></img>
+            {loading ? (
+                <div>Loading...</div>
+            ) : error ? (
+                <div>{error}</div>
+            ) : (
+                        <>
+                            <div className="back-to-result">
+                                <Link to="/">Back to products</Link>
                             </div>
-                            <div className="details-info">
-                                <ul>
-                                    <li>
-                                        <h4>{product.name}</h4>
-                                    </li>
-                                    {/* <li>
+                            <ul className="filter">
+                                <li>
+                                    Plaza: <select value={plaza} onChange={handleSetPlaza}>
+                                        <option value="void">select</option>
+                                        <option value="cdmx">CDMX</option>
+                                        <option value="cun">Cancun</option>
+                                        <option value="mty">Monterrey</option>
+                                        <option value="pbl">Playa del Carmen</option>
+                                        <option value="playa">Puebla</option>
+                                        <option value="qro">Queretaro</option>
+                                        <option value="tulum">Tulum</option>
+                                    </select>
+                                </li>
+                            </ul>
+                            <div className="details">
+                                <div className="details-image">
+                                    <img src={product.imageURL} alt="product"></img>
+                                </div>
+                                <div className="details-info">
+                                    <ul>
+                                        <li>
+                                            <h4>{product.name}</h4>
+                                        </li>
+                                        {/* <li>
                                 <a href="#reviews">
                                     <Rating
                                     value={product.rating}
@@ -88,25 +88,25 @@ function ProductScreen(props) {
                                 />
                                 </a>
                             </li> */}
-                                    <li>
-                                        Price: <b>${product.price}</b>
-                                    </li>
-                                    <li>
-                                        Commission: <b>${product.commission}</b>
-                                    </li>
-                                    <li>
-                                        Description:
+                                        <li>
+                                            Price: <b>${product.price}</b>
+                                        </li>
+                                        <li>
+                                            Commission: <b>${product.commission}</b>
+                                        </li>
+                                        <li>
+                                            Description:
                   <div>{product.description}</div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="details-action">
-                                <ul>
-                                    <li>
-                                        Price: $ {product.price}
-                                    </li>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="details-action">
+                                    <ul>
+                                        <li>
+                                            Price: $ {product.price}
+                                        </li>
 
-                                    <li>
+                                        {/* <li>
                                         Plaza: <select value={plazaStock} onChange={(e) => {
                                             setPlazaStock(e.target.value)
                                         }}>
@@ -119,31 +119,31 @@ function ProductScreen(props) {
                                             <option value={qroStock.countInStock}>Queretaro</option>
                                             <option value={tulStock.countInStock}>Tulum</option>
                                         </select>
-                                    </li>
-                                    <li>
-                                        Status: {productsAvailable.length > 0 ? "In stock" : ""}
-                                    </li>
-                                    <li>
-                                        Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
-                                            {productsAvailable}
-                                            {/* {[...Array({ plazaStock }).keys()].map(x =>
+                                    </li> */}
+                                        <li>
+                                            Status: {productsAvailable.length > 0 ? "In stock" : ""}
+                                        </li>
+                                        <li>
+                                            Qty: <select value={qty} onChange={(e) => { setQty(e.target.value) }} >
+                                                {productsAvailable}
+                                                {/* {[...Array({ plazaStock }).keys()].map(x =>
                                                 <option key={x + 1} value={x + 1}>{x + 1}</option>
                                             )} */}
-                                        </select>
-                                    </li>
-                                    <li>
-                                        {productsAvailable.length > 0 &&
-                                            <button
-                                                onClick={handleAddToCart}
-                                                className="button primary" >Add to order</button>
-                                        }
-                                    </li>
-                                </ul>
-                            </div>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            {productsAvailable.length > 0 &&
+                                                <button
+                                                    onClick={handleAddToCart}
+                                                    className="button primary" >Add to order</button>
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
 
-                        </div>
-                    )
-            }
+                            </div>
+                        </>
+                    )}
         </div>
     )
 }

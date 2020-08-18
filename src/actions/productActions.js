@@ -1,4 +1,4 @@
-import { PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL } from "../constants/productConstants";
+import { PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_STOCK_REQUEST, PRODUCT_STOCK_SUCCESS, PRODUCT_STOCK_FAIL } from "../constants/productConstants";
 import axios from 'axios';
 
 const listProducts = (category = '', searchKeyword = '', sortOrder = '') => async (dispatch) => {
@@ -26,4 +26,20 @@ const detailsProduct = (productId) => async (dispatch) => {
     }
 }
 
-export { listProducts, detailsProduct }
+const stockCountProduct = (plaza) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: PRODUCT_STOCK_REQUEST, payload: (plaza) });
+        const { userLogin: { userInfo } } = getState();
+        const { data } = await axios.get("http://164.90.158.158/" + plaza + "-products/", {
+            headers:
+                { Authorization: 'Bearer ' + userInfo.jwt }
+        }
+        );
+        dispatch({ type: PRODUCT_STOCK_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({ type: PRODUCT_STOCK_FAIL, payload: error.message })
+
+    }
+}
+
+export { listProducts, detailsProduct, stockCountProduct }
