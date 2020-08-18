@@ -8,7 +8,7 @@ function ProductScreen(props) {
     const cart = useSelector(state => state.cart);
     const { cartItems, plaza } = cart;
 
-    const [plazaStock, setPlazaStock] = useState({});
+    // const [plazaStock, setPlazaStock] = useState({});
     const [qty, setQty] = useState(1);
 
     const productDetails = useSelector(state => state.productDetails);
@@ -18,7 +18,10 @@ function ProductScreen(props) {
     const productStockCount = useSelector(state => state.productStockCount)
     const { productsStock } = productStockCount
 
-    // const countInStock = productsStock.filter(x => x.name === product.name)
+    const countInStock = () => {
+        const productInPlaza = productsStock.filter(x => x.name === product.name)
+        return productInPlaza.countInStock
+    }
 
     useEffect(() => {
         dispatch(detailsProduct(props.match.params.id));
@@ -29,20 +32,19 @@ function ProductScreen(props) {
         };
     }, [dispatch, props.match.params.id, plaza]);
 
-
     const productsAvailable = []
 
-    for (let x = 0; x < parseInt(plazaStock); x++) {
+    for (let x = 0; x < countInStock; x++) {
         productsAvailable.push(<option key={x + 1} value={x + 1}>{x + 1}</option>)
     }
 
-    const handleSetPlaza = (e) => {
-        dispatch(savePlaza(e.target.value))
-    }
+    // const handleSetPlaza = (e) => {
+    //     dispatch(savePlaza(e.target.value))
+    // }
 
     const handleAddToCart = () => {
         // props.history.push("/cart/" + props.match.params.id + "?qty=" + Number(qty))
-        dispatch(addToCart(product.id, qty, Number(plazaStock)));
+        dispatch(addToCart(product.id, qty, countInStock));
         alert("Added to cart")
     }
 
@@ -59,7 +61,9 @@ function ProductScreen(props) {
                             </div>
                             <ul className="filter">
                                 <li>
-                                    Plaza: <select value={plaza} onChange={handleSetPlaza}>
+                                    Plaza: <select value={plaza} onChange={(e) => {
+                                        dispatch(savePlaza(e.target.value))
+                                    }}>
                                         <option value="void">select</option>
                                         <option value="cdmx">CDMX</option>
                                         <option value="cun">Cancun</option>
