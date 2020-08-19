@@ -26,6 +26,7 @@ function OrderCreateReducer(state = { cartItems: [] }, action) {
       return { loading: true };
     case ORDER_CREATE_SUCCESS:
       Cookie.remove('cartItems');
+      Cookie.remove('plaza');
       return { loading: false, order: action.payload, success: true };
     case ORDER_CREATE_FAIL:
       return { loading: false, error: action.payload };

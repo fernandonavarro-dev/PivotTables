@@ -33,7 +33,10 @@ function PlaceOrderScreen(props) {
         props.history.push("/profile");
         // props.hisotry.push("/orders/");
 
-
+        cartItems.map(cartItem => {
+            console.log("cartItem in PlaceOrder, ", cartItem);
+            return "item come to me"
+        })
         // console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
     }
 
@@ -41,7 +44,7 @@ function PlaceOrderScreen(props) {
         if (success) {
             props.hisotry.push("/profile");
         }
-    }, [success]);
+    }, [success, props.history]);
 
     return <div>
         <PostOrderSteps step1 step2 step3></PostOrderSteps>
