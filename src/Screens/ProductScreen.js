@@ -57,30 +57,30 @@ function ProductScreen(props) {
                             </div>
 
                             <ul className="filter">
-                                <li>
-                                    {cartItems.length > 0 ?
-                                        <h3>Plaza: {plaza}</h3>
-                                        :
-                                        <li>
-                                            Plaza:{' '}
-                                            <select
-                                                value={plaza}
-                                                onChange={(e) => {
-                                                    dispatch(savePlaza(e.target.value));
-                                                }}
-                                            >
-                                                <option value="void">select</option>
-                                                <option value="cdmx">CDMX</option>
-                                                <option value="cun">Cancun</option>
-                                                <option value="mty">Monterrey</option>
-                                                <option value="playa">Playa del Carmen</option>
-                                                <option value="pbl">Puebla</option>
-                                                <option value="qro">Queretaro</option>
-                                                <option value="tulum">Tulum</option>
-                                            </select>
-                                        </li>
-                                    }
-                                </li>
+
+                                {cartItems.length > 0 ?
+                                    <h3>Plaza: {plaza}</h3>
+                                    :
+                                    <li>
+                                        Plaza:{' '}
+                                        <select
+                                            value={plaza}
+                                            onChange={(e) => {
+                                                dispatch(savePlaza(e.target.value));
+                                            }}
+                                        >
+                                            <option value="">select</option>
+                                            <option value="cdmx">CDMX</option>
+                                            <option value="cun">Cancun</option>
+                                            <option value="mty">Monterrey</option>
+                                            <option value="playa">Playa del Carmen</option>
+                                            <option value="pbl">Puebla</option>
+                                            <option value="qro">Queretaro</option>
+                                            <option value="tulum">Tulum</option>
+                                        </select>
+                                    </li>
+                                }
+
                             </ul>
                             <div className="details">
                                 <div className="details-image">
