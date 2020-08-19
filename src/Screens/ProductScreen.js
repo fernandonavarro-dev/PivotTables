@@ -28,10 +28,10 @@ function ProductScreen(props) {
     const countInStock = productsAvailable.product[plaza + '_product'] || 0;
 
     useEffect(() => {
-        if (!product || !product.name) {
-            dispatch(detailsProduct(props.match.params.id));
-        }
-
+        // if (!product || !product.name) {
+        //     dispatch(detailsProduct(props.match.params.id));
+        // }
+        dispatch(detailsProduct(props.match.params.id));
         dispatch(stockCountProduct(plaza));
 
         return () => {
@@ -81,24 +81,6 @@ function ProductScreen(props) {
                                         </li>
                                     }
                                 </li>
-                                {/* <li>
-                                    Plaza:{' '}
-                                    <select
-                                        value={plaza}
-                                        onChange={(e) => {
-                                            dispatch(savePlaza(e.target.value));
-                                        }}
-                                    >
-                                        <option value="void">select</option>
-                                        <option value="cdmx">CDMX</option>
-                                        <option value="cun">Cancun</option>
-                                        <option value="mty">Monterrey</option>
-                                        <option value="pbl">Playa del Carmen</option>
-                                        <option value="playa">Puebla</option>
-                                        <option value="qro">Queretaro</option>
-                                        <option value="tulum">Tulum</option>
-                                    </select>
-                                </li> */}
                             </ul>
                             <div className="details">
                                 <div className="details-image">
