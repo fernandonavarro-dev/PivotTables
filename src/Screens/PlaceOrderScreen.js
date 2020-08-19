@@ -23,9 +23,12 @@ function PlaceOrderScreen(props) {
 
     const subtotal = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
     const commission = cartItems.reduce((a, c) => a + c.commission * c.qty, 0);
-    const taxPrice = shipping.invoice * subtotal;
-    const totalNoShipping = Number(subtotal) + taxPrice
-    const total = Number(subtotal) + Number(shipping.shippingCost) + taxPrice;
+    const taxPricePre = (shipping.invoice * subtotal);
+    const taxPrice = Number((taxPricePre).toFixed(2));
+    const totalNoShippingPre = Number(subtotal) + taxPrice
+    const totalNoShipping = Number((totalNoShippingPre).toFixed(2));
+    const totalPre = Number(subtotal) + Number(shipping.shippingCost) + taxPrice;
+    const total = Number((totalPre).toFixed(2));
 
     const dispatch = useDispatch();
 
@@ -34,19 +37,19 @@ function PlaceOrderScreen(props) {
             dispatch(createStockevent(cartItem, shipping, total))
             console.log("cartItem, shipping, total =>", cartItems, shipping, total);
         })
-        // dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
-        // props.history.push("/profile");
+        dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
+        props.history.push("/profile");
         // props.hisotry.push("/orders/");
 
 
         // console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
     }
 
-    useEffect(() => {
-        if (success) {
-            props.hisotry.push("/profile");
-        }
-    }, [success, props.history]);
+    // useEffect(() => {
+    //     if (success) {
+    //         props.hisotry.push("/profile");
+    //     }
+    // }, [success, props.history]);
 
     return <div>
         <PostOrderSteps step1 step2 step3></PostOrderSteps>
