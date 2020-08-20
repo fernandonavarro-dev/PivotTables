@@ -26,8 +26,8 @@ function ProductScreen(props) {
         }) || { product: { countInStock: 0 } };
     }
     const productPlazaId = productsAvailable.id
-    const countInStock = productsAvailable.product[plaza + '_product'] || 0;
-
+    // const countInStock = productsAvailable.product[plaza + '_product'] || 0;
+    const countInStock = productsAvailable.countInStock || 0;
 
     useEffect(() => {
         // if (!product || !product.name) {

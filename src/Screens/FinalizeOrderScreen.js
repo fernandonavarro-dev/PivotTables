@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostOrderSteps from '../components/PostOrderSteps';
 import { detailsOrder, updateOrder } from '../actions/orderActions';
-import { createStockevent } from '../actions/stockeventActions';
+import { createStockevent, updateStockCount } from '../actions/stockeventActions';
 import { stockCountProduct } from '../actions/productActions';
 
 function FinalizeOrderScreen(props) {
@@ -24,8 +24,6 @@ function FinalizeOrderScreen(props) {
   const [isDelivered, setIsDelivered] = useState(false);
   const [status, setStatus] = useState('');
 
-  console.log("props, ", props);
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (isDelivered) {
@@ -34,11 +32,11 @@ function FinalizeOrderScreen(props) {
           // console.log(x.name === product.name, '=>', x.name, '=', product.name);
           return cartItem.name.indexOf(x.name) >= 0;
         })
-        // const productPlazaId = productsAvailable.id
-        const countInStock = productsAvailable.product[order.plaza + '_product']
-        console.log("countInStock, ", countInStock);
+        const productPlazaId = productsAvailable.id
+        // const countInStock = productsAvailable.product[order.plaza + '_product']
+        const countInStock = productsAvailable.countInStock
         dispatch(createStockevent(cartItem, order))
-
+        dispatch(updateStockCount(cartItem, order, productPlazaId, countInStock))
       })
     }
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import { useDispatch } from 'react-redux';
-import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL } from '../constants/stockeventConstants';
+import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL } from '../constants/stockeventConstants';
 
 const createStockevent = (cartItem, order) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -29,4 +29,26 @@ const createStockevent = (cartItem, order) => async (dispatch, getState) => {
     }
 }
 
-export { createStockevent }
+const updateStockCount = (cartItem, order, productPlazaId, countInStock) => async (dispatch, getState) => {
+    const { userLogin: { userInfo } } = getState();
+    const stockCountUpdate = Number(countInStock) - Number(cartItem.qty)
+    const stockCount = {
+        // product: cartItem.name,
+        countInStock: stockCountUpdate,
+    }
+    try {
+        dispatch({ type: STOCKCOUNT_UPDATE_REQUEST, payload: stockCount });
+        const { data } = await axios.put("http://164.90.158.158/" + order.plaza + "-products/" + productPlazaId,
+            stockCount, {
+            headers: {
+                Authorization: 'Bearer ' + userInfo.jwt
+            }
+        });
+        dispatch({ type: STOCKCOUNT_UPDATE_SUCCESS, payload: data });
+        // console.log("newStockevent, ", newStockevent);
+    } catch (error) {
+        dispatch({ type: STOCKCOUNT_UPDATE_FAIL, error: error.message });
+    }
+}
+
+export { createStockevent, updateStockCount }
