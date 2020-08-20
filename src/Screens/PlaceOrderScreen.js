@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createOrder } from '../actions/orderActions';
-import { createStockevent } from '../actions/stockeventActions';
+// import { createStockevent } from '../actions/stockeventActions';
 import PostOrderSteps from '../components/PostOrderSteps';
 
 function PlaceOrderScreen(props) {
@@ -18,7 +18,6 @@ function PlaceOrderScreen(props) {
     // }
     // console.log("cart, ", cart);
     // console.log("shipping, ", shipping);
-
 
     const subtotal = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
     const commission = cartItems.reduce((a, c) => a + c.commission * c.qty, 0);
@@ -160,12 +159,3 @@ function PlaceOrderScreen(props) {
 }
 
 export default PlaceOrderScreen;
-
- // const placeOrderHandler = () => {
-    //     props.history.push("/login?redirect=shipping");
-    //     dispatch(createOrder({
-    //         orderItems: shipping, subtotal, taxPrice, totalNoShipping, total
-    //     }));
-
-    //     console.log("orderItems: cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
-    // }

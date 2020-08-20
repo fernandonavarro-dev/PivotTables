@@ -7,7 +7,6 @@ import CartScreen from './Screens/CartScreen';
 import LoginScreen from './Screens/LoginScreen';
 import { useSelector } from 'react-redux';
 import ShippingScreen from './Screens/ShippingScreen';
-// import DeliveryScreen from './Screens/DeliveryScreen';
 import PlaceOrderScreen from './Screens/PlaceOrderScreen';
 import OrdersScreen from './Screens/OrdersScreen';
 import ProfileScreen from './Screens/ProfileScreen';
@@ -18,20 +17,20 @@ function App() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
-  const openMenu = () => {
-    document.querySelector('.sidebar').classList.add('open');
-  };
+  // const openMenu = () => {
+  //   document.querySelector('.sidebar').classList.add('open');
+  // };
 
-  const closeMenu = () => {
-    document.querySelector('.sidebar').classList.remove('open');
-  };
+  // const closeMenu = () => {
+  //   document.querySelector('.sidebar').classList.remove('open');
+  // };
 
   return (
     <BrowserRouter>
       <div className="grid-container">
         <header className="header">
           <div className="brand">
-            <button onClick={openMenu}>&#9776;</button>
+            {/* <button onClick={openMenu}>&#9776;</button> */}
             <Link to="/">Wellstar Order App</Link>
           </div>
           <div className="header-links">
@@ -58,7 +57,7 @@ function App() {
             )}
           </div>
         </header>
-        <aside className="sidebar">
+        {/* <aside className="sidebar">
           <h3>Product Categories</h3>
           <button className="sidebar-close-button" onClick={closeMenu}>
             X
@@ -71,7 +70,7 @@ function App() {
               <Link to="/category/category2">category2</Link>
             </li>
           </ul>
-        </aside>
+        </aside> */}
         <main className="main">
           <div className="content">
             <Route path="/login" component={LoginScreen} />

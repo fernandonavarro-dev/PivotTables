@@ -19,9 +19,9 @@ button {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header'
-    'main'
-    'footer';
+    "header"
+    "main"
+    "footer";
   grid-template-columns: 1fr;
   grid-template-rows: 5rem 1fr 5rem;
   height: 100%;
@@ -40,6 +40,7 @@ button {
   font-size: 3rem;
   font-weight: bold;
   text-decoration: none;
+  margin-left: 1rem;
 }
 .header-links a {
   color: #ffffff;
@@ -426,13 +427,17 @@ tbody > tr:nth-child(odd) {
 .dropdown {
   display: inline-block;
   position: relative;
+  justify-content: space-between;
+  line-height: 2.5rem;
+  margin-right: 1rem;
 }
 .dropdown-content {
   position: absolute;
   display: none;
   right: 0;
   padding: 1rem;
-  list-style-type: none;
+  justify-content: space-between;
+  list-style-typ: ;
   z-index: 1;
   background-color: #203040;
   margin: 0;
