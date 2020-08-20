@@ -1,17 +1,17 @@
 import axios from 'axios';
 // import { useDispatch } from 'react-redux';
-import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKEVENT_UPDATE_REQUEST, STOCKEVENT_UPDATE_SUCCESS, STOCKEVENT_UPDATE_FAIL } from '../constants/stockeventConstants';
+import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL } from '../constants/stockeventConstants';
 
-const createStockevent = (cartItem, shipping, total) => async (dispatch, getState) => {
+const createStockevent = (cartItem, order) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
 
     const stockevent = {
-        orderId: shipping.plaza + "-" + shipping.customerName + "-" + total,
-        type: "remove",
+        orderId: Number(order.id),
+        orderSlug: order.plaza + "-" + order.customerName + "-" + order.total,
+        type: "out",
         product: cartItem.name,
         qty: cartItem.qty,
-        status: "processing",
-        plaza: shipping.plaza
+        plaza: order.plaza
     }
     try {
         dispatch({ type: STOCKEVENT_CREATE_REQUEST, payload: stockevent });

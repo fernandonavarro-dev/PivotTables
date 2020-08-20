@@ -59,7 +59,10 @@ function OrdersScreen() {
                                                     <td>{order.status}</td>
                                                     {/* <td>{order.created_at}</td> */}
                                                     <td>
-                                                        <Link to={"/order/" + order.id}>DETAILS</Link>
+                                                        <Link
+                                                            to={{ pathname: "/order/" + order.id, state: { plaza: order.plaza } }}
+                                                        // to={"/order/" + order.id}
+                                                        >DETAILS</Link>
                                                         {' '}
                                                     </td>
                                                 </tr>)}

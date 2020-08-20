@@ -3,10 +3,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PostOrderSteps from '../components/PostOrderSteps';
 import { detailsOrder, updateOrder } from '../actions/orderActions';
+import { createStockevent } from '../actions/stockeventActions';
+import { stockCountProduct } from '../actions/productActions';
 
 function FinalizeOrderScreen(props) {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const orderDetails = useSelector((state) => state.orderDetails);
+  const { loading, order, error } = orderDetails;
+
+  const productStockCount = useSelector((state) => state.productStockCount);
+  const { productsStock } = productStockCount;
+
+  const dispatch = useDispatch();
 
   const [deliveryDate, setDeliveryDate] = useState('');
   const [notes, setNotes] = useState('');
@@ -14,13 +24,24 @@ function FinalizeOrderScreen(props) {
   const [isDelivered, setIsDelivered] = useState(false);
   const [status, setStatus] = useState('');
 
-  const dispatch = useDispatch();
-
-  const orderDetails = useSelector((state) => state.orderDetails);
-  const { loading, order, error } = orderDetails;
+  console.log("props, ", props);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    if (isDelivered) {
+      order.cartItems.map(cartItem => {
+        const productsAvailable = productsStock.find((x) => {
+          // console.log(x.name === product.name, '=>', x.name, '=', product.name);
+          return cartItem.name.indexOf(x.name) >= 0;
+        })
+        // const productPlazaId = productsAvailable.id
+        const countInStock = productsAvailable.product[order.plaza + '_product']
+        console.log("countInStock, ", countInStock);
+        dispatch(createStockevent(cartItem, order))
+
+      })
+    }
+
     dispatch(
       updateOrder(
         order.id,
@@ -32,15 +53,17 @@ function FinalizeOrderScreen(props) {
       )
     );
 
-    props.history.push('orders');
     alert('Order Updated Successfully');
+    props.history.push('');
   };
 
   useEffect(() => {
     if (userInfo) {
       dispatch(detailsOrder(props.match.params.id));
+      dispatch(stockCountProduct(props.location.state.plaza));
     }
-  }, [dispatch, props.match.params.id, userInfo]);
+
+  }, [dispatch, props.match.params.id, props.location.state.plaza, userInfo]);
 
   return (
     <div>

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 // import { addToCart, removeFromCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createOrder } from '../actions/orderActions';
 import { createStockevent } from '../actions/stockeventActions';
 import PostOrderSteps from '../components/PostOrderSteps';
-// import { usedispatch } from 'react-redux';
 
 function PlaceOrderScreen(props) {
 
@@ -33,18 +32,13 @@ function PlaceOrderScreen(props) {
     const dispatch = useDispatch();
 
     const placeOrderHandler = () => {
-        cartItems.map(cartItem => {
-            dispatch(createStockevent(cartItem, shipping, total))
-            console.log("cartItem, shipping, total =>", cartItems, shipping, total);
-        })
+        // cartItems.map(cartItem => {
+        //     dispatch(createStockevent(cartItem, shipping, total))
+        //     console.log("cartItem, shipping, total =>", cartItems, shipping, total);
+        // })
         dispatch(createOrder(cartItems, shipping, subtotal, commission, taxPrice, totalNoShipping, total));
         props.history.push("/profile");
-        // props.hisotry.push("/orders/");
-
-
-        // console.log("cartItems, shipping, subtotal, taxPrice, totalNoShipping, total =>", cartItems, shipping, subtotal, taxPrice, totalNoShipping, total);
     }
-
     // useEffect(() => {
     //     if (success) {
     //         props.hisotry.push("/profile");
@@ -160,6 +154,7 @@ function PlaceOrderScreen(props) {
             </div>
 
         </div>
+
     </div>
 
 }

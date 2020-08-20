@@ -6,7 +6,7 @@ const createOrder = (cartItems, shipping, subtotal, commission, taxPrice, totalN
 
     const order = {
         // body: {
-        orderId: shipping.plaza + "-" + shipping.customerName + "-" + total,
+        orderSlug: shipping.plaza + "-" + shipping.customerName + "-" + total,
         sellerUsername: userInfo.user.username,
         customerName: shipping.customerName,
         customerTel: shipping.customerTel,

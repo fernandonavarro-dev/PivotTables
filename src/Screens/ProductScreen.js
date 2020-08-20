@@ -25,7 +25,9 @@ function ProductScreen(props) {
             return product.name.indexOf(x.name) >= 0;
         }) || { product: { countInStock: 0 } };
     }
+    const productPlazaId = productsAvailable.id
     const countInStock = productsAvailable.product[plaza + '_product'] || 0;
+
 
     useEffect(() => {
         // if (!product || !product.name) {
@@ -40,7 +42,7 @@ function ProductScreen(props) {
     }, [dispatch, props.match.params.id, plaza]);
 
     const handleAddToCart = () => {
-        dispatch(addToCart(product.id, qty, countInStock));
+        dispatch(addToCart(product.id, qty, countInStock, productPlazaId));
         alert('Added to cart');
     };
 
