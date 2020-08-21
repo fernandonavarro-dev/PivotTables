@@ -3,7 +3,7 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOrders } from '../actions/orderActions';
-import { listStockevents } from '../actions/stockeventActions';
+// import { listStockevents } from '../actions/stockeventActions';
 
 const PivotTableScreen = (props) => {
 
@@ -13,8 +13,8 @@ const PivotTableScreen = (props) => {
     const orderList = useSelector(state => state.orderList);
     const { loading, orders, error } = orderList;
 
-    const stockeventList = useSelector(state => state.stockeventList);
-    const { stockevents } = stockeventList;
+    // const stockeventList = useSelector(state => state.stockeventList);
+    // const { stockevents } = stockeventList;
 
     const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ const PivotTableScreen = (props) => {
     useEffect(() => {
         if (userInfo && userInfo.user.isTop) {
             dispatch(listOrders());
-            dispatch(listStockevents());
+            // dispatch(listStockevents());
 
         }
         return () => {
@@ -65,6 +65,9 @@ const PivotTableScreen = (props) => {
                 <div>{error}</div>
             ) : (
                         <>
+                            <div className="content content-margined">
+                                <h3>Pivot Table Orders</h3>
+                            </div>
                             {userInfo && userInfo.user.isTop && (
 
 

@@ -12,6 +12,7 @@ import OrdersScreen from './Screens/OrdersScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 import FinalizeOrderScreen from './Screens/FinalizeOrderScreen';
 import PivotTableScreen from './Screens/PivotTableScreen';
+import PTableStockEvents from './Screens/PTableStockEvents';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -48,9 +49,15 @@ function App() {
                     <Link to="/orders">Orders</Link>
                   </li>
                   {userInfo && userInfo.user.isTop && (
-                    <li>
-                      <Link to="/pivottable">Table</Link>
-                    </li>
+                    <div>
+                      <li>
+                        <Link to="/pivottable">PT-Orders</Link>
+                      </li>
+                      <li>
+                        <Link to="/ptstockevents">PT-StockEvents</Link>
+                      </li>
+                    </div>
+
                   )}
                 </ul>
               </div>
@@ -76,6 +83,7 @@ function App() {
             <Route path="/login" component={LoginScreen} />
             <Route path="/orders" component={OrdersScreen} />
             <Route path="/pivottable" component={PivotTableScreen} />
+            <Route path="/ptstockevents" component={PTableStockEvents} />
             <Route path="/profile" component={ProfileScreen} />
             <Route path="/shipping" component={ShippingScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />

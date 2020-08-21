@@ -430,6 +430,7 @@ tbody > tr:nth-child(odd) {
   justify-content: space-between;
   line-height: 2.5rem;
   margin-right: 1rem;
+  width: auto;
 }
 .dropdown-content {
   position: absolute;
@@ -437,11 +438,12 @@ tbody > tr:nth-child(odd) {
   right: 0;
   padding: 1rem;
   justify-content: space-between;
-  list-style-typ: ;
   z-index: 1;
   background-color: #203040;
   margin: 0;
   margin-top: 0.4rem;
+  width: max-content;
+  align-items: center;
 }
 .dropdown:hover .dropdown-content {
   display: block;
