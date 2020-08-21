@@ -3,27 +3,59 @@ import PivotTableUI from 'react-pivottable/PivotTableUI';
 import 'react-pivottable/pivottable.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOrders } from '../actions/orderActions';
-// import { jsonToCSV } from 'react-papaparse'
-// import { cloneDeep } from 'lodash'
+import { listStockevents } from '../actions/stockeventActions';
 
 const PivotTableScreen = (props) => {
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
 
-    const [initialState, setInitialState] = useState(props)
-
     const orderList = useSelector(state => state.orderList);
     const { loading, orders, error } = orderList;
 
+    const stockeventList = useSelector(state => state.stockeventList);
+    const { stockevents } = stockeventList;
+
     const dispatch = useDispatch();
 
+    const [initialState, setInitialState] = useState(props)
+
+    // const mergeArrays = (a1, a2) =>
+    //     a1.map(itm => ({
+    //         ...a2.find((item) => (item.orderSlug === itm.orderSlug) && item),
+    //         ...itm
+    //     }));
+
+    // const mergeArrays = (a1, a2) =>
+    //     a1.map((item, i) => Object.assign({}, item, a2[i]));
+
+    // const mergeArrays = () => {
+    //     let merged = [];
+    //     let a1 = stockevents
+    //     let a2 = orders
+
+    //     for (let i = 0; i < a1.length; i++) {
+    //         merged.push({
+    //             ...a1[i],
+    //             ...(a2.find((itmInner) => itmInner.orderSlug === a1[i].orderSlug))
+    //         }
+    //         );
+    //     }
+    //     return merged
+    // }
+
+    // console.log("arr3, ", arr3);
+
     useEffect(() => {
-        dispatch(listOrders());
+        if (userInfo && userInfo.user.isTop) {
+            dispatch(listOrders());
+            dispatch(listStockevents());
+
+        }
         return () => {
             //
         };
-    }, [dispatch]);
+    }, [dispatch, userInfo]);
 
     return (
         <div>
@@ -35,18 +67,22 @@ const PivotTableScreen = (props) => {
                         <>
                             {userInfo && userInfo.user.isTop && (
 
+
                                 <PivotTableUI
                                     data={orders}
                                     onChange={s => setInitialState(s)}
                                     {...initialState}
                                 />
                             )}
+
                         </>
                     )}
         </div>
     );
 
 }
+
+export default PivotTableScreen;
 
 // class PivotTableScreen extends React.Component {
 //     constructor(props) {
@@ -58,21 +94,12 @@ const PivotTableScreen = (props) => {
 //     // const { userLogin: { userInfo } } = getState();
 //     const userLogin = useSelector(state => state.userLogin);
 //     const { userInfo } = userLogin;
-//     const fetchedOrders = await axios.get("http://164.90.158.158/orders/"
-//         // const { data: orders } = await axios.get("http://164.90.158.158/orders/"
-//         , {
-//             headers:
-//                 { Authorization: 'Bearer ' + userInfo.jwt }
-//         }
-//     );
-//     // console.log("fetchedOrders, ", fetchedOrders);
-
+//     
 //     const ordersData = fetchedOrders.data;
 //     this.setState = ({ ordersData });
 //     console.log("ordersData, ", ordersData);
 
 // }
-
 
 //     render() {
 //         return (
@@ -84,27 +111,3 @@ const PivotTableScreen = (props) => {
 //         );
 //     }
 // }
-
-export default PivotTableScreen;
-
-// const orderDispatch = () => {
-//     const userLogin = useSelector(state => state.userLogin);
-//     const { userInfo } = userLogin;
-
-//     const openOrderList = useSelector(state => state.openOrderList);
-//     // const { loading, orders, error } = openOrderList;
-//     const { loading: loadingOrders, orders, error: errorOrders } = openOrderList;
-
-//     const dispatch = useDispatch();
-
-//     useEffect(() => {
-//         dispatch(listOpenOrders());
-//         return () => {
-//             //
-//         };
-//     }, []);
-
-//     return data
-// }
-
-// export default connect(orderDispatch)(PivotTableScreen);

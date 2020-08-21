@@ -51,4 +51,20 @@ const updateStockCount = (cartItem, order, productPlazaId, countInStock) => asyn
     }
 }
 
-export { createStockevent, updateStockCount }
+const listStockevents = () => async (dispatch, getState) => {
+    try {
+        dispatch({ type: STOCKEVENT_LIST_REQUEST });
+        const { userLogin: { userInfo } } = getState();
+        const { data: orders } = await axios.get("http://164.90.158.158/stockevents/"
+            , {
+                headers:
+                    { Authorization: 'Bearer ' + userInfo.jwt }
+            }
+        );
+        dispatch({ type: STOCKEVENT_LIST_SUCCESS, payload: orders, user: userInfo })
+    } catch (error) {
+        dispatch({ type: STOCKEVENT_LIST_FAIL, payload: error.message });
+    }
+}
+
+export { createStockevent, updateStockCount, listStockevents }
