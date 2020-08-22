@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { logout } from '../actions/userActions';
 import { listMyOrders, updateOrder } from '../actions/orderActions';
 import { useDispatch, useSelector } from 'react-redux';
+import UseSortableData from '../components/UseSortableData';
 
 function ProductScreen(props) {
 
@@ -20,22 +21,23 @@ function ProductScreen(props) {
 
     const myOrderList = useSelector(state => state.myOrderList);
     const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
-    // const [, updateState] = useState()
-    // const forceUpdate = useCallback(() => updateState({}), [])
+
+    const { items, requestSort } = UseSortableData(orders);
+
 
     useEffect(() => {
-        if (userInfo) {
-            // console.log(userInfo.name)
-            // setEmail(userInfo.email);
-            // setName(userInfo.name);
-            // setPassword(userInfo.password);
-        }
+        // if (userInfo) {
+        // console.log(userInfo.name)
+        // setEmail(userInfo.email);
+        // setName(userInfo.name);
+        // setPassword(userInfo.password);
+        // }
         dispatch(listMyOrders());
         // setAllOrders()
         return () => {
 
         };
-    }, [userInfo])
+    }, [dispatch])
 
     function cancelOrderHandler(orderId) {
         // e.preventDefault()
@@ -84,13 +86,34 @@ function ProductScreen(props) {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>ORDER ID</th>
-                                    <th>CUSTOMER</th>
-                                    <th>SELLER</th>
-                                    <th>PLAZA</th>
-                                    <th>TOTAL</th>
-                                    <th>COMMISSION</th>
-                                    <th>STATUS</th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('id')}>
+                                            ORDER ID
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('customerName')}>
+                                            CUSTOMER
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('sellerUsername')}>
+                                            SELLER
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('plaza')}>
+                                            PLAZA
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('total')}>
+                                            TOTAL
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('commission')}>
+                                            COMMISSION
+            </button></th>
+                                    <th>
+                                        <button type="button" onClick={() => requestSort('status')}>
+                                            STATUS
+            </button></th>
                                     {/* <th>CREATED AT</th> */}
                                 </tr>
                             </thead>
