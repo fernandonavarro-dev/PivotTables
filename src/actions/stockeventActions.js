@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import { useDispatch } from 'react-redux';
-import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL } from '../constants/stockeventConstants';
+import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL, STOCKCOUNT_LIST_FAIL, STOCKCOUNT_LIST_SUCCESS, STOCKCOUNT_LIST_REQUEST } from '../constants/stockeventConstants';
 
 const createStockevent = (cartItem, order) => async (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
@@ -67,4 +67,20 @@ const listStockevents = () => async (dispatch, getState) => {
     }
 }
 
-export { createStockevent, updateStockCount, listStockevents }
+// const listStockCounts = () => async (dispatch, getState) => {
+//     try {
+//         dispatch({ type: STOCKCOUNT_LIST_REQUEST });
+//         const { userLogin: { userInfo } } = getState();
+//         const { data: stockCounts } = await axios.get("http://164.90.158.158/stockevents/"
+//             , {
+//                 headers:
+//                     { Authorization: 'Bearer ' + userInfo.jwt }
+//             }
+//         );
+//         dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: stockCounts, user: userInfo })
+//     } catch (error) {
+//         dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
+//     }
+// }
+
+export { createStockevent, updateStockCount, listStockevents, /*listStockCounts*/ }
