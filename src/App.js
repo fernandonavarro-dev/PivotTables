@@ -13,6 +13,7 @@ import ProfileScreen from './Screens/ProfileScreen';
 import FinalizeOrderScreen from './Screens/FinalizeOrderScreen';
 import PivotTableScreen from './Screens/PivotTableScreen';
 import PTableStockEvents from './Screens/PTableStockEvents';
+import PTableStockCounts from './Screens/PTableStockCountsScreen';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
@@ -56,6 +57,9 @@ function App() {
                       <li>
                         <Link to="/ptstockevents">PT-StockEvents</Link>
                       </li>
+                      <li>
+                        <Link to="/ptstockcounts">PT-StockCounts</Link>
+                      </li>
                     </div>
 
                   )}
@@ -84,6 +88,7 @@ function App() {
             <Route path="/orders" component={OrdersScreen} />
             <Route path="/pivottable" component={PivotTableScreen} />
             <Route path="/ptstockevents" component={PTableStockEvents} />
+            <Route path="/ptstockcounts" component={PTableStockCounts} />
             <Route path="/profile" component={ProfileScreen} />
             <Route path="/shipping" component={ShippingScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />

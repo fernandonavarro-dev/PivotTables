@@ -46,4 +46,24 @@ function stockeventListReducer(
     }
 }
 
-export { stockeventCreateReducer, stockcountUpdateReducer, stockeventListReducer }
+function stockCountListReducer(
+    state = {
+        stocksCount: [],
+    },
+    action
+) {
+    switch (action.type) {
+        case STOCKEVENT_LIST_REQUEST:
+            return { loading: true };
+        case STOCKEVENT_LIST_SUCCESS:
+            // const ordersPre = action.payload;
+            // const orders = [...ordersPre];
+            return { loading: false, stockcounts: action.payload };
+        case STOCKEVENT_LIST_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+}
+
+export { stockeventCreateReducer, stockcountUpdateReducer, stockeventListReducer, stockCountListReducer }

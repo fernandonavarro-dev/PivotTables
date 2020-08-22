@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL, STOCKCOUNT_LIST_FAIL, STOCKCOUNT_LIST_SUCCESS, STOCKCOUNT_LIST_REQUEST } from '../constants/stockeventConstants';
 
@@ -67,20 +68,32 @@ const listStockevents = () => async (dispatch, getState) => {
     }
 }
 
-// const listStockCounts = () => async (dispatch, getState) => {
-//     try {
-//         dispatch({ type: STOCKCOUNT_LIST_REQUEST });
-//         const { userLogin: { userInfo } } = getState();
-//         const { data: stockCounts } = await axios.get("http://164.90.158.158/stockevents/"
-//             , {
-//                 headers:
-//                     { Authorization: 'Bearer ' + userInfo.jwt }
-//             }
-//         );
-//         dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: stockCounts, user: userInfo })
-//     } catch (error) {
-//         dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
-//     }
-// }
+const listStockCounts = () => (dispatch, getState) => {
+    const { userLogin: { userInfo } } = getState();
+    const plazasIndex = ["cdmx", "cun"];
+    // const plazas = [];
 
-export { createStockevent, updateStockCount, listStockevents, /*listStockCounts*/ }
+    // plazasIndex.map(plaza =>
+    const plazas = async dispatch => {
+        // try {
+        dispatch({ type: STOCKCOUNT_LIST_REQUEST });
+        const { data } = await axios.get("http://164.90.158.158/" + "cdmx" + "-products"
+            , {
+                headers:
+                    { Authorization: 'Bearer ' + userInfo.jwt }
+            }
+        );
+        plazas.push(data);
+    }
+    // )
+    dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazas, user: userInfo })
+    console.log("plazas, ", plazas);
+
+    // )
+
+    // } catch (error) {
+    //     dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
+    // }
+}
+
+export { createStockevent, updateStockCount, listStockevents, listStockCounts }
