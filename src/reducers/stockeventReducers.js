@@ -1,4 +1,4 @@
-import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL } from '../constants/stockeventConstants';
+import { STOCKEVENT_CREATE_REQUEST, STOCKEVENT_CREATE_SUCCESS, STOCKEVENT_CREATE_FAIL, STOCKEVENT_LIST_REQUEST, STOCKEVENT_LIST_SUCCESS, STOCKEVENT_LIST_FAIL, STOCKCOUNT_UPDATE_REQUEST, STOCKCOUNT_UPDATE_SUCCESS, STOCKCOUNT_UPDATE_FAIL, STOCKCOUNT_LIST_REQUEST, STOCKCOUNT_LIST_SUCCESS, STOCKCOUNT_LIST_FAIL } from '../constants/stockeventConstants';
 
 function stockeventCreateReducer(state = { cartItem: [] }, action) {
     switch (action.type) {
@@ -48,18 +48,17 @@ function stockeventListReducer(
 
 function stockCountListReducer(
     state = {
-        stocksCount: [],
+        plazasStocks: [],
     },
     action
 ) {
     switch (action.type) {
-        case STOCKEVENT_LIST_REQUEST:
+        case STOCKCOUNT_LIST_REQUEST:
             return { loading: true };
-        case STOCKEVENT_LIST_SUCCESS:
-            // const ordersPre = action.payload;
-            // const orders = [...ordersPre];
-            return { loading: false, stockcounts: action.payload };
-        case STOCKEVENT_LIST_FAIL:
+        case STOCKCOUNT_LIST_SUCCESS:
+            console.log("action.payload, ", action.payload);
+            return { loading: false, plazasStocks: action.payload };
+        case STOCKCOUNT_LIST_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;

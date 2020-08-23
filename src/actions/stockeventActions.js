@@ -70,30 +70,57 @@ const listStockevents = () => async (dispatch, getState) => {
 
 const listStockCounts = () => (dispatch, getState) => {
     const { userLogin: { userInfo } } = getState();
-    const plazasIndex = ["cdmx", "cun"];
-    // const plazas = [];
 
-    // plazasIndex.map(plaza =>
-    const plazas = async dispatch => {
-        // try {
+    try {
         dispatch({ type: STOCKCOUNT_LIST_REQUEST });
-        const { data } = await axios.get("http://164.90.158.158/" + "cdmx" + "-products"
-            , {
-                headers:
-                    { Authorization: 'Bearer ' + userInfo.jwt }
-            }
-        );
-        plazas.push(data);
+
+        const plazas = ["cdmx", "cun", "mty", "playa", "pbl", "qro", "tulum"]
+        function getStockCounts(array) {
+            const plazasStocks = []
+            array.map(async (item) => {
+                let plazaStock = await axios.get("http://164.90.158.158/" + item + "-products"
+                    , {
+                        headers:
+                            { Authorization: 'Bearer ' + userInfo.jwt }
+                    }
+                );
+                plazasStocks.push(plazaStock.data)
+            })
+            return plazasStocks
+        }
+        const plazasStocks = getStockCounts(plazas)
+        console.log("plazasStocks, ", plazasStocks);
+
+        dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazasStocks, user: userInfo })
+    } catch (error) {
+        dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
     }
-    // )
-    dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazas, user: userInfo })
-    console.log("plazas, ", plazas);
-
-    // )
-
-    // } catch (error) {
-    //     dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
-    // }
 }
 
 export { createStockevent, updateStockCount, listStockevents, listStockCounts }
+
+ // const { userLogin: { userInfo } } = getState();
+    // const plazasIndex = ["cdmx", "cun"];
+    // // const plazas = [];
+
+    // // plazasIndex.map(plaza =>
+    //   const plazas =  async dispatch => {
+    //         // try {
+    //         dispatch({ type: STOCKCOUNT_LIST_REQUEST });
+    //         const { data } = await axios.get("http://164.90.158.158/" + "cdmx" + "-products"
+    //             , {
+    //                 headers:
+    //                     { Authorization: 'Bearer ' + userInfo.jwt }
+    //             }
+    //         );
+    //         plazas.push(data);
+    //     }
+    // // )
+    // dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazas, user: userInfo })
+    // console.log("plazas, ", plazas);
+
+    // // )
+
+    // // } catch (error) {
+    // //     dispatch({ type: STOCKCOUNT_LIST_FAIL, payload: error.message });
+    // // }
