@@ -56,7 +56,7 @@ function stockCountListReducer(
         case STOCKCOUNT_LIST_REQUEST:
             return { loading: true };
         case STOCKCOUNT_LIST_SUCCESS:
-            console.log("action.payload, ", action.payload);
+            // console.log("action.payload, ", action.payload);
             return { loading: false, plazasStocks: action.payload };
         case STOCKCOUNT_LIST_FAIL:
             return { loading: false, error: action.payload };

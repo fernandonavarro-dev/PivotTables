@@ -80,7 +80,7 @@ const listMyOrders = () => async (dispatch, getState) => {
     try {
         dispatch({ type: MY_ORDER_LIST_REQUEST });
         const { userLogin: { userInfo } } = getState();
-        const { data: orders } = await axios.get("http://164.90.158.158/orders/"
+        const { data: orders } = await axios.get("http://164.90.158.158/orders?_limit=1000"
             , {
                 headers:
                     { Authorization: 'Bearer ' + userInfo.jwt }
@@ -96,7 +96,7 @@ const listOpenOrders = () => async (dispatch, getState) => {
     try {
         dispatch({ type: OPEN_ORDER_LIST_REQUEST });
         const { userLogin: { userInfo } } = getState();
-        const { data: orders } = await axios.get("http://164.90.158.158/orders/"
+        const { data: orders } = await axios.get("http://164.90.158.158/orders?_limit=1000"
             , {
                 headers:
                     { Authorization: 'Bearer ' + userInfo.jwt }
@@ -112,7 +112,7 @@ const listOrders = () => async (dispatch, getState) => {
     try {
         dispatch({ type: ORDER_LIST_REQUEST });
         const { userLogin: { userInfo } } = getState();
-        const { data: orders } = await axios.get("http://164.90.158.158/orders/"
+        const { data: orders } = await axios.get("http://164.90.158.158/orders?_limit=1000"
             , {
                 headers:
                     { Authorization: 'Bearer ' + userInfo.jwt }

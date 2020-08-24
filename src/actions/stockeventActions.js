@@ -69,11 +69,9 @@ const listStockevents = () => async (dispatch, getState) => {
 }
 
 const listStockCounts = () => (dispatch, getState) => {
-    const { userLogin: { userInfo } } = getState();
-
     try {
         dispatch({ type: STOCKCOUNT_LIST_REQUEST });
-
+        const { userLogin: { userInfo } } = getState();
         const plazas = ["cdmx", "cun", "mty", "playa", "pbl", "qro", "tulum"]
         function getStockCounts(array) {
             const plazasStocks = []
@@ -89,7 +87,7 @@ const listStockCounts = () => (dispatch, getState) => {
             return plazasStocks
         }
         const plazasStocks = getStockCounts(plazas)
-        console.log("plazasStocks, ", plazasStocks);
+        // console.log("plazasStocks, ", plazasStocks);
 
         dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazasStocks, user: userInfo })
     } catch (error) {

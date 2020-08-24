@@ -22,7 +22,7 @@ function ProductScreen(props) {
     const myOrderList = useSelector(state => state.myOrderList);
     const { loading: loadingOrders, orders, error: errorOrders } = myOrderList;
 
-    const { items, requestSort } = UseSortableData(orders);
+    // const { items, requestSort } = UseSortableData(orders);
 
 
     useEffect(() => {
@@ -87,33 +87,55 @@ function ProductScreen(props) {
                             <thead>
                                 <tr>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('id')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('id')}
+                                        > */}
                                             ORDER ID
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('customerName')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('customerName')}
+                                        > */}
                                             CUSTOMER
-            </button></th>
+            {/* </button>*/}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('sellerUsername')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort
+                                                ('sellerUsername')}
+                                        > */}
                                             SELLER
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('plaza')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('plaza')}
+                                        > */}
                                             PLAZA
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('total')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('total')}
+                                        > */}
                                             TOTAL
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('commission')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('commission')}
+                                        > */}
                                             COMMISSION
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     <th>
-                                        <button type="button" onClick={() => requestSort('status')}>
+                                        {/* <button type="button"
+                                            onClick={() => requestSort('status')}
+                                        > */}
                                             STATUS
-            </button></th>
+            {/* </button> */}
+                                    </th>
                                     {/* <th>CREATED AT</th> */}
                                 </tr>
                             </thead>
