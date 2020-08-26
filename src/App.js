@@ -2,15 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import HomeScreen from './Screens/HomeScreen';
-import ProductScreen from './Screens/ProductScreen';
-import CartScreen from './Screens/CartScreen';
 import LoginScreen from './Screens/LoginScreen';
 import { useSelector } from 'react-redux';
-import ShippingScreen from './Screens/ShippingScreen';
-import PlaceOrderScreen from './Screens/PlaceOrderScreen';
-import OrdersScreen from './Screens/OrdersScreen';
-import ProfileScreen from './Screens/ProfileScreen';
-import FinalizeOrderScreen from './Screens/FinalizeOrderScreen';
 import PivotTableScreen from './Screens/PivotTableScreen';
 import PTableStockEvents from './Screens/PTableStockEvents';
 import PTableStockCounts from './Screens/PTableStockCountsScreen';
@@ -36,7 +29,7 @@ function App() {
             <Link to="/">Wellstar Order App</Link>
           </div>
           <div className="header-links">
-            <a href="/cart">Cart</a>
+            {/* <a href="/cart">Cart</a> */}
             {userInfo && userInfo.user ? (
               <Link to="/profile">{userInfo.user.name}</Link>
             ) : (
@@ -85,17 +78,9 @@ function App() {
         <main className="main">
           <div className="content">
             <Route path="/login" component={LoginScreen} />
-            <Route path="/orders" component={OrdersScreen} />
             <Route path="/pivottable" component={PivotTableScreen} />
             <Route path="/ptstockevents" component={PTableStockEvents} />
             <Route path="/ptstockcounts" component={PTableStockCounts} />
-            <Route path="/profile" component={ProfileScreen} />
-            <Route path="/shipping" component={ShippingScreen} />
-            <Route path="/placeorder" component={PlaceOrderScreen} />
-            {/* <Route path="/delivery" component={DeliveryScreen} /> */}
-            <Route path="/product/:id" component={ProductScreen} />
-            <Route path="/order/:id" component={FinalizeOrderScreen} />
-            <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/" exact={true} component={HomeScreen} />
           </div>
         </main>
