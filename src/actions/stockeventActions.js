@@ -28,19 +28,21 @@ const listStockCounts = () => (dispatch, getState) => {
         const plazas = ["cdmx", "cun", "mty", "playa", "pbl", "qro", "tulum"]
         function getStockCounts(array) {
             const plazasStocks = []
-            array.map(async (item) => {
-                let plazaStock = await axios.get("http://164.90.158.158/" + item + "-products"
+            array.map(async (plaza) => {
+                const { data: plazaStock } = await axios.get("http://164.90.158.158/" + plaza + "-products?_sort=name:ASC"
                     , {
                         headers:
                             { Authorization: 'Bearer ' + userInfo.jwt }
                     }
                 );
-                plazasStocks.push(plazaStock.data)
+                plazaStock.map(item => {
+                    plazasStocks.push({ product: item.name, plaza, countInStock: item.countInStock })
+                })
             })
+
             return plazasStocks
         }
         const plazasStocks = getStockCounts(plazas)
-        // console.log("plazasStocks, ", plazasStocks);
 
         dispatch({ type: STOCKCOUNT_LIST_SUCCESS, payload: plazasStocks, user: userInfo })
     } catch (error) {
@@ -49,6 +51,5 @@ const listStockCounts = () => (dispatch, getState) => {
 }
 
 export {
-    // createStockevent, updateStockCount,
     listStockevents, listStockCounts
 }
